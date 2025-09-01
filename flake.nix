@@ -30,7 +30,7 @@
             # Filled on second run with the value Nix suggests.
             # Temporary placeholder to trigger hint:
             # First build will fail and print the correct hash; paste it here in base64 format.
-            npmDepsHash = "sha256-VzxG2xXZOBH5J/1rvYpX7wGK6T7elOFupjPeUaaL4FM=";  # replace after first build
+            npmDepsHash = "sha256-ID+XeYaBO7m4cRBqM5lAEgeMopSDZZhQY1H2lVQDSFw=";  # replace after first build
 
             # We only need production dependencies for the CLI runtime.
             # Production install only (npm >=9 prefers --omit=dev)
