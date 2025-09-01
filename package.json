@@ -67,6 +67,7 @@
     "wiki-plugin-roster": "^0.4.0",
     "wiki-plugin-scatter": "^0.6.0",
     "wiki-plugin-search": "^0.3.0",
+    "wiki-plugin-solo": "0.1.29",
     "wiki-plugin-transport": "^0.3.0",
     "wiki-plugin-video": "^0.4.0",
     "wiki-security-friends": "^0.2.3",
