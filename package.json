@@ -45,7 +45,7 @@
     "wiki-plugin-graphviz": "^0.11.2",
     "wiki-plugin-grep": "^1.1.1",
     "wiki-plugin-html": "^0.6.0",
-    "wiki-plugin-image": "^0.6.2",
+    "wiki-plugin-image": "^0.7.2",
     "wiki-plugin-line": "^0.6.0",
     "wiki-plugin-map": "^0.9.0",
     "wiki-plugin-markdown": "^0.5.0",
@@ -66,9 +66,9 @@
     "wiki-plugin-search": "^0.3.0",
     "wiki-plugin-transport": "^0.3.0",
     "wiki-plugin-video": "^0.4.0",
-    "wiki-security-friends": "^0.2.3",
-    "wiki-security-passportjs": "^0.11.3",
-    "wiki-server": "^0.26.0-rc.6"
+    "wiki-security-friends": "^0.3.0-rc.0",
+    "wiki-security-passportjs": "^0.12.0-rc.0",
+    "wiki-server": "^0.26.0-rc.7"
   },
   "devDependencies": {
     "@eslint/js": "^9.27.0",
