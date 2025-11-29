@@ -11,9 +11,28 @@
 import path from 'node:path'
 import url from 'node:url'
 
-const packageJsonPath = path.join(process.cwd(), 'package.json')
-const packageJsonUrl = url.pathToFileURL(packageJsonPath).href
-const { default: packageJson } = await import(packageJsonUrl, { with: { type: 'json' } })
+const wikiPackageImport = async () => {
+  return new Promise(resolve => {
+    import('wiki/package.json', { with: { type: 'json' } })
+      .then(imported => {
+        resolve(imported.default)
+      })
+      .catch(e => {
+        return e
+      })
+      .then(async () => {
+        const packageJsonPath = path.join(process.cwd(), 'package.json')
+        const packageJsonUrl = url.pathToFileURL(packageJsonPath).href
+        import(packageJsonUrl, { with: { type: 'json' } })
+          .then(imported => {
+            resolve(imported.default)
+          })
+          .catch(e => console.error('problems importing package', e))
+      })
+  })
+}
+
+const packageJson = await wikiPackageImport()
 
 const getPackageVersion = packageName => {
   return new Promise(resolve => {
