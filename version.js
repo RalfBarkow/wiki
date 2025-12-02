@@ -39,17 +39,20 @@ const packageJson = await wikiPackageImport()
 
 const getPackageVersion = packageName => {
   return new Promise(resolve => {
-    try {
-      // Use dynamic import to load package.json from the main application's working directory
-      const packageJsonPath = path.join(process.cwd(), 'node_modules', packageName, 'package.json')
-      const packageJsonUrl = url.pathToFileURL(packageJsonPath).href
-      import(packageJsonUrl, { with: { type: 'json' } }).then(({ default: packageJson }) => {
-        resolve({ [packageName]: packageJson.version })
+    let done = false
+    import(`${packageName}/package.json`, { with: { type: 'json' } })
+      .then(imported => {
+        done = true
+        resolve({ [packageName]: imported.default.version })
       })
-    } catch (error) {
-      console.error(`Error reading package for ${packageName}:`, error)
-      resolve({ [packageName]: 'unknown' })
-    }
+      .catch(e => {
+        console.error(`Error reading package for ${packageName}:`, e)
+        return e
+      })
+      .then(() => {
+        if (done) return
+        resolve({ [packageName]: 'unknown' })
+      })
   })
 }
 
