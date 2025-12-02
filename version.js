@@ -12,15 +12,18 @@ import path from 'node:path'
 import url from 'node:url'
 
 const wikiPackageImport = async () => {
+  let done = false
   return new Promise(resolve => {
     import('wiki/package.json', { with: { type: 'json' } })
       .then(imported => {
+        done = true
         resolve(imported.default)
       })
       .catch(e => {
         return e
       })
       .then(async () => {
+        if (done) return
         const packageJsonPath = path.join(process.cwd(), 'package.json')
         const packageJsonUrl = url.pathToFileURL(packageJsonPath).href
         import(packageJsonUrl, { with: { type: 'json' } })
