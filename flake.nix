@@ -23,7 +23,9 @@
             nodejs = pkgs.nodejs_22;
 
             # Filled after first run if it mismatches
-            npmDepsHash = "sha256-L8TSlbmK5H7tl8Zyj0Vp1Xibi9l7subaeNO8PfQnJMs=";
+            npmDepsHash = "sha256-25AwfWycCn9oBSMxdMzpHQTL6rYZZvamMUSTpqbhXxs=";
+
+            makeCacheWritable = true;
 
             # Only production deps for the CLI
             npmFlags = [ "--omit=dev" ];
