@@ -41,10 +41,16 @@
             dontNpmBuild = true;
 
             postInstall = ''
-              mkdir -p $out/lib/node_modules/wiki/plugins/mech
-              cp -R ${mechSrc}/* $out/lib/node_modules/wiki/plugins/mech/
-              mkdir -p $out/lib/node_modules/wiki/node_modules
-              ln -s $out/lib/node_modules/wiki/plugins/mech $out/lib/node_modules/wiki/node_modules/wiki-plugin-mech
+              mechTarget="$out/lib/node_modules/wiki/node_modules/wiki-plugin-mech"
+              mkdir -p "$mechTarget"
+              cp -R --no-preserve=mode,ownership ${mechSrc}/. "$mechTarget/"
+              if [ ! -f "$mechTarget/client/mech.js" ] && [ -f "$mechTarget/src/client/mech.js" ]; then
+                mkdir -p "$mechTarget/client"
+                cp -R --no-preserve=mode,ownership "$mechTarget/src/client/." "$mechTarget/client/"
+              fi
+              mkdir -p $out/lib/node_modules/wiki/plugins
+              ln -sfn "$mechTarget" $out/lib/node_modules/wiki/plugins/mech
+              test -f "$mechTarget/client/mech.js" || (echo "missing mech client at $mechTarget/client/mech.js" >&2; exit 1)
             '';
 
             meta = {
