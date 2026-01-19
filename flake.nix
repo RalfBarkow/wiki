@@ -11,11 +11,12 @@
       let
         pkgs = import nixpkgs { inherit system; };
         lib  = pkgs.lib;
+        mechRev = "abd88d2da6c89029515f2a456356832dffe038ab";
         mechSrc = pkgs.fetchFromGitHub {
           owner = "RalfBarkow";
           repo = "wiki-plugin-mech";
-          rev = "e1150bd97334a531b380f3a607afc44ca52d944b";
-          hash = "sha256-T40GKh3zoSthN5fitlHDoLr37xqgtoncmFVZ27abcZQ=";
+          rev = mechRev;
+          hash = "sha256-KJrG7bgqiY7rPYqU8Cg9FLcetgpOXtnIevKLgAnezWs=";
         };
       in {
         packages = {
@@ -48,9 +49,17 @@
                 mkdir -p "$mechTarget/client"
                 cp -R --no-preserve=mode,ownership "$mechTarget/src/client/." "$mechTarget/client/"
               fi
+              mechClient="$mechTarget/client/mech.js"
+              mechVersion="$(node -p "require('$mechTarget/package.json').version" 2>/dev/null || echo "unknown")"
+              mechBuildTime="$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
+              mechCommit="${mechRev}"
+              tmpFile="$mechClient.tmp"
+              printf '%s\n' "globalThis.__MECH_BUILD__ = { MECH_VERSION: \"''${mechVersion}\", MECH_BUILD_TIME: \"''${mechBuildTime}\", MECH_GIT_COMMIT: \"''${mechCommit}\" };" > "$tmpFile"
+              cat "$mechClient" >> "$tmpFile"
+              mv "$tmpFile" "$mechClient"
               mkdir -p $out/lib/node_modules/wiki/plugins
               ln -sfn "$mechTarget" $out/lib/node_modules/wiki/plugins/mech
-              test -f "$mechTarget/client/mech.js" || (echo "missing mech client at $mechTarget/client/mech.js" >&2; exit 1)
+              test -f "$mechClient" || (echo "missing mech client at $mechClient" >&2; exit 1)
             '';
 
             meta = {
