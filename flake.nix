@@ -11,6 +11,12 @@
       let
         pkgs = import nixpkgs { inherit system; };
         lib  = pkgs.lib;
+        mechSrc = pkgs.fetchFromGitHub {
+          owner = "RalfBarkow";
+          repo = "wiki-plugin-mech";
+          rev = "2aae2f6aedaba887220e944df4547898e289c266";
+          hash = "sha256-iyofFPYX/pYq8wN7NNLjhHJG97zVXx3TOiV5fqYL/m4=";
+        };
       in {
         packages = {
           wiki = pkgs.buildNpmPackage {
@@ -23,7 +29,7 @@
             nodejs = pkgs.nodejs_22;
 
             # Filled after first run if it mismatches
-            npmDepsHash = "sha256-2PFNRRxU9Qq1klChisYTg2ll57hJoGHLEFI4kn4sszs=";
+            npmDepsHash = "sha256-RtNAFoks1B2fkPrIMJr8wNWSt+EoXw2ZpnY7Sl9eSDk=";
             #npmDepsHash = lib.fakeHash;
 
             makeCacheWritable = true;
@@ -33,6 +39,13 @@
 
             # Upstream has no build step
             dontNpmBuild = true;
+
+            postInstall = ''
+              mkdir -p $out/lib/node_modules/wiki/plugins/mech
+              cp -R ${mechSrc}/* $out/lib/node_modules/wiki/plugins/mech/
+              mkdir -p $out/lib/node_modules/wiki/node_modules
+              ln -s $out/lib/node_modules/wiki/plugins/mech $out/lib/node_modules/wiki/node_modules/wiki-plugin-mech
+            '';
 
             meta = {
               description = "Federated Wiki command-line server";
