@@ -14,8 +14,8 @@
         mechSrc = pkgs.fetchFromGitHub {
           owner = "RalfBarkow";
           repo = "wiki-plugin-mech";
-          rev = "ac371a69a05ac75b4f2286fa696182219ef3c52f";
-          hash = "sha256-MTxSgINDB+W9CsEnl2EeCdZaWb6nPOrf9btB9V7HSUA=";
+          rev = "e1150bd97334a531b380f3a607afc44ca52d944b";
+          hash = "sha256-T40GKh3zoSthN5fitlHDoLr37xqgtoncmFVZ27abcZQ=";
         };
       in {
         packages = {
