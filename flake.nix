@@ -29,6 +29,14 @@
           # If you prefer the “first run tells you” workflow:
           # hash = lib.fakeHash;
         };
+
+        soloRev = "17915844349bada64c901bd5ea73472702c446f9";
+        soloSrc = pkgs.fetchFromGitHub {
+          owner = "WardCunningham";
+          repo = "wiki-plugin-solo";
+          rev = soloRev;
+          hash = "sha256-73eSiWqSzIZK0vc4UTKEmDmA1YBenWaaPQfULh7j18w=";
+        };
       in {
         packages = {
           wiki = pkgs.buildNpmPackage {
@@ -82,6 +90,16 @@
               mkdir -p $out/lib/node_modules/wiki/plugins
               ln -sfn "$graphvizTarget" $out/lib/node_modules/wiki/plugins/graphviz
               test -f "$graphvizTarget/package.json" || (echo "missing graphviz package.json at $graphvizTarget/package.json" >&2; exit 1)
+
+              # --- pin wiki-plugin-solo (Ward commit 1791584...) ---
+              soloTarget="$out/lib/node_modules/wiki/node_modules/wiki-plugin-solo"
+              mkdir -p "$soloTarget"
+              cp -R --no-preserve=mode,ownership ${soloSrc}/. "$soloTarget/"
+
+              # Ensure it appears in /plugin/* discovery like other bundled plugins
+              mkdir -p $out/lib/node_modules/wiki/plugins
+              ln -sfn "$soloTarget" $out/lib/node_modules/wiki/plugins/solo
+              test -f "$soloTarget/package.json" || (echo "missing solo package.json at $soloTarget/package.json" >&2; exit 1)
             '';
           };
 
