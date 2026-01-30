@@ -1,5 +1,5 @@
 {
-  description = "fedwiki/wiki packaged from this checkout via buildNpmPackage";
+  description = "fedwiki/wiki packaged for NixOS";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
@@ -11,12 +11,23 @@
       let
         pkgs = import nixpkgs { inherit system; };
         lib  = pkgs.lib;
+
         mechRev = "abd88d2da6c89029515f2a456356832dffe038ab";
         mechSrc = pkgs.fetchFromGitHub {
           owner = "RalfBarkow";
           repo = "wiki-plugin-mech";
           rev = mechRev;
           hash = "sha256-KJrG7bgqiY7rPYqU8Cg9FLcetgpOXtnIevKLgAnezWs=";
+        };
+
+        graphvizRev = "609ca0da68e964bacd132aa58884570dbc7830e4";
+        graphvizSrc = pkgs.fetchFromGitHub {
+          owner = "fedwiki";
+          repo = "wiki-plugin-graphviz";
+          rev = graphvizRev;
+          hash = "sha256-wnuNfB1GgBAorel1mY9hyBQdKLg1yHsBY8bPbq0A+XQ=";
+          # If you prefer the “first run tells you” workflow:
+          # hash = lib.fakeHash;
         };
       in {
         packages = {
@@ -42,6 +53,7 @@
             dontNpmBuild = true;
 
             postInstall = ''
+              # --- pin wiki-plugin-mech into the built node_modules ---
               mechTarget="$out/lib/node_modules/wiki/node_modules/wiki-plugin-mech"
               mkdir -p "$mechTarget"
               cp -R --no-preserve=mode,ownership ${mechSrc}/. "$mechTarget/"
@@ -60,109 +72,21 @@
               mkdir -p $out/lib/node_modules/wiki/plugins
               ln -sfn "$mechTarget" $out/lib/node_modules/wiki/plugins/mech
               test -f "$mechClient" || (echo "missing mech client at $mechClient" >&2; exit 1)
+
+              # --- pin wiki-plugin-graphviz (Ward fix commit 609ca0d...) ---
+              graphvizTarget="$out/lib/node_modules/wiki/node_modules/wiki-plugin-graphviz"
+              mkdir -p "$graphvizTarget"
+              cp -R --no-preserve=mode,ownership ${graphvizSrc}/. "$graphvizTarget/"
+
+              # Ensure it appears in /plugin/* discovery like other bundled plugins
+              mkdir -p $out/lib/node_modules/wiki/plugins
+              ln -sfn "$graphvizTarget" $out/lib/node_modules/wiki/plugins/graphviz
+              test -f "$graphvizTarget/package.json" || (echo "missing graphviz package.json at $graphvizTarget/package.json" >&2; exit 1)
             '';
-
-            meta = {
-              description = "Federated Wiki command-line server";
-              homepage    = "https://github.com/fedwiki/wiki";
-              mainProgram = "wiki";
-              license     = lib.licenses.mit;
-              # Make available on Linux and macOS
-              platforms   = lib.platforms.linux ++ lib.platforms.darwin;
-            };
           };
+
+          default = self.packages.${system}.wiki;
         };
-
-        # nix build
-        defaultPackage = self.packages.${system}.wiki;
-
-        # nix run
-        apps.wiki = {
-          type    = "app";
-          program = lib.getExe self.packages.${system}.wiki;
-        };
-        defaultApp = self.apps.${system}.wiki;
-
-        # nix develop / direnv use flake .
-        devShells.default = pkgs.mkShell {
-          packages = [
-            pkgs.nodejs_20      # handy runtime for hacking (npm included)
-            pkgs.corepack
-            pkgs.jq
-          ];
-          shellHook = ''
-            echo "Dev shell for fedwiki/wiki"
-            echo "  node: $(node -v)"
-            echo "  npm : $(npm -v 2>/dev/null || true)"
-          '';
-        };
-
-        # Optional: NixOS module (harmless on Darwin)
-        nixosModules.fedwiki = { config, lib, pkgs, ... }:
-          let cfg = config.services.fedwiki;
-          in {
-            options.services.fedwiki = {
-              enable  = lib.mkEnableOption "Federated Wiki server";
-              package = lib.mkOption {
-                type = lib.types.package;
-                default = self.packages.${system}.wiki;
-                description = "Wiki package to run";
-              };
-              user  = lib.mkOption { type = lib.types.str; default = "fedwiki"; };
-              group = lib.mkOption { type = lib.types.str; default = "fedwiki"; };
-              port  = lib.mkOption { type = lib.types.port; default = 3000; };
-              configFile = lib.mkOption {
-                type = lib.types.path;
-                example = "/var/lib/fedwiki/config.json";
-                description = "Path to wiki config.json";
-              };
-              hostName = lib.mkOption {
-                type = lib.types.nullOr lib.types.str;
-                default = null;
-                description = "If set, create an nginx vhost for this host name";
-              };
-            };
-
-            config = lib.mkIf cfg.enable {
-              users.users.${cfg.user} = {
-                isSystemUser = true;
-                group = cfg.group;
-                home = "/var/lib/fedwiki";
-                createHome = true;
-              };
-              users.groups.${cfg.group} = {};
-
-              systemd.services.fedwiki = {
-                description = "Federated Wiki";
-                after = [ "network-online.target" ];
-                wantedBy = [ "multi-user.target" ];
-                serviceConfig = {
-                  ExecStart = ''${cfg.package}/bin/wiki --config ${cfg.configFile} --port ${toString cfg.port}'';
-                  WorkingDirectory = "/var/lib/fedwiki";
-                  User = cfg.user;
-                  Group = cfg.group;
-                  Restart = "on-failure";
-                  RestartSec = 3;
-                  NoNewPrivileges = true;
-                  PrivateTmp = true;
-                  ProtectSystem = "strict";
-                  ProtectHome = true;
-                  ReadWritePaths = [ "/var/lib/fedwiki" ];
-                };
-              };
-
-              services.nginx = lib.mkIf (cfg.hostName != null) {
-                enable = true;
-                virtualHosts."${cfg.hostName}" = {
-                  forceSSL = true;
-                  enableACME = true;
-                  locations."/" = {
-                    proxyPass = "http://127.0.0.1:${toString cfg.port}";
-                    proxyWebsockets = true;
-                  };
-                };
-              };
-            };
-          };
-      });
+      }
+    );
 }
