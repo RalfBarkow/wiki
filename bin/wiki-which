@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if ! command -v nix >/dev/null 2>&1; then
+  echo "error: nix is not installed or not on PATH" >&2
+  exit 127
+fi
+
+echo "command -v wiki: $(command -v wiki || echo 'not found')"
+
+if command -v wiki >/dev/null 2>&1; then
+  if ! wiki --version 2>/dev/null; then
+    echo "wiki --version: unavailable"
+  fi
+fi
+
+out_path="$(nix build .#wiki --no-link --print-out-paths 2>/dev/null)"
+if [ -z "$out_path" ]; then
+  echo "error: failed to resolve flake build output" >&2
+  exit 1
+fi
+
+node_path="$out_path/lib/node_modules/wiki/node_modules"
+
+resolved_path="$(NODE_PATH="$node_path" node -e "const path=require.resolve('wiki-plugin-graphviz/package.json'); console.log(path);")"
+resolved_version="$(NODE_PATH="$node_path" node -e "const pkg=require('wiki-plugin-graphviz/package.json'); console.log(pkg.version);")"
+
+echo "graphviz package.json path: $resolved_path"
+echo "graphviz version: $resolved_version"
+
+case "$resolved_path" in
+  *"/nix/store/"*) : ;;
+  *)
+    echo "error: expected graphviz path to come from /nix/store" >&2
+    exit 1
+    ;;
+esac
+
+case "$resolved_path" in
+  *"/.nvm/"*)
+    echo "error: graphviz path points into ~/.nvm, which indicates global npm install" >&2
+    exit 1
+    ;;
+  *) : ;;
+esac

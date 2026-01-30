@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if ! command -v nix >/dev/null 2>&1; then
+  echo "error: nix is not installed or not on PATH" >&2
+  exit 127
+fi
+
+if ! nix run .#wiki -- "$@"; then
+  echo "error: failed to run flake-built wiki via 'nix run .#wiki'" >&2
+  exit 1
+fi
