@@ -37,6 +37,14 @@
           rev = soloRev;
           hash = "sha256-73eSiWqSzIZK0vc4UTKEmDmA1YBenWaaPQfULh7j18w=";
         };
+
+        journalmaticRev = "8fcf50cacf3ea432cdfeda42a6b86c27ca34e23d";
+        journalmaticSrc = pkgs.fetchFromGitHub {
+          owner = "fedwiki";
+          repo = "wiki-plugin-journalmatic";
+          rev = journalmaticRev;
+          hash = "sha256-Cik9YNdH3SQo/PFtb6CQBh2kEwotm89moFjqq4gWdUk=";
+        };
       in {
         packages = {
           wiki = pkgs.buildNpmPackage {
@@ -100,6 +108,16 @@
               mkdir -p $out/lib/node_modules/wiki/plugins
               ln -sfn "$soloTarget" $out/lib/node_modules/wiki/plugins/solo
               test -f "$soloTarget/package.json" || (echo "missing solo package.json at $soloTarget/package.json" >&2; exit 1)
+
+              # --- pin wiki-plugin-journalmatic (commit 8fcf50c...) ---
+              journalmaticTarget="$out/lib/node_modules/wiki/node_modules/wiki-plugin-journalmatic"
+              mkdir -p "$journalmaticTarget"
+              cp -R --no-preserve=mode,ownership ${journalmaticSrc}/. "$journalmaticTarget/"
+
+              # Ensure it appears in /plugin/* discovery like other bundled plugins
+              mkdir -p $out/lib/node_modules/wiki/plugins
+              ln -sfn "$journalmaticTarget" $out/lib/node_modules/wiki/plugins/journalmatic
+              test -f "$journalmaticTarget/package.json" || (echo "missing journalmatic package.json at $journalmaticTarget/package.json" >&2; exit 1)
             '';
           };
 
