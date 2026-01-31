@@ -38,7 +38,7 @@
           hash = "sha256-73eSiWqSzIZK0vc4UTKEmDmA1YBenWaaPQfULh7j18w=";
         };
 
-        journalmaticRev = "8fcf50cacf3ea432cdfeda42a6b86c27ca34e23d";
+        journalmaticRev = "8fcf50cacf3ea432cdfeda42a6b86c27ca34e23d"; # v0.2.2
         journalmaticSrc = pkgs.fetchFromGitHub {
           owner = "fedwiki";
           repo = "wiki-plugin-journalmatic";
@@ -109,7 +109,7 @@
               ln -sfn "$soloTarget" $out/lib/node_modules/wiki/plugins/solo
               test -f "$soloTarget/package.json" || (echo "missing solo package.json at $soloTarget/package.json" >&2; exit 1)
 
-              # --- pin wiki-plugin-journalmatic (commit 8fcf50c...) ---
+              # --- pin wiki-plugin-journalmatic (v0.2.2 commit 8fcf50c...) ---
               journalmaticTarget="$out/lib/node_modules/wiki/node_modules/wiki-plugin-journalmatic"
               mkdir -p "$journalmaticTarget"
               cp -R --no-preserve=mode,ownership ${journalmaticSrc}/. "$journalmaticTarget/"
