@@ -11,13 +11,6 @@
       let
         pkgs = import nixpkgs { inherit system; };
         lib  = pkgs.lib;
-        mechRev = "abd88d2da6c89029515f2a456356832dffe038ab";
-        mechSrc = pkgs.fetchFromGitHub {
-          owner = "RalfBarkow";
-          repo = "wiki-plugin-mech";
-          rev = mechRev;
-          hash = "sha256-KJrG7bgqiY7rPYqU8Cg9FLcetgpOXtnIevKLgAnezWs=";
-        };
       in {
         packages = {
           wiki = pkgs.buildNpmPackage {
@@ -29,8 +22,8 @@
             # Build/runtime Node
             nodejs = pkgs.nodejs_22;
 
-            # Filled after first run if it mismatches
-            npmDepsHash = "sha256-8rz8DRwuYrb6vbNJwKtWEu9CscvyawUU4FllFhibo80=";
+            # Set to lib.fakeHash when package-lock.json changes, then replace with the "got: sha256-..." value from nix build.
+            npmDepsHash = "sha256-zR1g035A39OJzM8P3LhSbYTtwRUJxgvfbA+pCaYek4c=";
 
             makeCacheWritable = true;
 
@@ -40,33 +33,11 @@
             # Upstream has no build step
             dontNpmBuild = true;
 
-            postInstall = ''
-              mechTarget="$out/lib/node_modules/wiki/node_modules/wiki-plugin-mech"
-              mkdir -p "$mechTarget"
-              cp -R --no-preserve=mode,ownership ${mechSrc}/. "$mechTarget/"
-              if [ ! -f "$mechTarget/client/mech.js" ] && [ -f "$mechTarget/src/client/mech.js" ]; then
-                mkdir -p "$mechTarget/client"
-                cp -R --no-preserve=mode,ownership "$mechTarget/src/client/." "$mechTarget/client/"
-              fi
-              mechClient="$mechTarget/client/mech.js"
-              mechVersion="$(node -p "require('$mechTarget/package.json').version" 2>/dev/null || echo "unknown")"
-              mechBuildTime="$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
-              mechCommit="${mechRev}"
-              tmpFile="$mechClient.tmp"
-              printf '%s\n' "globalThis.__MECH_BUILD__ = { MECH_VERSION: \"''${mechVersion}\", MECH_BUILD_TIME: \"''${mechBuildTime}\", MECH_GIT_COMMIT: \"''${mechCommit}\" };" > "$tmpFile"
-              cat "$mechClient" >> "$tmpFile"
-              mv "$tmpFile" "$mechClient"
-              mkdir -p $out/lib/node_modules/wiki/plugins
-              ln -sfn "$mechTarget" $out/lib/node_modules/wiki/plugins/mech
-              test -f "$mechClient" || (echo "missing mech client at $mechClient" >&2; exit 1)
-            '';
-
             meta = {
               description = "Federated Wiki command-line server";
               homepage    = "https://github.com/fedwiki/wiki";
               mainProgram = "wiki";
               license     = lib.licenses.mit;
-              # Make available on Linux and macOS
               platforms   = lib.platforms.linux ++ lib.platforms.darwin;
             };
           };
@@ -85,7 +56,7 @@
         # nix develop / direnv use flake .
         devShells.default = pkgs.mkShell {
           packages = [
-            pkgs.nodejs_20      # handy runtime for hacking (npm included)
+            pkgs.nodejs_22
             pkgs.corepack
             pkgs.jq
           ];
