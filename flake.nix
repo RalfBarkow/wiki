@@ -11,6 +11,25 @@
       let
         pkgs = import nixpkgs { inherit system; };
         lib  = pkgs.lib;
+        mechRev = "4b8051417dec6b0eff40878290a703b1fa60fb52";
+        journalmaticRev = "aa5f5863bb8de8f697815b405cfb2f1a0e055ed9";
+        mechSrc = pkgs.fetchFromGitHub {
+          owner = "RalfBarkow";
+          repo = "wiki-plugin-mech";
+          rev = mechRev;
+          hash = "sha256-UQyFvFY+buaZQ8mAilJL1/XOCzTMS02D4O9d3BKbiYc=";
+        };
+        journalmaticSrc = pkgs.fetchFromGitHub {
+          owner = "RalfBarkow";
+          repo = "wiki-plugin-journalmatic";
+          rev = journalmaticRev;
+          hash = "sha256-ox+ZA5kgAETyTcPY1+y4DUsy7YRmufYv/cJJ7lqZwWg=";
+        };
+        soloVersion = "0.1.30-1";
+        soloSrc = pkgs.fetchurl {
+          url = "https://registry.npmjs.org/wiki-plugin-solo/-/wiki-plugin-solo-${soloVersion}.tgz";
+          hash = "sha256-HnKwvcEaA8uagQus0wmaC+uNAx5PuZdVVh+wJ7lYqrw=";
+        };
       in {
         packages = {
           wiki = pkgs.buildNpmPackage {
@@ -21,17 +40,82 @@
 
             # Build/runtime Node
             nodejs = pkgs.nodejs_22;
+            nativeBuildInputs = [ pkgs.git ];
 
             # Set to lib.fakeHash when package-lock.json changes, then replace with the "got: sha256-..." value from nix build.
-            npmDepsHash = "sha256-zR1g035A39OJzM8P3LhSbYTtwRUJxgvfbA+pCaYek4c=";
+            npmDepsHash = "sha256-kxIOeiIn6SWivhzlT6NC2ZOeDTF1MnCxrNPfR9F82gg=";
 
             makeCacheWritable = true;
 
             # Only production deps for the CLI
-            npmFlags = [ "--omit=dev" ];
+            npmFlags = [ "--omit=dev" "--omit=optional" ];
 
             # Upstream has no build step
             dontNpmBuild = true;
+
+            postInstall = ''
+              # Fix /system/plugins.json for ESM (avoid require.main.require).
+              serverJs="$out/lib/node_modules/wiki/node_modules/wiki-server/lib/server.js"
+              if [ -f "$serverJs" ]; then
+                substituteInPlace "$serverJs" \
+                  --replace \
+                    "const pluginNames = Object.keys(require.main.require('./package').dependencies)" \
+                    "const packageJson = JSON.parse(fs.readFileSync(path.join(argv.packageDir, '..', 'package.json'), 'utf8')); const pluginDeps = { ...(packageJson.dependencies || {}), ...(packageJson.optionalDependencies || {}) }; const pluginNames = Object.keys(pluginDeps)"
+                substituteInPlace "$serverJs" \
+                  --replace \
+                    "Object.keys(packageJson.dependencies)" \
+                    "Object.keys({ ...(packageJson.dependencies || {}), ...(packageJson.optionalDependencies || {}) })"
+              fi
+
+              # Fix plugin pages lookup in page.js for ESM/Nix (avoid require.main.*).
+              pageJs="$out/lib/node_modules/wiki/node_modules/wiki-server/lib/page.js"
+              if [ -f "$pageJs" ]; then
+                substituteInPlace "$pageJs" \
+                  --replace \
+                    "Object.keys(packageJson.dependencies)" \
+                    "Object.keys((() => { const packageJson = JSON.parse(fs.readFileSync(path.join(argv.packageDir, '..', 'package.json'), 'utf8')); return { ...(packageJson.dependencies || {}), ...(packageJson.optionalDependencies || {}) }; })())"
+                substituteInPlace "$pageJs" \
+                  --replace \
+                    "const pagesPath = path.join(path.dirname(require.resolve(`''${plugin}/package`)), 'pages')" \
+                    "const pagesPath = path.join(argv.packageDir, plugin, 'pages')"
+              fi
+
+              # Vendor mech into the closure and ensure client/mech.js exists.
+              mechTarget="$out/lib/node_modules/wiki/node_modules/wiki-plugin-mech"
+              rm -rf "$mechTarget"
+              cp -R "${mechSrc}" "$mechTarget"
+              chmod -R u+w "$mechTarget"
+              if [ ! -f "$mechTarget/client/mech.js" ] && [ -f "$mechTarget/src/client/mech.js" ]; then
+                mkdir -p "$mechTarget/client"
+                cp -R "$mechTarget/src/client/"* "$mechTarget/client/"
+              fi
+              test -f "$mechTarget/client/mech.js" || { echo "missing mech client/mech.js in $mechTarget" >&2; exit 1; }
+
+              pluginsDir="$out/lib/node_modules/wiki/plugins"
+              mkdir -p "$pluginsDir"
+              rm -f "$pluginsDir/mech"
+              ln -s "$mechTarget" "$pluginsDir/mech"
+
+              # Vendor journalmatic into the closure and ensure client/check-page.html exists.
+              journalTarget="$out/lib/node_modules/wiki/node_modules/wiki-plugin-journalmatic"
+              rm -rf "$journalTarget"
+              cp -R "${journalmaticSrc}" "$journalTarget"
+              chmod -R u+w "$journalTarget"
+              test -f "$journalTarget/client/check-page.html" || { echo "missing journalmatic client/check-page.html in $journalTarget" >&2; exit 1; }
+              rm -f "$pluginsDir/journalmatic"
+              ln -s "$journalTarget" "$pluginsDir/journalmatic"
+
+              # Vendor solo into the closure and ensure client assets exist.
+              soloTarget="$out/lib/node_modules/wiki/node_modules/wiki-plugin-solo"
+              rm -rf "$soloTarget"
+              mkdir -p "$soloTarget"
+              tar -xzf "${soloSrc}" -C "$soloTarget" --strip-components=1
+              chmod -R u+w "$soloTarget"
+              test -f "$soloTarget/client/solo.js" || { echo "missing solo client/solo.js in $soloTarget" >&2; exit 1; }
+              test -f "$soloTarget/client/dialog/index.html" || { echo "missing solo client/dialog/index.html in $soloTarget" >&2; exit 1; }
+              rm -f "$pluginsDir/solo"
+              ln -s "$soloTarget" "$pluginsDir/solo"
+            '';
 
             meta = {
               description = "Federated Wiki command-line server";

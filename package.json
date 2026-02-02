@@ -76,10 +76,12 @@
     "prettier": "^3.8.1"
   },
   "scripts": {
-    "start": "node index.js",
+    "start": "bin/wiki",
     "prettier:format": "prettier --write '*.js'",
     "prettier:check": "prettier --check *.js",
-    "update-authors": "node scripts/update-authors.js"
+    "update-authors": "node scripts/update-authors.js",
+    "check:plugins": "bash scripts/check-plugins.sh",
+    "set:mech": "bash scripts/set-mech-source.sh"
   },
   "repository": {
     "type": "git",
@@ -91,5 +93,10 @@
   "type": "module",
   "engines": {
     "node": ">=20"
+  },
+  "optionalDependencies": {
+    "wiki-plugin-mech": "git+https://github.com/ralfbarkow/wiki-plugin-mech.git#4b8051417dec6b0eff40878290a703b1fa60fb52",
+    "wiki-plugin-journalmatic": "git+https://github.com/ralfbarkow/wiki-plugin-journalmatic.git#aa5f5863bb8de8f697815b405cfb2f1a0e055ed9",
+    "wiki-plugin-solo": "0.1.30-1"
   }
 }
