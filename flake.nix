@@ -30,8 +30,7 @@
             nodejs = pkgs.nodejs_22;
 
             # Filled after first run if it mismatches
-            npmDepsHash = "sha256-7Fa2fmmU51+KOLeJFefWiRuWJ5mGPX2BVvE8TKd6UB0=";
-            #npmDepsHash = lib.fakeHash;
+            npmDepsHash = "sha256-8rz8DRwuYrb6vbNJwKtWEu9CscvyawUU4FllFhibo80=";
 
             makeCacheWritable = true;
 
