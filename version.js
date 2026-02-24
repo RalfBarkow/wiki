@@ -12,27 +12,21 @@ import path from 'node:path'
 import url from 'node:url'
 
 const wikiPackageImport = async () => {
-  let done = false
-  return new Promise(resolve => {
-    import('wiki/package.json', { with: { type: 'json' } })
-      .then(imported => {
-        done = true
-        resolve(imported.default)
-      })
-      .catch(e => {
-        return e
-      })
-      .then(async () => {
-        if (done) return
-        const packageJsonPath = path.join(process.cwd(), 'package.json')
-        const packageJsonUrl = url.pathToFileURL(packageJsonPath).href
-        import(packageJsonUrl, { with: { type: 'json' } })
-          .then(imported => {
-            resolve(imported.default)
-          })
-          .catch(e => console.error('problems importing package', e))
-      })
-  })
+  try {
+    const imported = await import('wiki/package.json', { with: { type: 'json' } })
+    return imported.default
+  } catch (e) {
+    const packageJsonPath = path.join(process.cwd(), 'package.json')
+    const packageJsonUrl = url.pathToFileURL(packageJsonPath).href
+    try {
+      const imported = await import(packageJsonUrl, { with: { type: 'json' } })
+      return imported.default
+    } catch (fallbackError) {
+      console.error('problems importing package', e)
+      console.error('problems importing fallback package', fallbackError)
+      return { name: 'wiki', version: 'unknown', dependencies: {} }
+    }
+  }
 }
 
 const packageJson = await wikiPackageImport()
