@@ -116,29 +116,11 @@
 
                 version="$(node -e "console.log(JSON.parse(require('fs').readFileSync('package.json','utf8')).version)")"
                 now="$(date -u +"%a, %d %b %Y %H:%M:%S GMT")"
-
-                # Resolve module locations across layout variants.
-                if [ -f "client/lib/wiki.js" ] && [ -f "client/lib/legacy.js" ]; then
-                  wikiMod="./client/lib/wiki"
-                  legacyMod="./client/lib/legacy"
-                elif [ -f "lib/wiki.js" ] && [ -f "lib/legacy.js" ]; then
-                  wikiMod="./lib/wiki"
-                  legacyMod="./lib/legacy"
-                else
-                  echo "cannot locate wiki + legacy modules for bundling" >&2
-                  echo "tried: client/lib/{wiki,legacy}.js and lib/{wiki,legacy}.js" >&2
-                  exit 1
-                fi
-
-                # Bootstrap: assign global wiki BEFORE legacy initializes.
-                cat > bootstrap.cjs <<EOF
-globalThis.wiki = require('$wikiMod');
-require('$legacyMod');
-EOF
+                test -f client.js || { echo "missing wiki-client entrypoint: $wikiClientTarget/client.js" >&2; exit 1; }
 
                 mkdir -p client
 
-                esbuild bootstrap.cjs \
+                esbuild client.js \
                   --bundle \
                   --minify \
                   --sourcemap \
@@ -148,8 +130,6 @@ EOF
                   --banner:js="/* wiki-client - $version - $now */" \
                   --metafile=meta-client.json \
                   --outfile=client/client.js
-
-                rm -f bootstrap.cjs
               )
 
               # Guard: without a built browser bundle, /client.js will fall through as HTML.
@@ -158,9 +138,13 @@ EOF
                 exit 1
               }
 
-              # Additional guard: ensure bundle assigns global wiki.
-              grep -q "globalThis\\.wiki" "$wikiClientTarget/client/client.js" || {
-                echo "client bundle does not assign globalThis.wiki (bootstrap ordering regression)" >&2
+              # Guard: ensure plugin globals are initialized by the bundled entrypoint.
+              grep -q "window\\.plugins" "$wikiClientTarget/client/client.js" || {
+                echo "client bundle missing window.plugins init (plugin bootstrap regression)" >&2
+                exit 1
+              }
+              grep -q "pluginSuccessor" "$wikiClientTarget/client/client.js" || {
+                echo "client bundle missing pluginSuccessor mapping (plugin bootstrap regression)" >&2
                 exit 1
               }
 
