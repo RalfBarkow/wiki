@@ -66,7 +66,7 @@
             makeCacheWritable = true;
 
             # Only production deps for the CLI
-            npmFlags = [ "--omit=dev" "--omit=optional" ];
+            npmFlags = [ "--omit=dev" ];
 
             # Upstream has no build step
             dontNpmBuild = true;
@@ -82,12 +82,26 @@
             '';
 
             postInstall = ''
-              # Replace wiki-client with the staged checkout.
+              # Replace wiki-client source with pinned checkout but keep npm-installed runtime deps.
               wikiClientTarget="$out/lib/node_modules/wiki/node_modules/wiki-client"
-              rm -rf "$wikiClientTarget"
-              mkdir -p "$wikiClientTarget"
+              savedNodeModules="$(mktemp -d)"
+              if [ -d "$wikiClientTarget/node_modules" ]; then
+                mv "$wikiClientTarget/node_modules" "$savedNodeModules/node_modules"
+              fi
+              find "$wikiClientTarget" -mindepth 1 -maxdepth 1 ! -name node_modules -exec rm -rf {} +
               tar -C "$PWD/vendor/wiki-client" -cf - . | tar -C "$wikiClientTarget" -xf -
+              chmod u+w "$wikiClientTarget"
+              if [ -d "$savedNodeModules/node_modules" ]; then
+                mv "$savedNodeModules/node_modules" "$wikiClientTarget/node_modules"
+              fi
               chmod -R u+w "$wikiClientTarget"
+
+              # wiki-client uses minisearch during browser bundling, but in this assembled tree it may
+              # only be present under wiki-server/node_modules.
+              if [ ! -d "$wikiClientTarget/node_modules/minisearch" ] && [ -d "$out/lib/node_modules/wiki/node_modules/wiki-server/node_modules/minisearch" ]; then
+                mkdir -p "$wikiClientTarget/node_modules"
+                ln -s "$out/lib/node_modules/wiki/node_modules/wiki-server/node_modules/minisearch" "$wikiClientTarget/node_modules/minisearch"
+              fi
 
               # Keep browser test harness sourced from pinned wiki-client.
               testTarget="$wikiClientTarget/client/test"
@@ -109,6 +123,8 @@
                   --bundle \
                   --minify \
                   --sourcemap \
+                  --format=iife \
+                  --global-name=wiki \
                   --log-level=warning \
                   --banner:js="/* wiki-client - $version - $now */" \
                   --metafile=meta-client.json \
