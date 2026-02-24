@@ -38,7 +38,8 @@
       "inputs": {
         "flake-utils": "flake-utils",
         "nixpkgs": "nixpkgs",
-        "wiki-client-src": "wiki-client-src"
+        "wiki-client-src": "wiki-client-src",
+        "wiki-server-src": "wiki-server-src"
       }
     },
     "systems": {
@@ -70,6 +71,23 @@
         "owner": "RalfBarkow",
         "repo": "wiki-client",
         "rev": "8febbcfc9611b48c44e263bd0cdc7db2aec53a38",
+        "type": "github"
+      }
+    },
+    "wiki-server-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1771340773,
+        "narHash": "sha256-D+ph/N2nm3RBHuC2QlAvFqBEAsPAerpulPimkOVrW98=",
+        "owner": "fedwiki",
+        "repo": "wiki-server",
+        "rev": "ec3527abf0d1c1e1929272d580a80905c1dbf381",
+        "type": "github"
+      },
+      "original": {
+        "owner": "fedwiki",
+        "repo": "wiki-server",
+        "rev": "ec3527abf0d1c1e1929272d580a80905c1dbf381",
         "type": "github"
       }
     }

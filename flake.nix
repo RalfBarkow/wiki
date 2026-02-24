@@ -8,6 +8,10 @@
       url = "github:RalfBarkow/wiki-client/8febbcfc9611b48c44e263bd0cdc7db2aec53a38";
       flake = false;
     };
+    "wiki-server-src" = {
+      url = "github:fedwiki/wiki-server/ec3527abf0d1c1e1929272d580a80905c1dbf381";
+      flake = false;
+    };
   };
 
   outputs = inputs @ { self, nixpkgs, flake-utils, ... }:
@@ -35,6 +39,7 @@
           hash = "sha256-HnKwvcEaA8uagQus0wmaC+uNAx5PuZdVVh+wJ7lYqrw=";
         };
         wikiClientSrc = inputs."wiki-client-src";
+        wikiServerSrc = inputs."wiki-server-src";
       in {
         packages = {
           wiki = pkgs.buildNpmPackage {
@@ -63,6 +68,9 @@
               rm -rf vendor/wiki-client
               mkdir -p vendor/wiki-client
               tar -C "${wikiClientSrc}" --exclude=.git -cf - . | tar -C vendor/wiki-client -xf -
+              rm -rf vendor/wiki-server
+              mkdir -p vendor/wiki-server
+              tar -C "${wikiServerSrc}" --exclude=.git -cf - . | tar -C vendor/wiki-server -xf -
             '';
 
             postInstall = ''
@@ -77,6 +85,12 @@
               testTarget="$wikiClientTarget/client/test"
               mkdir -p "$testTarget"
               cp -R "$PWD/vendor/wiki-client/client/test/." "$testTarget/"
+
+              # Replace wiki-server with the staged checkout.
+              wikiServerTarget="$out/lib/node_modules/wiki/node_modules/wiki-server"
+              mkdir -p "$wikiServerTarget"
+              tar -C "$PWD/vendor/wiki-server" --exclude=.git --exclude=node_modules --exclude=package-lock.json -cf - . | tar -C "$wikiServerTarget" -xf -
+              chmod -R u+w "$wikiServerTarget"
 
               # Fix /system/plugins.json for ESM (avoid require.main.require).
               serverJs="$out/lib/node_modules/wiki/node_modules/wiki-server/lib/server.js"
