@@ -94,6 +94,12 @@
               mkdir -p "$testTarget"
               cp -R "$PWD/vendor/wiki-client/client/test/." "$testTarget/"
 
+              # Guard: without a built browser bundle, /client.js will fall through as HTML.
+              test -s "$wikiClientTarget/client/client.js" || {
+                echo "missing wiki-client browser bundle: $wikiClientTarget/client/client.js" >&2
+                exit 1
+              }
+
               # Replace wiki-server with the staged checkout.
               wikiServerTarget="$out/lib/node_modules/wiki/node_modules/wiki-server"
               mkdir -p "$wikiServerTarget"
