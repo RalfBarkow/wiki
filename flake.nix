@@ -58,7 +58,7 @@
 
             # Build/runtime Node
             nodejs = pkgs.nodejs_22;
-            nativeBuildInputs = [ pkgs.git pkgs.makeWrapper ];
+            nativeBuildInputs = [ pkgs.git pkgs.makeWrapper pkgs.esbuild ];
 
             # Set to lib.fakeHash when package-lock.json changes, then replace with the "got: sha256-..." value from nix build.
             npmDepsHash = "sha256-kxIOeiIn6SWivhzlT6NC2ZOeDTF1MnCxrNPfR9F82gg=";
@@ -93,6 +93,27 @@
               testTarget="$wikiClientTarget/client/test"
               mkdir -p "$testTarget"
               cp -R "$PWD/vendor/wiki-client/client/test/." "$testTarget/"
+
+              # Rebuild wiki-client browser bundle from pinned sources.
+              # (The upstream build script is scripts/build-client.mjs; we use esbuild CLI to avoid requiring
+              # devDependencies inside the node_modules tree.)
+              (
+                cd "$wikiClientTarget"
+
+                version="$(node -e "console.log(JSON.parse(require('fs').readFileSync('package.json','utf8')).version)")"
+                now="$(date -u +"%a, %d %b %Y %H:%M:%S GMT")"
+
+                mkdir -p client
+
+                esbuild client.js \
+                  --bundle \
+                  --minify \
+                  --sourcemap \
+                  --log-level=warning \
+                  --banner:js="/* wiki-client - $version - $now */" \
+                  --metafile=meta-client.json \
+                  --outfile=client/client.js
+              )
 
               # Guard: without a built browser bundle, /client.js will fall through as HTML.
               test -s "$wikiClientTarget/client/client.js" || {
