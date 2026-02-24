@@ -15,7 +15,7 @@
   };
 
   outputs = inputs @ { self, nixpkgs, flake-utils, ... }:
-    flake-utils.lib.eachDefaultSystem (system:
+    (flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = import nixpkgs { inherit system; };
         lib  = pkgs.lib;
@@ -202,73 +202,74 @@
             echo "  npm : $(npm -v 2>/dev/null || true)"
           '';
         };
+      }))
+    // {
+      # Optional: NixOS module (harmless on Darwin)
+      nixosModules.fedwiki = { config, lib, pkgs, ... }:
+        let cfg = config.services.fedwiki;
+        in {
+          options.services.fedwiki = {
+            enable  = lib.mkEnableOption "Federated Wiki server";
+            package = lib.mkOption {
+              type = lib.types.package;
+              default = self.packages.${pkgs.system}.wiki;
+              description = "Wiki package to run";
+            };
+            user  = lib.mkOption { type = lib.types.str; default = "fedwiki"; };
+            group = lib.mkOption { type = lib.types.str; default = "fedwiki"; };
+            port  = lib.mkOption { type = lib.types.port; default = 3000; };
+            configFile = lib.mkOption {
+              type = lib.types.path;
+              example = "/var/lib/fedwiki/config.json";
+              description = "Path to wiki config.json";
+            };
+            hostName = lib.mkOption {
+              type = lib.types.nullOr lib.types.str;
+              default = null;
+              description = "If set, create an nginx vhost for this host name";
+            };
+          };
 
-        # Optional: NixOS module (harmless on Darwin)
-        nixosModules.fedwiki = { config, lib, pkgs, ... }:
-          let cfg = config.services.fedwiki;
-          in {
-            options.services.fedwiki = {
-              enable  = lib.mkEnableOption "Federated Wiki server";
-              package = lib.mkOption {
-                type = lib.types.package;
-                default = self.packages.${system}.wiki;
-                description = "Wiki package to run";
-              };
-              user  = lib.mkOption { type = lib.types.str; default = "fedwiki"; };
-              group = lib.mkOption { type = lib.types.str; default = "fedwiki"; };
-              port  = lib.mkOption { type = lib.types.port; default = 3000; };
-              configFile = lib.mkOption {
-                type = lib.types.path;
-                example = "/var/lib/fedwiki/config.json";
-                description = "Path to wiki config.json";
-              };
-              hostName = lib.mkOption {
-                type = lib.types.nullOr lib.types.str;
-                default = null;
-                description = "If set, create an nginx vhost for this host name";
+          config = lib.mkIf cfg.enable {
+            users.users.${cfg.user} = {
+              isSystemUser = true;
+              group = cfg.group;
+              home = "/var/lib/fedwiki";
+              createHome = true;
+            };
+            users.groups.${cfg.group} = {};
+
+            systemd.services.fedwiki = {
+              description = "Federated Wiki";
+              after = [ "network-online.target" ];
+              wantedBy = [ "multi-user.target" ];
+              serviceConfig = {
+                ExecStart = ''${cfg.package}/bin/wiki --config ${cfg.configFile} --port ${toString cfg.port}'';
+                WorkingDirectory = "/var/lib/fedwiki";
+                User = cfg.user;
+                Group = cfg.group;
+                Restart = "on-failure";
+                RestartSec = 3;
+                NoNewPrivileges = true;
+                PrivateTmp = true;
+                ProtectSystem = "strict";
+                ProtectHome = true;
+                ReadWritePaths = [ "/var/lib/fedwiki" ];
               };
             };
 
-            config = lib.mkIf cfg.enable {
-              users.users.${cfg.user} = {
-                isSystemUser = true;
-                group = cfg.group;
-                home = "/var/lib/fedwiki";
-                createHome = true;
-              };
-              users.groups.${cfg.group} = {};
-
-              systemd.services.fedwiki = {
-                description = "Federated Wiki";
-                after = [ "network-online.target" ];
-                wantedBy = [ "multi-user.target" ];
-                serviceConfig = {
-                  ExecStart = ''${cfg.package}/bin/wiki --config ${cfg.configFile} --port ${toString cfg.port}'';
-                  WorkingDirectory = "/var/lib/fedwiki";
-                  User = cfg.user;
-                  Group = cfg.group;
-                  Restart = "on-failure";
-                  RestartSec = 3;
-                  NoNewPrivileges = true;
-                  PrivateTmp = true;
-                  ProtectSystem = "strict";
-                  ProtectHome = true;
-                  ReadWritePaths = [ "/var/lib/fedwiki" ];
-                };
-              };
-
-              services.nginx = lib.mkIf (cfg.hostName != null) {
-                enable = true;
-                virtualHosts."${cfg.hostName}" = {
-                  forceSSL = true;
-                  enableACME = true;
-                  locations."/" = {
-                    proxyPass = "http://127.0.0.1:${toString cfg.port}";
-                    proxyWebsockets = true;
-                  };
+            services.nginx = lib.mkIf (cfg.hostName != null) {
+              enable = true;
+              virtualHosts."${cfg.hostName}" = {
+                forceSSL = true;
+                enableACME = true;
+                locations."/" = {
+                  proxyPass = "http://127.0.0.1:${toString cfg.port}";
+                  proxyWebsockets = true;
                 };
               };
             };
           };
-      });
+        };
+    };
 }
