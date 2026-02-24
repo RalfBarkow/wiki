@@ -1,0 +1,20 @@
+{
+  "output": {
+    "filePath": "wiki-repomix-output.md",
+    "style": "markdown"
+  },
+  "ignore": {
+    "useGitignore": true,
+    "useDotIgnore": false,
+    "useDefaultPatterns": true,
+    "customPatterns": [
+      ".git/**",
+      ".direnv/**",
+      "node_modules/**",
+      "result/**",
+      "data/**",
+      "*.log",
+      "**/.DS_Store"
+    ]
+  }
+}

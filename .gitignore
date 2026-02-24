@@ -1,4 +1,9 @@
 data
 node_modules
 *.log
-
+.direnv/
+.npm-cache/
+repomix-output.md
+wiki-*-repomix-output.md
+/result
+result

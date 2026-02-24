@@ -16,6 +16,45 @@ When we originally extracted the wiki-client, we included it back into wiki whil
 
 Here we have a new wiki repository, and package, which only exist to pull together the federated wiki modules (wiki-server, wiki-client, and plug-ins) and start the server.
 
+## Running localhost (Nix-built)
+
+We only run the Nix-built server for local testing.
+
+```sh
+nix build .#wiki
+./bin/wiki --port 80
+```
+
+## Mech sourcing (localhost)
+
+You can switch the Mech plugin to a specific git ref without editing files by
+setting `MECH_GIT` and running the helper script.
+
+```sh
+npm run set:mech
+# uses pinned commit 4b8051417dec6b0eff40878290a703b1fa60fb52 by default
+```
+
+Override example:
+
+```sh
+MECH_GIT=git+https://github.com/ralfbarkow/wiki-plugin-mech.git#<sha> npm run set:mech
+```
+
+Local injection (explicit) example:
+
+```sh
+ALLOW_FILE_MECH=1 MECH_GIT=file:/Users/rgb/workspace/wiki-plugin-mech npm run set:mech
+```
+
+If you use direnv, you may need to run `direnv allow` after updates.
+
+After updating, verify the localhost installation:
+
+```sh
+bash scripts/check-plugins.sh
+```
+
 ## Using Federated Wiki
 
 Learn [how to wiki](http://fed.wiki.org/view/how-to-wiki) by reading [fed.wiki.org](http://fed.wiki.org/view/welcome-visitors)
