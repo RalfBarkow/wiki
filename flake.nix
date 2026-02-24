@@ -40,6 +40,14 @@
         };
         wikiClientSrc = inputs."wiki-client-src";
         wikiServerSrc = inputs."wiki-server-src";
+        wikiServerRev = lib.attrByPath
+          [ "wiki-server-src" "rev" ]
+          (lib.attrByPath [ "wiki-server-src" "sourceInfo" "rev" ] "unknown" inputs)
+          inputs;
+        wikiClientRev = lib.attrByPath
+          [ "wiki-client-src" "rev" ]
+          (lib.attrByPath [ "wiki-client-src" "sourceInfo" "rev" ] "unknown" inputs)
+          inputs;
       in {
         packages = {
           wiki = pkgs.buildNpmPackage {
@@ -50,7 +58,7 @@
 
             # Build/runtime Node
             nodejs = pkgs.nodejs_22;
-            nativeBuildInputs = [ pkgs.git ];
+            nativeBuildInputs = [ pkgs.git pkgs.makeWrapper ];
 
             # Set to lib.fakeHash when package-lock.json changes, then replace with the "got: sha256-..." value from nix build.
             npmDepsHash = "sha256-kxIOeiIn6SWivhzlT6NC2ZOeDTF1MnCxrNPfR9F82gg=";
@@ -153,6 +161,12 @@
               test -f "$soloTarget/client/dialog/index.html" || { echo "missing solo client/dialog/index.html in $soloTarget" >&2; exit 1; }
               rm -f "$pluginsDir/solo"
               ln -s "$soloTarget" "$pluginsDir/solo"
+            '';
+
+            postFixup = ''
+              wrapProgram "$out/bin/wiki" \
+                --set-default WIKI_SERVER_REV "${wikiServerRev}" \
+                --set-default WIKI_CLIENT_REV "${wikiClientRev}"
             '';
 
             meta = {

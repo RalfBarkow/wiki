@@ -89,6 +89,10 @@ const plugins = () => {
 export function version() {
   Promise.all([getPackageVersion('wiki-server'), getPackageVersion('wiki-client'), security(), plugins()]).then(v => {
     Object.assign(versions, { [packageJson.name]: packageJson.version }, ...v)
+    const pinned = {}
+    if (process.env.WIKI_SERVER_REV) pinned['wiki-server'] = process.env.WIKI_SERVER_REV
+    if (process.env.WIKI_CLIENT_REV) pinned['wiki-client'] = process.env.WIKI_CLIENT_REV
+    if (Object.keys(pinned).length > 0) versions.pinned = pinned
     console.info(JSON.stringify(versions, null, ' '))
   })
 }
