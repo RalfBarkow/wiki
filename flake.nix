@@ -48,6 +48,8 @@
           [ "wiki-client-src" "rev" ]
           (lib.attrByPath [ "wiki-client-src" "sourceInfo" "rev" ] "unknown" inputs)
           inputs;
+        wikiClientRevShort =
+          if wikiClientRev == "unknown" then "unknown" else lib.substring 0 7 wikiClientRev;
       in {
         packages = {
           wiki = pkgs.buildNpmPackage {
@@ -116,6 +118,7 @@
 
                 version="$(node -e "console.log(JSON.parse(require('fs').readFileSync('package.json','utf8')).version)")"
                 now="$(date -u +"%a, %d %b %Y %H:%M:%S GMT")"
+                dev="${wikiClientRevShort}"
                 test -f client.js || { echo "missing wiki-client entrypoint: $wikiClientTarget/client.js" >&2; exit 1; }
 
                 mkdir -p client
@@ -127,7 +130,7 @@
                   --platform=browser \
                   --format=iife \
                   --log-level=warning \
-                  --banner:js="/* wiki-client - $version - $now */" \
+                  --banner:js="/* wiki-client - $version - $now - $dev */" \
                   --metafile=meta-client.json \
                   --outfile=client/client.js
               )
@@ -135,6 +138,10 @@
               # Guard: without a built browser bundle, /client.js will fall through as HTML.
               test -s "$wikiClientTarget/client/client.js" || {
                 echo "missing wiki-client browser bundle: $wikiClientTarget/client/client.js" >&2
+                exit 1
+              }
+              grep -q "${wikiClientRevShort}" "$wikiClientTarget/client/client.js" || {
+                echo "client bundle missing dev sha stamp ${wikiClientRevShort}" >&2
                 exit 1
               }
 
