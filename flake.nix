@@ -5,7 +5,7 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
     flake-utils.url = "github:numtide/flake-utils";
     "wiki-client-src" = {
-      url = "github:RalfBarkow/wiki-client/8febbcfc9611b48c44e263bd0cdc7db2aec53a38";
+      url = "github:RalfBarkow/wiki-client/1aba55920f95b957bc8ccf3b3648c9b23d534c9a";
       flake = false;
     };
     "wiki-server-src" = {
