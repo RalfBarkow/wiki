@@ -119,7 +119,8 @@
                 version="$(node -e "console.log(JSON.parse(require('fs').readFileSync('package.json','utf8')).version)")"
                 now="$(date -u +"%a, %d %b %Y %H:%M:%S GMT")"
                 dev="${wikiClientRevShort}"
-                banner="$(printf '/* wiki-client - %s - %s - %s */\n/* wiki-client-dev-sha: %s */' "$version" "$now" "$dev" "$dev")"
+                devVersion="''${version}-dev+''${dev}"
+                banner="/* wiki-client - $devVersion - $now */"
                 test -f client.js || { echo "missing wiki-client entrypoint: $wikiClientTarget/client.js" >&2; exit 1; }
 
                 mkdir -p client
@@ -141,8 +142,8 @@
                 echo "missing wiki-client browser bundle: $wikiClientTarget/client/client.js" >&2
                 exit 1
               }
-              grep -q "wiki-client-dev-sha: ${wikiClientRevShort}" "$wikiClientTarget/client/client.js" || {
-                echo "client bundle missing dev sha stamp ${wikiClientRevShort}" >&2
+              grep -q "''${devVersion}" "$wikiClientTarget/client/client.js" || {
+                echo "client bundle missing dev version stamp ''${devVersion}" >&2
                 exit 1
               }
 
@@ -257,7 +258,7 @@ JSON
               curl -fsS "http://127.0.0.1:$port/client.js" -o "$tmpdir/client.js"
               body_head="$(head -c 1024 "$tmpdir/client.js")"
               [ "''${body_head#<}" = "$body_head" ]
-              grep -q "wiki-client-dev-sha:" "$tmpdir/client.js"
+              grep -q -- "-dev+${wikiClientRevShort}" "$tmpdir/client.js"
 
               kill "$wpid" >/dev/null 2>&1 || true
               trap - EXIT
