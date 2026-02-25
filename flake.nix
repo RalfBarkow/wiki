@@ -60,7 +60,7 @@
 
             # Build/runtime Node
             nodejs = pkgs.nodejs_22;
-            nativeBuildInputs = [ pkgs.git pkgs.makeWrapper pkgs.esbuild ];
+            nativeBuildInputs = [ pkgs.git pkgs.makeWrapper pkgs.esbuild pkgs.curl ];
 
             # Set to lib.fakeHash when package-lock.json changes, then replace with the "got: sha256-..." value from nix build.
             npmDepsHash = "sha256-kxIOeiIn6SWivhzlT6NC2ZOeDTF1MnCxrNPfR9F82gg=";
@@ -119,6 +119,7 @@
                 version="$(node -e "console.log(JSON.parse(require('fs').readFileSync('package.json','utf8')).version)")"
                 now="$(date -u +"%a, %d %b %Y %H:%M:%S GMT")"
                 dev="${wikiClientRevShort}"
+                banner="$(printf '/* wiki-client - %s - %s - %s */\n/* wiki-client-dev-sha: %s */' "$version" "$now" "$dev" "$dev")"
                 test -f client.js || { echo "missing wiki-client entrypoint: $wikiClientTarget/client.js" >&2; exit 1; }
 
                 mkdir -p client
@@ -130,7 +131,7 @@
                   --platform=browser \
                   --format=iife \
                   --log-level=warning \
-                  --banner:js="/* wiki-client - $version - $now - $dev */" \
+                  --banner:js="$banner" \
                   --metafile=meta-client.json \
                   --outfile=client/client.js
               )
@@ -140,7 +141,7 @@
                 echo "missing wiki-client browser bundle: $wikiClientTarget/client/client.js" >&2
                 exit 1
               }
-              grep -q "${wikiClientRevShort}" "$wikiClientTarget/client/client.js" || {
+              grep -q "wiki-client-dev-sha: ${wikiClientRevShort}" "$wikiClientTarget/client/client.js" || {
                 echo "client bundle missing dev sha stamp ${wikiClientRevShort}" >&2
                 exit 1
               }
@@ -222,6 +223,46 @@
               test -f "$soloTarget/client/dialog/index.html" || { echo "missing solo client/dialog/index.html in $soloTarget" >&2; exit 1; }
               rm -f "$pluginsDir/solo"
               ln -s "$soloTarget" "$pluginsDir/solo"
+            '';
+
+            doInstallCheck = true;
+            installCheckPhase = ''
+              runHook preInstallCheck
+
+              tmpdir="$(mktemp -d)"
+              mkdir -p "$tmpdir/data"
+              cat > "$tmpdir/config.json" <<JSON
+{
+  "data": "$tmpdir/data"
+}
+JSON
+
+              port="$(shuf -i 20000-29999 -n 1)"
+              "$out/bin/wiki" --config "$tmpdir/config.json" --port "$port" >"$tmpdir/wiki.log" 2>&1 &
+              wpid="$!"
+              trap 'kill "$wpid" >/dev/null 2>&1 || true' EXIT
+
+              # wait until endpoint responds
+              for _ in $(seq 1 30); do
+                if curl -fsSI "http://127.0.0.1:$port/client.js" >/dev/null 2>&1; then
+                  break
+                fi
+                sleep 1
+              done
+
+              headers="$(curl -fsSI "http://127.0.0.1:$port/client.js")"
+              printf "%s\n" "$headers" | grep -Eiq '^HTTP/.* 200'
+              printf "%s\n" "$headers" | grep -Eiq '^Content-Type:.*javascript'
+
+              curl -fsS "http://127.0.0.1:$port/client.js" -o "$tmpdir/client.js"
+              body_head="$(head -c 1024 "$tmpdir/client.js")"
+              [ "''${body_head#<}" = "$body_head" ]
+              grep -q "wiki-client-dev-sha:" "$tmpdir/client.js"
+
+              kill "$wpid" >/dev/null 2>&1 || true
+              trap - EXIT
+
+              runHook postInstallCheck
             '';
 
             postFixup = ''
