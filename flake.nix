@@ -298,6 +298,7 @@ JSON
             pkgs.nodejs_22
             pkgs.corepack
             pkgs.jq
+            pkgs.caddy
           ];
           shellHook = ''
             echo "Dev shell for fedwiki/wiki"
