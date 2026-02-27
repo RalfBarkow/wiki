@@ -77,17 +77,17 @@
     "wiki-server-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1771340773,
-        "narHash": "sha256-D+ph/N2nm3RBHuC2QlAvFqBEAsPAerpulPimkOVrW98=",
-        "owner": "fedwiki",
+        "lastModified": 1772178228,
+        "narHash": "sha256-/mzL67u+LdxGygoPgsCDJo4I8qTWhjTkrp1DLeIWdvg=",
+        "owner": "RalfBarkow",
         "repo": "wiki-server",
-        "rev": "ec3527abf0d1c1e1929272d580a80905c1dbf381",
+        "rev": "c8d3163ed0d804f728130d78482259de35a49571",
         "type": "github"
       },
       "original": {
-        "owner": "fedwiki",
+        "owner": "RalfBarkow",
         "repo": "wiki-server",
-        "rev": "ec3527abf0d1c1e1929272d580a80905c1dbf381",
+        "rev": "c8d3163ed0d804f728130d78482259de35a49571",
         "type": "github"
       }
     }
