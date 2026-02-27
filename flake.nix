@@ -9,7 +9,7 @@
       flake = false;
     };
     "wiki-server-src" = {
-      url = "github:RalfBarkow/wiki-server/c8d3163ed0d804f728130d78482259de35a49571";
+      url = "github:RalfBarkow/wiki-server/b0ea691db16ccd314b0ba7995c417511c04d08ef";
       flake = false;
     };
   };
