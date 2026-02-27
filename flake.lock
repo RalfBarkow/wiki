@@ -60,17 +60,17 @@
     "wiki-client-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1772183555,
-        "narHash": "sha256-F7ZlbhrJEhzq1YhcMjqJvqzAFeLvITWS7ATYLW00IEg=",
+        "lastModified": 1772187199,
+        "narHash": "sha256-jJa392BEuf57Naf4IB/JR+1oWa04oSdsm9NcN2Y+Ih8=",
         "owner": "RalfBarkow",
         "repo": "wiki-client",
-        "rev": "4b105f2ba9d38cb3ddbb79e8200e4d3bb35c4cd8",
+        "rev": "f3c72d9fc31a3db8a296c7f2d05b36364395e4fe",
         "type": "github"
       },
       "original": {
         "owner": "RalfBarkow",
         "repo": "wiki-client",
-        "rev": "4b105f2ba9d38cb3ddbb79e8200e4d3bb35c4cd8",
+        "rev": "f3c72d9fc31a3db8a296c7f2d05b36364395e4fe",
         "type": "github"
       }
     },
