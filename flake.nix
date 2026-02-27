@@ -5,11 +5,11 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
     flake-utils.url = "github:numtide/flake-utils";
     "wiki-client-src" = {
-      url = "github:RalfBarkow/wiki-client/1aba55920f95b957bc8ccf3b3648c9b23d534c9a";
+      url = "github:RalfBarkow/wiki-client/4b105f2ba9d38cb3ddbb79e8200e4d3bb35c4cd8";
       flake = false;
     };
     "wiki-server-src" = {
-      url = "github:RalfBarkow/wiki-server/b0ea691db16ccd314b0ba7995c417511c04d08ef";
+      url = "github:RalfBarkow/wiki-server/dcd9146bad283e63f07cac3eff43dba0f5c7241a";
       flake = false;
     };
   };
