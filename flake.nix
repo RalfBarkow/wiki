@@ -18,19 +18,39 @@
           rev = mechRev;
           hash = "sha256-KJrG7bgqiY7rPYqU8Cg9FLcetgpOXtnIevKLgAnezWs=";
         };
+        wikiRev = "646fa4aa56a6f81e1cc571d6e7725bdcdfc82958";
+        wikiSrc = pkgs.fetchFromGitHub {
+          owner = "fedwiki";
+          repo = "wiki";
+          rev = wikiRev;
+          hash = "sha256-ESZjuf06uP59KYxlvHwI6B1opN1x2TndOrxYWY5ot9A=";
+        };
+        wikiServerRev = "9b842d7be8bc5e0990ec574b19fb5554830591a5";
+        wikiServerSrc = pkgs.fetchFromGitHub {
+          owner = "fedwiki";
+          repo = "wiki-server";
+          rev = wikiServerRev;
+          hash = "sha256-zDMpcJPQHoreJ5p9zXoLUkkuq6BB49oVXtb28wkqLkw=";
+        };
+        wikiClientRev = "3f61a4862703f492b0d6bfb8695bd665b943bb38";
+        wikiClientSrc = pkgs.fetchFromGitHub {
+          owner = "fedwiki";
+          repo = "wiki-client";
+          rev = wikiClientRev;
+          hash = "sha256-c+uctkCLTKpoc9bPsyOR7gOK920QX1MQcaIH7uyAU3Q=";
+        };
       in {
         packages = {
           wiki = pkgs.buildNpmPackage {
             pname   = "wiki";
-            # Keep in sync with package.json at repo root
-            version = (lib.importJSON ./package.json).version;
-            src     = ./.;
+            version = "0.39.2";
+            src     = wikiSrc;
 
             # Build/runtime Node
             nodejs = pkgs.nodejs_22;
 
             # Filled after first run if it mismatches
-            npmDepsHash = "sha256-RtNAFoks1B2fkPrIMJr8wNWSt+EoXw2ZpnY7Sl9eSDk=";
+            npmDepsHash = "sha256-B2DWPvGTHgPriHUPgyA04s/AzDu+5BhCzqBJsQL0+Nk=";
             #npmDepsHash = lib.fakeHash;
 
             makeCacheWritable = true;
@@ -42,6 +62,33 @@
             dontNpmBuild = true;
 
             postInstall = ''
+              wikiClientTarget="$out/lib/node_modules/wiki/node_modules/wiki-client"
+              if [ -d "$wikiClientTarget" ]; then
+                find "$wikiClientTarget" -mindepth 1 -maxdepth 1 ! -name node_modules -exec rm -rf {} +
+                chmod u+w "$wikiClientTarget"
+                tar -C "${wikiClientSrc}" --exclude=.git --exclude=node_modules --exclude=package-lock.json -cf - . | tar -C "$wikiClientTarget" -xf -
+                chmod -R u+w "$wikiClientTarget"
+              fi
+
+              wikiServerTarget="$out/lib/node_modules/wiki/node_modules/wiki-server"
+              if [ -d "$wikiServerTarget" ]; then
+                find "$wikiServerTarget" -mindepth 1 -maxdepth 1 ! -name node_modules -exec rm -rf {} +
+                chmod u+w "$wikiServerTarget"
+                tar -C "${wikiServerSrc}" --exclude=.git --exclude=node_modules --exclude=package-lock.json -cf - . | tar -C "$wikiServerTarget" -xf -
+                chmod -R u+w "$wikiServerTarget"
+              fi
+
+              cat > "$out/lib/node_modules/wiki/pinned-core-revs.json" <<EOF
+              {
+                "wiki": "${wikiRev}",
+                "wiki-server": "${wikiServerRev}",
+                "wiki-client": "${wikiClientRev}"
+              }
+EOF
+
+              ln -sfn wiki/node_modules/wiki-server "$out/lib/node_modules/wiki-server"
+              ln -sfn wiki/node_modules/wiki-client "$out/lib/node_modules/wiki-client"
+
               mechTarget="$out/lib/node_modules/wiki/node_modules/wiki-plugin-mech"
               mkdir -p "$mechTarget"
               cp -R --no-preserve=mode,ownership ${mechSrc}/. "$mechTarget/"
@@ -86,8 +133,9 @@
         # nix develop / direnv use flake .
         devShells.default = pkgs.mkShell {
           packages = [
-            pkgs.nodejs_20      # handy runtime for hacking (npm included)
+            pkgs.nodejs_22
             pkgs.corepack
+            pkgs.git
             pkgs.jq
           ];
           shellHook = ''
