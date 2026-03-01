@@ -64,10 +64,28 @@
             postInstall = ''
               wikiClientTarget="$out/lib/node_modules/wiki/node_modules/wiki-client"
               if [ -d "$wikiClientTarget" ]; then
+                savedWikiClientBundle="$(mktemp -d)"
+                if [ -f "$wikiClientTarget/client/client.js" ]; then
+                  cp "$wikiClientTarget/client/client.js" "$savedWikiClientBundle/client.js"
+                fi
+                if [ -f "$wikiClientTarget/client/client.js.map" ]; then
+                  cp "$wikiClientTarget/client/client.js.map" "$savedWikiClientBundle/client.js.map"
+                fi
                 find "$wikiClientTarget" -mindepth 1 -maxdepth 1 ! -name node_modules -exec rm -rf {} +
                 chmod u+w "$wikiClientTarget"
                 tar -C "${wikiClientSrc}" --exclude=.git --exclude=node_modules --exclude=package-lock.json -cf - . | tar -C "$wikiClientTarget" -xf -
+                if [ -f "$savedWikiClientBundle/client.js" ]; then
+                  mkdir -p "$wikiClientTarget/client"
+                  chmod u+w "$wikiClientTarget/client"
+                  cp "$savedWikiClientBundle/client.js" "$wikiClientTarget/client/client.js"
+                fi
+                if [ -f "$savedWikiClientBundle/client.js.map" ]; then
+                  mkdir -p "$wikiClientTarget/client"
+                  chmod u+w "$wikiClientTarget/client"
+                  cp "$savedWikiClientBundle/client.js.map" "$wikiClientTarget/client/client.js.map"
+                fi
                 chmod -R u+w "$wikiClientTarget"
+                test -f "$wikiClientTarget/client/client.js" || { echo "missing browser bundle at $wikiClientTarget/client/client.js" >&2; exit 1; }
               fi
 
               wikiServerTarget="$out/lib/node_modules/wiki/node_modules/wiki-server"
@@ -86,6 +104,8 @@
               }
 EOF
 
+              ln -sfn node_modules/wiki-client "$out/lib/node_modules/wiki/wiki-client"
+              ln -sfn node_modules/wiki-server "$out/lib/node_modules/wiki/wiki-server"
               ln -sfn wiki/node_modules/wiki-server "$out/lib/node_modules/wiki-server"
               ln -sfn wiki/node_modules/wiki-client "$out/lib/node_modules/wiki-client"
 
