@@ -8,10 +8,6 @@
       url = "github:RalfBarkow/wiki-client/1aba55920f95b957bc8ccf3b3648c9b23d534c9a";
       flake = false;
     };
-    "wiki-server-src" = {
-      url = "github:fedwiki/wiki-server/ec3527abf0d1c1e1929272d580a80905c1dbf381";
-      flake = false;
-    };
   };
 
   outputs = inputs @ { self, nixpkgs, flake-utils, ... }:
@@ -39,17 +35,15 @@
           hash = "sha256-HnKwvcEaA8uagQus0wmaC+uNAx5PuZdVVh+wJ7lYqrw=";
         };
         wikiClientSrc = inputs."wiki-client-src";
-        wikiServerSrc = inputs."wiki-server-src";
-        wikiServerRev = lib.attrByPath
-          [ "wiki-server-src" "rev" ]
-          (lib.attrByPath [ "wiki-server-src" "sourceInfo" "rev" ] "unknown" inputs)
-          inputs;
         wikiClientRev = lib.attrByPath
           [ "wiki-client-src" "rev" ]
           (lib.attrByPath [ "wiki-client-src" "sourceInfo" "rev" ] "unknown" inputs)
           inputs;
         wikiClientRevShort =
           if wikiClientRev == "unknown" then "unknown" else lib.substring 0 7 wikiClientRev;
+        packageLock = lib.importJSON ./package-lock.json;
+        wikiServerVersion =
+          lib.attrByPath [ "packages" "node_modules/wiki-server" "version" ] "unknown" packageLock;
       in {
         packages = {
           wiki = pkgs.buildNpmPackage {
@@ -63,7 +57,7 @@
             nativeBuildInputs = [ pkgs.git pkgs.makeWrapper pkgs.esbuild pkgs.curl ];
 
             # Set to lib.fakeHash when package-lock.json changes, then replace with the "got: sha256-..." value from nix build.
-            npmDepsHash = "sha256-kxIOeiIn6SWivhzlT6NC2ZOeDTF1MnCxrNPfR9F82gg=";
+            npmDepsHash = "sha256-qSEQYxtC9SwhqWEI9wtyZS612lQSRLby6kL/zwz+4rM=";
 
             makeCacheWritable = true;
 
@@ -78,9 +72,6 @@
               rm -rf vendor/wiki-client
               mkdir -p vendor/wiki-client
               tar -C "${wikiClientSrc}" --exclude=.git -cf - . | tar -C vendor/wiki-client -xf -
-              rm -rf vendor/wiki-server
-              mkdir -p vendor/wiki-server
-              tar -C "${wikiServerSrc}" --exclude=.git -cf - . | tar -C vendor/wiki-server -xf -
             '';
 
             postInstall = ''
@@ -157,36 +148,13 @@
                 exit 1
               }
 
-              # Replace wiki-server with the staged checkout.
-              wikiServerTarget="$out/lib/node_modules/wiki/node_modules/wiki-server"
-              mkdir -p "$wikiServerTarget"
-              tar -C "$PWD/vendor/wiki-server" --exclude=.git --exclude=node_modules --exclude=package-lock.json -cf - . | tar -C "$wikiServerTarget" -xf -
-              chmod -R u+w "$wikiServerTarget"
-
-              # Fix /system/plugins.json for ESM (avoid require.main.require).
-              serverJs="$out/lib/node_modules/wiki/node_modules/wiki-server/lib/server.js"
-              if [ -f "$serverJs" ]; then
-                substituteInPlace "$serverJs" \
-                  --replace \
-                    "const pluginNames = Object.keys(require.main.require('./package').dependencies)" \
-                    "const packageJson = JSON.parse(fs.readFileSync(path.join(argv.packageDir, '..', 'package.json'), 'utf8')); const pluginDeps = { ...(packageJson.dependencies || {}), ...(packageJson.optionalDependencies || {}) }; const pluginNames = Object.keys(pluginDeps)"
-                substituteInPlace "$serverJs" \
-                  --replace \
-                    "Object.keys(packageJson.dependencies)" \
-                    "Object.keys({ ...(packageJson.dependencies || {}), ...(packageJson.optionalDependencies || {}) })"
-              fi
-
-              # Fix plugin pages lookup in page.js for ESM/Nix (avoid require.main.*).
-              pageJs="$out/lib/node_modules/wiki/node_modules/wiki-server/lib/page.js"
-              if [ -f "$pageJs" ]; then
-                substituteInPlace "$pageJs" \
-                  --replace \
-                    "Object.keys(packageJson.dependencies)" \
-                    "Object.keys((() => { const packageJson = JSON.parse(fs.readFileSync(path.join(argv.packageDir, '..', 'package.json'), 'utf8')); return { ...(packageJson.dependencies || {}), ...(packageJson.optionalDependencies || {}) }; })())"
-                substituteInPlace "$pageJs" \
-                  --replace \
-                    "const pagesPath = path.join(path.dirname(require.resolve(`''${plugin}/package`)), 'pages')" \
-                    "const pagesPath = path.join(argv.packageDir, plugin, 'pages')"
+              # Keep plugin loader interop patch for ESM default exports.
+              pluginsJs="$out/lib/node_modules/wiki/node_modules/wiki-server/lib/plugins.js"
+              if [ -f "$pluginsJs" ]; then
+                substituteInPlace "$pluginsJs" \
+                  --replace-warn \
+                    "plugins[plugin].startServer?.(params)" \
+                    "const pluginModule = plugins[plugin]; const pluginEntry = pluginModule?.startServer ? pluginModule : pluginModule?.default; pluginEntry?.startServer?.(params)"
               fi
 
               # Vendor mech into the closure and ensure client/mech.js exists.
@@ -268,7 +236,7 @@ JSON
 
             postFixup = ''
               wrapProgram "$out/bin/wiki" \
-                --set-default WIKI_SERVER_REV "${wikiServerRev}" \
+                --set-default WIKI_SERVER_REV "${wikiServerVersion}" \
                 --set-default WIKI_CLIENT_REV "${wikiClientRev}"
             '';
 
