@@ -10,20 +10,17 @@
 // The farm module works by putting a bouncy host based proxy
 // in front of servers that it creates
 
-const path = require('path')
-const fs = require('fs')
-const chokidar = require('chokidar')
+import path from 'node:path'
+import fs from 'node:fs'
+import chokidar from 'chokidar'
 
-const http = require('http')
-// socketio = require 'socket.io'
+import http from 'node:http'
 
-const server = require('wiki-server')
+import server from 'wiki-server'
 
-const _ = require('lodash')
+import * as errorPage from './error-page.js'
 
-const errorPage = require('./error-page')
-
-module.exports = exports = function (argv) {
+export function farm(argv) {
   // Map incoming hosts to their wiki's port
   let allowDomain, allowHost, inWikiDomain, runningFarmServ, wikiDomains
   const hosts = {}
@@ -54,7 +51,9 @@ module.exports = exports = function (argv) {
         })
         .on('unlinkDir', function (delWiki) {
           delWiki = path.basename(delWiki)
-          _.pull(allowedHosts, delWiki)
+          // remove deleted wiki directory from the list of allowed wiki
+          allowedHosts.splice(allowedHosts.indexOf(delWiki), 1)
+          // TODO: if wiki server is already running, it needs to be stopped, if that is even possible.
         })
     } else {
       // we have a list of wiki that are allowed
@@ -211,27 +210,28 @@ module.exports = exports = function (argv) {
 
       // apply wiki domain configuration, if defined
       if (inWikiDomain) {
-        newargv = _.assignIn(newargv, newargv.wikiDomains[inWikiDomain])
+        newargv = Object.assign({}, newargv, newargv.wikiDomains[inWikiDomain])
         newargv.wiki_domain = inWikiDomain
       }
 
       // Create a new server, add it to the list of servers, and
       // once it's ready send the request to it.
-      const local = server(newargv)
-      // local.io = io
-      hosts[incHost] = local
-      runningServers.push(local)
 
-      // patch in new neighbors
-      if (argv.autoseed) {
-        let neighbors = argv.neighbors ? argv.neighbors + ',' : ''
-        neighbors += Object.keys(hosts).join(',')
-        runningServers.forEach(server => (server.startOpts.neighbors = neighbors))
-      }
+      server(newargv).then(local => {
+        hosts[incHost] = local
+        runningServers.push(local)
 
-      return local.once('owner-set', function () {
-        local.emit('running-serv', farmServ)
-        return hosts[incHost](req, res)
+        // patch in new neighbors
+        if (argv.autoseed) {
+          let neighbors = argv.neighbors ? argv.neighbors + ',' : ''
+          neighbors += Object.keys(hosts).join(',')
+          runningServers.forEach(server => (server.startOpts.neighbors = neighbors))
+        }
+
+        return local.once('owner-set', function () {
+          local.emit('running-serv', farmServ)
+          return hosts[incHost](req, res)
+        })
       })
     }
   })
