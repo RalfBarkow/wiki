@@ -60,12 +60,13 @@
     "wiki-client-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1772014267,
-        "narHash": "sha256-QXd4xELj2K7mT5xaoexmo90m1004yLWnbXGijBqTMiE=",
-        "owner": "RalfBarkow",
-        "repo": "wiki-client",
-        "rev": "1aba55920f95b957bc8ccf3b3648c9b23d534c9a",
-        "type": "github"
+        "lastModified": 1772439128,
+        "narHash": "sha256-p/siqTnmdaNHWfWLGe44JQWQY7T27yYf2M0jK5QBCqs=",
+        "ref": "localhost",
+        "rev": "4b290709a1906c2010306f0f47ebfad530d8b4b6",
+        "revCount": 1252,
+        "type": "git",
+        "url": "file:///Users/rgb/workspace/wiki-client"
       },
       "original": {
         "owner": "RalfBarkow",
@@ -77,12 +78,13 @@
     "wiki-server-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1771340773,
-        "narHash": "sha256-D+ph/N2nm3RBHuC2QlAvFqBEAsPAerpulPimkOVrW98=",
-        "owner": "fedwiki",
-        "repo": "wiki-server",
-        "rev": "ec3527abf0d1c1e1929272d580a80905c1dbf381",
-        "type": "github"
+        "lastModified": 1772184877,
+        "narHash": "sha256-LF9BnGMggHW9gGiR7TtK147C/cz63bHUtfqpvXe7TzA=",
+        "ref": "localhost",
+        "rev": "b8a5f36907a35e64d338bf21351fd89226b41bed",
+        "revCount": 747,
+        "type": "git",
+        "url": "file:///Users/rgb/workspace/wiki-server"
       },
       "original": {
         "owner": "fedwiki",
