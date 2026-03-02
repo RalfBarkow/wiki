@@ -78,11 +78,11 @@
     "wiki-server-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1772184877,
-        "narHash": "sha256-LF9BnGMggHW9gGiR7TtK147C/cz63bHUtfqpvXe7TzA=",
+        "lastModified": 1772440316,
+        "narHash": "sha256-R+YbJHQYQnovEmUBhenkc4/JJREfS1YgkQsgssUJvDE=",
         "ref": "localhost",
-        "rev": "b8a5f36907a35e64d338bf21351fd89226b41bed",
-        "revCount": 747,
+        "rev": "0ea9ba00d8286faba7633e413e9786e3c4508fa8",
+        "revCount": 748,
         "type": "git",
         "url": "file:///Users/rgb/workspace/wiki-server"
       },
