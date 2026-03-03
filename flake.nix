@@ -18,6 +18,11 @@
           rev = mechRev;
           hash = "sha256-KJrG7bgqiY7rPYqU8Cg9FLcetgpOXtnIevKLgAnezWs=";
         };
+        soloVersion = "0.1.29";
+        soloSrc = pkgs.fetchurl {
+          url = "https://registry.npmjs.org/wiki-plugin-solo/-/wiki-plugin-solo-${soloVersion}.tgz";
+          hash = "sha256-jZZzAIzUNeCZmrKtkOnOJDOOJIEsGGZXVK7JUd8S/Pc=";
+        };
         wikiRev = "646fa4aa56a6f81e1cc571d6e7725bdcdfc82958";
         wikiSrc = pkgs.fetchFromGitHub {
           owner = "fedwiki";
@@ -101,11 +106,12 @@
                 "wiki": "${wikiRev}",
                 "wiki-server": "${wikiServerRev}",
                 "wiki-client": "${wikiClientRev}",
-                "wiki-plugin-mech": "${mechRev}"
+                "wiki-plugin-mech": "${mechRev}",
+                "wiki-plugin-solo": "${soloVersion}"
               }
 EOF
 
-              node -e "const fs=require('fs'); const pkgPath='$out/lib/node_modules/wiki/package.json'; const pkg=JSON.parse(fs.readFileSync(pkgPath,'utf8')); pkg.dependencies = pkg.dependencies || {}; pkg.dependencies['wiki-plugin-mech'] = 'github:RalfBarkow/wiki-plugin-mech#${mechRev}'; fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2) + '\n')"
+              node -e "const fs=require('fs'); const pkgPath='$out/lib/node_modules/wiki/package.json'; const pkg=JSON.parse(fs.readFileSync(pkgPath,'utf8')); pkg.dependencies = pkg.dependencies || {}; pkg.dependencies['wiki-plugin-mech'] = 'github:RalfBarkow/wiki-plugin-mech#${mechRev}'; pkg.dependencies['wiki-plugin-solo'] = '${soloVersion}'; fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2) + '\n')"
               ln -sfn node_modules/wiki-client "$out/lib/node_modules/wiki/wiki-client"
               ln -sfn node_modules/wiki-server "$out/lib/node_modules/wiki/wiki-server"
               ln -sfn wiki/node_modules/wiki-server "$out/lib/node_modules/wiki-server"
@@ -129,6 +135,13 @@ EOF
               mkdir -p $out/lib/node_modules/wiki/plugins
               ln -sfn "$mechTarget" $out/lib/node_modules/wiki/plugins/mech
               test -f "$mechClient" || (echo "missing mech client at $mechClient" >&2; exit 1)
+
+              soloTarget="$out/lib/node_modules/wiki/node_modules/wiki-plugin-solo"
+              rm -rf "$soloTarget"
+              mkdir -p "$soloTarget"
+              tar -xzf "${soloSrc}" -C "$soloTarget" --strip-components=1
+              test -f "$soloTarget/client/solo.js" || (echo "missing solo client at $soloTarget/client/solo.js" >&2; exit 1)
+              ln -sfn "$soloTarget" $out/lib/node_modules/wiki/plugins/solo
             '';
 
             meta = {
