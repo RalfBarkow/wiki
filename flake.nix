@@ -18,10 +18,10 @@
           rev = mechRev;
           hash = "sha256-KJrG7bgqiY7rPYqU8Cg9FLcetgpOXtnIevKLgAnezWs=";
         };
-        soloVersion = "0.1.29";
+        soloVersion = "0.1.30-1";
         soloSrc = pkgs.fetchurl {
           url = "https://registry.npmjs.org/wiki-plugin-solo/-/wiki-plugin-solo-${soloVersion}.tgz";
-          hash = "sha256-jZZzAIzUNeCZmrKtkOnOJDOOJIEsGGZXVK7JUd8S/Pc=";
+          hash = "sha256-HnKwvcEaA8uagQus0wmaC+uNAx5PuZdVVh+wJ7lYqrw=";
         };
         wikiRev = "646fa4aa56a6f81e1cc571d6e7725bdcdfc82958";
         wikiSrc = pkgs.fetchFromGitHub {
