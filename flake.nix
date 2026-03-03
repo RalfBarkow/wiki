@@ -100,10 +100,12 @@
               {
                 "wiki": "${wikiRev}",
                 "wiki-server": "${wikiServerRev}",
-                "wiki-client": "${wikiClientRev}"
+                "wiki-client": "${wikiClientRev}",
+                "wiki-plugin-mech": "${mechRev}"
               }
 EOF
 
+              node -e "const fs=require('fs'); const pkgPath='$out/lib/node_modules/wiki/package.json'; const pkg=JSON.parse(fs.readFileSync(pkgPath,'utf8')); pkg.dependencies = pkg.dependencies || {}; pkg.dependencies['wiki-plugin-mech'] = 'github:RalfBarkow/wiki-plugin-mech#${mechRev}'; fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2) + '\n')"
               ln -sfn node_modules/wiki-client "$out/lib/node_modules/wiki/wiki-client"
               ln -sfn node_modules/wiki-server "$out/lib/node_modules/wiki/wiki-server"
               ln -sfn wiki/node_modules/wiki-server "$out/lib/node_modules/wiki-server"
