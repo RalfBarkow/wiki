@@ -23,6 +23,11 @@
           url = "https://registry.npmjs.org/wiki-plugin-solo/-/wiki-plugin-solo-${soloVersion}.tgz";
           hash = "sha256-HnKwvcEaA8uagQus0wmaC+uNAx5PuZdVVh+wJ7lYqrw=";
         };
+        journalmaticVersion = "0.2.2";
+        journalmaticSrc = pkgs.fetchurl {
+          url = "https://registry.npmjs.org/wiki-plugin-journalmatic/-/wiki-plugin-journalmatic-${journalmaticVersion}.tgz";
+          hash = "sha256-dM2WPksePSzHOQQA+06J0pgIYYAfaSpgkX5UMA1LXbc=";
+        };
         wikiRev = "646fa4aa56a6f81e1cc571d6e7725bdcdfc82958";
         wikiSrc = pkgs.fetchFromGitHub {
           owner = "fedwiki";
@@ -107,11 +112,12 @@
                 "wiki-server": "${wikiServerRev}",
                 "wiki-client": "${wikiClientRev}",
                 "wiki-plugin-mech": "${mechRev}",
-                "wiki-plugin-solo": "${soloVersion}"
+                "wiki-plugin-solo": "${soloVersion}",
+                "wiki-plugin-journalmatic": "${journalmaticVersion}"
               }
 EOF
 
-              node -e "const fs=require('fs'); const pkgPath='$out/lib/node_modules/wiki/package.json'; const pkg=JSON.parse(fs.readFileSync(pkgPath,'utf8')); pkg.dependencies = pkg.dependencies || {}; pkg.dependencies['wiki-plugin-mech'] = 'github:RalfBarkow/wiki-plugin-mech#${mechRev}'; pkg.dependencies['wiki-plugin-solo'] = '${soloVersion}'; fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2) + '\n')"
+              node -e "const fs=require('fs'); const pkgPath='$out/lib/node_modules/wiki/package.json'; const pkg=JSON.parse(fs.readFileSync(pkgPath,'utf8')); pkg.dependencies = pkg.dependencies || {}; pkg.dependencies['wiki-plugin-mech'] = 'github:RalfBarkow/wiki-plugin-mech#${mechRev}'; pkg.dependencies['wiki-plugin-solo'] = '${soloVersion}'; pkg.dependencies['wiki-plugin-journalmatic'] = '${journalmaticVersion}'; fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2) + '\n')"
               ln -sfn node_modules/wiki-client "$out/lib/node_modules/wiki/wiki-client"
               ln -sfn node_modules/wiki-server "$out/lib/node_modules/wiki/wiki-server"
               ln -sfn wiki/node_modules/wiki-server "$out/lib/node_modules/wiki-server"
@@ -142,6 +148,13 @@ EOF
               tar -xzf "${soloSrc}" -C "$soloTarget" --strip-components=1
               test -f "$soloTarget/client/solo.js" || (echo "missing solo client at $soloTarget/client/solo.js" >&2; exit 1)
               ln -sfn "$soloTarget" $out/lib/node_modules/wiki/plugins/solo
+
+              journalTarget="$out/lib/node_modules/wiki/node_modules/wiki-plugin-journalmatic"
+              rm -rf "$journalTarget"
+              mkdir -p "$journalTarget"
+              tar -xzf "${journalmaticSrc}" -C "$journalTarget" --strip-components=1
+              test -f "$journalTarget/client/check-page.html" || (echo "missing journalmatic client/check-page.html in $journalTarget" >&2; exit 1)
+              ln -sfn "$journalTarget" $out/lib/node_modules/wiki/plugins/journalmatic
             '';
 
             meta = {
