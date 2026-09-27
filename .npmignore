@@ -4,3 +4,7 @@ scripts
 .vscode
 .zed
 cve-report
+
+vendor
+.p41-build-home
+candidate/smoke-report.json

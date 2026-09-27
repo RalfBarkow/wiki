@@ -1,0 +1,360 @@
+diff --git a/lib/defaultargs.js b/lib/defaultargs.js
+index 1e06369d3d20392948859c91c2ae553931fdb817..443c6a3636af4648d1a98ddfbbd9ff9559f919b6 100644
+--- a/lib/defaultargs.js
++++ b/lib/defaultargs.js
+@@ -46,0 +47,3 @@ export default argv => {
++  argv.csp ||= false
++  argv.csp_connect_src_public ||= "'self' https: wss:"
++  argv.csp_connect_src_loopback ||= "'self' http: https: ws: wss:"
+diff --git a/lib/page.js b/lib/page.js
+index 2500be644dd24a134c40f4bb4d9007d2d24becf1..eb972368aa41546fde7cd7724baab6bd6a62b856 100644
+--- a/lib/page.js
++++ b/lib/page.js
+@@ -79 +79 @@ export default argv => {
+-  const dependencyPlugins = Object.keys(packageJson.dependencies).filter(depend => depend.startsWith('wiki-plugin'))
++  const dependencyPlugins = Object.keys({ ...(packageJson.dependencies || {}), ...(packageJson.optionalDependencies || {}) }).filter(depend => depend.startsWith('wiki-plugin'))
+diff --git a/lib/plugins.js b/lib/plugins.js
+index dfa7e087d9719be70c5f63576e4024e62289b146..07343c237e64fe7999aab873a839406270714f43 100644
+--- a/lib/plugins.js
++++ b/lib/plugins.js
+@@ -42 +42 @@ export default argv => {
+-    const dependencies = params.packageJson.dependencies
++    const dependencies = { ...(params.packageJson.dependencies || {}), ...(params.packageJson.optionalDependencies || {}) }
+diff --git a/lib/server.js b/lib/server.js
+index 547c29c0040f9f83725c9cb51200e7e5b645ffa1..2a04f737a0445623b0d329926aecb3edf1752e6e 100644
+--- a/lib/server.js
++++ b/lib/server.js
+@@ -24,0 +25 @@ import url from 'url'
++import { Readable } from 'node:stream'
+@@ -88,0 +90,43 @@ const packageJson = await wikiPackageImport()
++export const isLoopbackHost = host => {
++  const value = String(host || '').trim().toLowerCase()
++  if (!value) return false
++  let normalizedHost = value
++  try {
++    normalizedHost = new URL(value.includes('://') ? value : `http://${value}`).hostname.toLowerCase()
++  } catch {
++    normalizedHost = value
++  }
++  return (
++    normalizedHost === 'localhost' ||
++    normalizedHost === '127.0.0.1' ||
++    normalizedHost === '::1' ||
++    normalizedHost.endsWith('.localhost')
++  )
++}
++
++export const buildRemoteRequestURLs = (wikiName, remoteHost, remoteResource) => {
++  const blocked = !isLoopbackHost(wikiName) && isLoopbackHost(remoteHost)
++  return {
++    blocked,
++    candidates: blocked ? [] : [`https://${remoteHost}/${remoteResource}`, `http://${remoteHost}/${remoteResource}`],
++  }
++}
++
++const fetchWithProtocolFallback = async (requestURLs, { timeoutMs = 2000, headers } = {}) => {
++  let lastError
++  for (const requestURL of requestURLs) {
++    try {
++      const response = await fetch(requestURL, {
++        signal: AbortSignal.timeout(timeoutMs),
++        headers,
++      })
++      return { requestURL, response }
++    } catch (error) {
++      lastError = error
++    }
++  }
++  throw lastError
++}
++
++const proxyResponseHeaderAllowlist = new Set(['content-type', 'cache-control', 'etag', 'last-modified'])
++
+@@ -139,0 +184,8 @@ export default async argv => {
++  if (argv.csp) {
++    const connectSrc = isLoopbackHost(wikiName) ? argv.csp_connect_src_loopback : argv.csp_connect_src_public
++    app.use((req, res, next) => {
++      res.setHeader('Content-Security-Policy', `connect-src ${connectSrc};`)
++      next()
++    })
++  }
++
+@@ -200,7 +252,10 @@ export default async argv => {
+-    // assume http, as we know no better at this point and we need to specify a protocol.
+-    const remoteURL = new URL(`http://${remote}/${slug}.json`).toString()
+-    // set a two second timeout
+-    fetch(remoteURL, { signal: AbortSignal.timeout(2000) })
+-      .then(res => {
+-        if (res.ok) {
+-          return res
++    const { blocked, candidates } = buildRemoteRequestURLs(wikiName, remote, `${slug}.json`)
++    if (blocked) {
++      cb(new Error('Loopback targets are blocked'), 'Page not found', 403)
++      return
++    }
++    fetchWithProtocolFallback(candidates, { timeoutMs: 8000 })
++      .then(async ({ response }) => {
++        if (!response.ok) {
++          cb(null, 'Page not found', response.status)
++          return
+@@ -208,7 +263,2 @@ export default async argv => {
+-        throw new Error(res.statusText)
+-      })
+-      .then(res => {
+-        return res.json()
+-      })
+-      .then(json => {
+-        cb(null, json, 200)
++        const json = await response.json()
++        cb(null, json, response.status || 200)
+@@ -329 +379 @@ export default async argv => {
+-  Object.keys(packageJson.dependencies)
++  Object.keys({ ...(packageJson.dependencies || {}), ...(packageJson.optionalDependencies || {}) })
+@@ -463 +513 @@ export default async argv => {
+-    const dependencyPlugins = Object.keys(packageJson.dependencies).filter(depend => depend.startsWith('wiki-plugin'))
++    const dependencyPlugins = Object.keys({ ...(packageJson.dependencies || {}), ...(packageJson.optionalDependencies || {}) }).filter(depend => depend.startsWith('wiki-plugin'))
+@@ -654 +704 @@ export default async argv => {
+-      const dependencyPlugins = Object.keys(packageJson.dependencies).filter(depend => depend.startsWith('wiki-plugin'))
++      const dependencyPlugins = Object.keys({ ...(packageJson.dependencies || {}), ...(packageJson.optionalDependencies || {}) }).filter(depend => depend.startsWith('wiki-plugin'))
+@@ -663 +713 @@ export default async argv => {
+-    // Object.keys(packageJson.dependencies)
++    // Object.keys({ ...(packageJson.dependencies || {}), ...(packageJson.optionalDependencies || {}) })
+@@ -780 +830 @@ export default async argv => {
+-          Object.keys(packageJson.dependencies)
++          Object.keys({ ...(packageJson.dependencies || {}), ...(packageJson.optionalDependencies || {}) })
+@@ -794 +844 @@ export default async argv => {
+-          Object.keys(packageJson.dependencies)
++          Object.keys({ ...(packageJson.dependencies || {}), ...(packageJson.optionalDependencies || {}) })
+@@ -813,16 +863,24 @@ export default async argv => {
+-  app.get('/proxy/*splat', authorized, (req, res) => {
+-    const pathParts = req.originalUrl.split('/')
+-    const remoteHost = pathParts[2]
+-    pathParts.splice(0, 3)
+-    const remoteResource = pathParts.join('/')
+-    // this will fail if remote is TLS only!
+-    const requestURL = 'http://' + remoteHost + '/' + remoteResource
+-    console.log('PROXY Request: ', requestURL)
+-    if (
+-      requestURL.endsWith('.json') ||
+-      requestURL.endsWith('.png') ||
+-      requestURL.endsWith('.jpg') ||
+-      pathParts[0] === 'plugin'
+-    ) {
+-      fetch(requestURL, { signal: AbortSignal.timeout(2000) })
+-        .then(async fetchRes => {
++  app.get('/proxy/*splat', (req, res) => {
++    const requestURL = new URL(req.originalUrl, 'http://local')
++    const pathParts = requestURL.pathname.split('/').filter(Boolean)
++    const remoteHost = pathParts[1]
++    const remotePath = pathParts.slice(2).join('/')
++    const remoteResource = `${remotePath}${requestURL.search}`
++    const { blocked, candidates } = buildRemoteRequestURLs(wikiName, remoteHost, remoteResource)
++    console.log('PROXY Request: ', candidates[0] || `blocked:${remoteHost}/${remoteResource}`)
++    if (!remoteHost || !remotePath) {
++      res.status(400).end()
++      return
++    }
++    if (blocked) {
++      res.status(403).end()
++      return
++    }
++    const extension = path.extname(requestURL.pathname).toLowerCase()
++    const isJsonRequest = extension === '.json'
++    const isImageRequest = extension === '.png' || extension === '.jpg'
++    const isPluginRequest = pathParts[2] === 'plugin'
++    if (isJsonRequest || isImageRequest || isPluginRequest) {
++      const timeoutMs = isJsonRequest || isPluginRequest ? 20000 : 2000
++      fetchWithProtocolFallback(candidates, { timeoutMs })
++        .then(async ({ response: fetchRes }) => {
+@@ -830,3 +888,17 @@ export default async argv => {
+-            res.set('content-type', fetchRes.headers.get('content-type'))
+-            res.set('last-modified', fetchRes.headers.get('last-modified'))
+-            await pipeline(fetchRes.body, res)
++            for (const [key, value] of fetchRes.headers.entries()) {
++              const normalized = key.toLowerCase()
++              if (proxyResponseHeaderAllowlist.has(normalized)) {
++                res.setHeader(normalized, value)
++              }
++            }
++            if (isJsonRequest) {
++              const body = Buffer.from(await fetchRes.arrayBuffer())
++              res.setHeader('content-length', String(body.length))
++              res.end(body)
++              return
++            }
++            if (!fetchRes.body) {
++              res.status(502).end()
++              return
++            }
++            await pipeline(Readable.fromWeb(fetchRes.body), res)
+@@ -838,2 +910,6 @@ export default async argv => {
+-          console.log('ERROR: Proxy Request ', requestURL, err)
+-          res.status(500).end()
++          console.log('ERROR: Proxy Request ', candidates, err)
++          if (!res.headersSent) {
++            res.status(502).end()
++          } else {
++            res.destroy(err)
++          }
+diff --git b/test/proxy.js b/test/proxy.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..6e3fe8298b927877993366660deaefa2b5e19368
+--- /dev/null
++++ b/test/proxy.js
+@@ -0,0 +1,156 @@
++import { after, before, describe, it } from 'node:test'
++import assert from 'node:assert/strict'
++import http from 'node:http'
++import { setTimeout as delay } from 'node:timers/promises'
++import os from 'node:os'
++import path from 'node:path'
++import fs from 'node:fs'
++import { once } from 'node:events'
++
++import supertest from 'supertest'
++
++const serverModule = await import('../index.js')
++const { buildRemoteRequestURLs } = await import('../lib/server.js')
++import defaultargs from '../lib/defaultargs.js'
++import random from '../lib/random_id.js'
++
++const makeRemoteServer = async () => {
++  let lastRequestUrl = ''
++  const remoteServer = http.createServer((req, res) => {
++    lastRequestUrl = req.url || ''
++    if ((req.url || '').startsWith('/favicon.png')) {
++      res.writeHead(200, {
++        'Content-Type': 'image/png',
++        'Cache-Control': 'public, max-age=60',
++        ETag: '"proxy-test"',
++        Connection: 'keep-alive',
++        'Proxy-Connection': 'keep-alive',
++        Upgrade: 'h2c',
++        'Transfer-Encoding': 'chunked',
++      })
++      res.end(Buffer.from('proxy-test-png'))
++      return
++    }
++    res.writeHead(404)
++    res.end('not found')
++  })
++
++  remoteServer.listen(0, '127.0.0.1')
++  await once(remoteServer, 'listening')
++  const address = remoteServer.address()
++  if (!address || typeof address === 'string') throw new Error('expected tcp address')
++  return {
++    close: () => new Promise((resolve, reject) => remoteServer.close(err => (err ? reject(err) : resolve()))),
++    port: address.port,
++    lastRequestUrl: () => lastRequestUrl,
++  }
++}
++
++const makeWikiApp = async ({ url, port }) => {
++  const testid = random()
++  const data = fs.mkdtempSync(path.join(os.tmpdir(), `sfw-proxy-${testid}-`))
++  fs.mkdirSync(path.join(data, 'status'), { recursive: true })
++  fs.writeFileSync(path.join(data, 'status', 'sitemap.json'), JSON.stringify([]))
++
++  const argv = defaultargs({
++    data,
++    packageDir: path.join(path.dirname(new URL(import.meta.url).pathname), '..', 'node_modules'),
++    port,
++    security_legacy: true,
++    test: true,
++    url,
++  })
++
++  const app = await serverModule.default(argv)
++  await once(app, 'owner-set')
++  return { app, cleanup: () => fs.rmSync(data, { recursive: true, force: true }) }
++}
++
++describe('proxy', () => {
++  let remote
++
++  before(async () => {
++    remote = await makeRemoteServer()
++  })
++
++  after(async () => {
++    await remote.close()
++  })
++
++  it('falls back from https to http and preserves query strings', async () => {
++    const wiki = await makeWikiApp({ url: 'http://localhost:55610', port: 55610 })
++    const request = supertest(wiki.app)
++
++    await request
++      .get(`/proxy/localhost:${remote.port}/favicon.png?x=1`)
++      .expect(200)
++      .expect('Content-Type', /image\/png/)
++      .then(res => {
++        assert.equal(res.body.toString(), 'proxy-test-png')
++        assert.equal(remote.lastRequestUrl(), '/favicon.png?x=1')
++        assert.equal(res.headers['cache-control'], 'public, max-age=60')
++        assert.equal(res.headers.etag, '"proxy-test"')
++        assert.notEqual(res.headers.connection, 'keep-alive')
++        assert.equal(res.headers['proxy-connection'], undefined)
++        assert.equal(res.headers.upgrade, undefined)
++      })
++
++    wiki.cleanup()
++  })
++
++  it('keeps http fallback available for non-loopback remotes on public sites', () => {
++    const plan = buildRemoteRequestURLs('wiki.ralfbarkow.ch', 'fed.wiki.org', 'favicon.png')
++
++    assert.equal(plan.blocked, false)
++    assert.deepEqual(plan.candidates, ['https://fed.wiki.org/favicon.png', 'http://fed.wiki.org/favicon.png'])
++  })
++
++  it('buffers slow json responses to avoid partial 200 bodies', async () => {
++    const slowRemote = http.createServer(async (req, res) => {
++      if ((req.url || '').startsWith('/system/sitemap.json')) {
++        res.writeHead(200, { 'Content-Type': 'application/json' })
++        res.write('{"items":[')
++        for (let i = 0; i < 42; i += 1) {
++          if (i > 0) res.write(',')
++          res.write(JSON.stringify({ slug: `page-${i}` }))
++          await delay(50)
++        }
++        res.end(']}')
++        return
++      }
++      res.writeHead(404)
++      res.end('not found')
++    })
++
++    slowRemote.listen(0, '127.0.0.1')
++    await once(slowRemote, 'listening')
++    const address = slowRemote.address()
++    if (!address || typeof address === 'string') throw new Error('expected tcp address')
++
++    const wiki = await makeWikiApp({ url: 'http://localhost:55612', port: 55612 })
++    const request = supertest(wiki.app)
++
++    try {
++      await request
++        .get(`/proxy/localhost:${address.port}/system/sitemap.json`)
++        .expect(200)
++        .expect('Content-Type', /application\/json/)
++        .then(res => {
++          const parsed = JSON.parse(res.text)
++          assert.equal(parsed.items.length, 42)
++        })
++    } finally {
++      await new Promise((resolve, reject) => slowRemote.close(err => (err ? reject(err) : resolve())))
++      wiki.cleanup()
++    }
++  })
++
++  it('blocks loopback proxy targets for non-loopback sites', async () => {
++    const wiki = await makeWikiApp({ url: 'http://example.com:55611', port: 55611 })
++    const request = supertest(wiki.app)
++
++    await request.get(`/proxy/localhost:${remote.port}/favicon.png`).expect(403)
++
++    wiki.cleanup()
++  })
++})

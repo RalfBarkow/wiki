@@ -1,0 +1,115 @@
+{
+  "artifact": "/nix/store/qj488bdrnfchi2w27i0ylys4xbqlx0vk-wiki-p41-0.41.0-rc.3",
+  "derivation": "/nix/store/vqqyl545z61ah6i0ivk2vdyk54cn430g-wiki-p41-0.41.0-rc.3.drv",
+  "buildCommand": "nix build .#default --out-link result -L",
+  "buildExitCode": 0,
+  "buildLog": "/tmp/p41-offline-ci-build.log",
+  "system": "x86_64-darwin",
+  "node": "22.23.3",
+  "nodeInterpreter": "#!/nix/store/4418mibqll9d99bsh1zz0xm5vm7pwcdl-nodejs-22.23.3/bin/node",
+  "versions": {
+    "wiki": "0.41.0-rc.3",
+    "wiki-plugin-code": "0.6.1",
+    "wiki-server": "0.28.0",
+    "wiki-plugin-html": "0.7.2",
+    "wiki-plugin-map": "0.10.0",
+    "wiki-plugin-flagmatic": "0.3.0",
+    "wiki-plugin-reference": "0.4.0",
+    "wiki-plugin-pagefold": "0.4.0",
+    "wiki-plugin-math": "0.3.0",
+    "wiki-plugin-grep": "1.1.1",
+    "wiki-plugin-journalmatic": "0.2.3",
+    "wiki-plugin-calendar": "0.4.0",
+    "wiki-plugin-factory": "0.4.0",
+    "wiki-plugin-audio": "0.3.0",
+    "wiki-plugin-method": "0.4.1",
+    "wiki-plugin-future": "0.4.1",
+    "wiki-plugin-calculator": "0.6.0",
+    "wiki-plugin-assets": "0.7.5",
+    "wiki-security-passportjs": "0.14.0",
+    "wiki-plugin-search": "0.3.0",
+    "wiki-plugin-force": "0.6.0",
+    "wiki-plugin-radar": "0.6.0",
+    "wiki-plugin-rollup": "0.4.0",
+    "wiki-plugin-metabolism": "0.4.0",
+    "wiki-plugin-scatter": "0.6.0",
+    "wiki-plugin-markdown": "0.5.3",
+    "wiki-plugin-pushpin": "0.6.0",
+    "wiki-plugin-activity": "0.7.1",
+    "wiki-security-social": "0.1.0",
+    "wiki-client": "0.33.0",
+    "wiki-security-friends": "0.3.1",
+    "wiki-plugin-reduce": "0.4.0",
+    "wiki-plugin-graphviz": "0.11.9",
+    "wiki-plugin-video": "0.4.0",
+    "wiki-plugin-recycler": "0.4.0",
+    "wiki-plugin-changes": "0.5.0",
+    "wiki-plugin-mech": "0.1.32-dev.1",
+    "wiki-plugin-data": "0.4.0",
+    "wiki-plugin-transport": "0.3.0",
+    "wiki-plugin-chart": "0.5.0",
+    "wiki-plugin-paragraph": "0.4.0",
+    "wiki-plugin-bars": "0.6.0",
+    "wiki-plugin-frame": "0.10.3",
+    "wiki-plugin-plugmatic": "1.5.1",
+    "wiki-plugin-image": "0.8.1",
+    "wiki-plugin-roster": "0.4.0",
+    "wiki-plugin-solo": "0.1.30-1",
+    "wiki-plugin-line": "0.6.0"
+  },
+  "npmConfigHook": "/nix/store/rqdi72xp5qmc3ha8ydr4g6s9vd29yb10-npm-config-hook/nix-support/setup-hook",
+  "installCommand": "npm ci --offline --ignore-scripts",
+  "npmDeps": "/nix/store/s4r27cs3ldvs5r66hvnknl73nqiwanqv-wiki-0.41.0-rc.3-sources",
+  "stamps": {
+    "wrapper": "#! /nix/store/z39hk1z11jwf06zhslmgwr22d0n1z0zm-bash-5.3p9/bin/bash -e\nexport WIKI_SERVER_REV=${WIKI_SERVER_REV-'6e8d4e1433da6773016ca35641b797453a667ff0+p41'}\nexport WIKI_CLIENT_REV=${WIKI_CLIENT_REV-'d59dbd68c2a539d32add72e06d2fd74e9d6d60c2+p41'}\nexec -a \"$0\" \"/nix/store/qj488bdrnfchi2w27i0ylys4xbqlx0vk-wiki-p41-0.41.0-rc.3/bin/.wiki-wrapped\"  \"$@\" \n",
+    "clientBundle": [
+      "0.33.0-dev+d59dbd68c2a539d32add72e06d2fd74e9d6d60c2+p41.70237aa59f7f"
+    ],
+    "provenance": {
+      "candidate": "P41",
+      "metaCommit": "96d3080fa10e259d6d4db71000ee25f4a5721b9d",
+      "metaVersion": "0.41.0-rc.3",
+      "nixpkgsCommit": "5e2305d577ca00acbba631b05cb1094d172b29f3",
+      "nodeVersion": "22.23.3",
+      "components": {
+        "wiki-server": {
+          "version": "0.28.0",
+          "upstreamCommit": "6e8d4e1433da6773016ca35641b797453a667ff0",
+          "personalCommit": "b8a5f36907a35e64d338bf21351fd89226b41bed",
+          "archiveSha256": "1b17048869c3a3313dcea6766b15a94b5cce9c803979ebd48850e902202c876e"
+        },
+        "wiki-client": {
+          "version": "0.33.0",
+          "upstreamCommit": "d59dbd68c2a539d32add72e06d2fd74e9d6d60c2",
+          "personalCommit": "f3c72d9fc31a3db8a296c7f2d05b36364395e4fe",
+          "archiveSha256": "70237aa59f7f29c1ae29eaca0da5434b39e74765b6fd6083b76786330dbb5b15"
+        },
+        "wiki-plugin-mech": {
+          "version": "0.1.32-dev.1",
+          "sourceCommit": "4b8051417dec6b0eff40878290a703b1fa60fb52",
+          "archiveSha256": "3164e097fd30dc1185b90a1f481e2d899645d87981f3dcb68982c6fa4a44b1d9"
+        },
+        "wiki-plugin-solo": {
+          "version": "0.1.30-1",
+          "sourceCommit": "3ad7796217d564407fd36cf62c37844654fdc967",
+          "archiveSha256": "0d63486478ad61bcb942f8e68be01364fa0c3cc64be369597fe931656a931ed9"
+        },
+        "wiki-plugin-journalmatic": {
+          "version": "0.2.3",
+          "upstreamCommit": "29bd58246fa4043b1808d1e26bd6bf9df15fc952",
+          "metadataFrom": "aa5f5863bb8de8f697815b405cfb2f1a0e055ed9",
+          "archiveSha256": "4b55578f0dc578812433ec918ba52b67bf3a97f8da9e9a066914ccf83910839d"
+        }
+      },
+      "security": {
+        "friends": "0.3.1",
+        "passportjs": "0.14.0",
+        "social": "0.1.0"
+      }
+    }
+  },
+  "provenanceMatches": true,
+  "archiveHashesMatch": true,
+  "nestedWiki": [],
+  "clientBundleSha256": "1d920a887d0332039f50b0eb7069062c4f230f5ed13066a55e69f66bf7f5ee63"
+}

@@ -1,0 +1,75 @@
+{
+  "server-upstream": {
+    "repository": "https://github.com/fedwiki/wiki-server",
+    "revision": "6e8d4e1433da6773016ca35641b797453a667ff0",
+    "url": "https://codeload.github.com/fedwiki/wiki-server/tar.gz/6e8d4e1433da6773016ca35641b797453a667ff0",
+    "hash": "sha256-rpYPfKywCmd97b67g2k3j3bJO1Oik0qtpT1YznyU+xU=",
+    "kind": "github-commit-archive"
+  },
+  "server-personal": {
+    "repository": "https://github.com/RalfBarkow/wiki-server",
+    "revision": "b8a5f36907a35e64d338bf21351fd89226b41bed",
+    "url": "https://codeload.github.com/RalfBarkow/wiki-server/tar.gz/b8a5f36907a35e64d338bf21351fd89226b41bed",
+    "hash": "sha256-EVmtkZXha5s0FyH57+Nl7MkuwxLbLxFrCEfYy4vQHQw=",
+    "kind": "github-commit-archive"
+  },
+  "server-production-base": {
+    "repository": "https://github.com/fedwiki/wiki-server",
+    "revision": "ec3527abf0d1c1e1929272d580a80905c1dbf381",
+    "url": "https://codeload.github.com/fedwiki/wiki-server/tar.gz/ec3527abf0d1c1e1929272d580a80905c1dbf381",
+    "hash": "sha256-2GB2CA27bgKzjD8A41ZQU4azoo/J+PLjLFndfGVJQOw=",
+    "kind": "github-commit-archive"
+  },
+  "client-upstream": {
+    "repository": "https://github.com/fedwiki/wiki-client",
+    "revision": "d59dbd68c2a539d32add72e06d2fd74e9d6d60c2",
+    "url": "https://codeload.github.com/fedwiki/wiki-client/tar.gz/d59dbd68c2a539d32add72e06d2fd74e9d6d60c2",
+    "hash": "sha256-5/4gPTEP05Lb3/kDdgHXOmER9JIbUnHEwmJ8ohixWtg=",
+    "kind": "github-commit-archive"
+  },
+  "client-personal": {
+    "repository": "https://github.com/RalfBarkow/wiki-client",
+    "revision": "f3c72d9fc31a3db8a296c7f2d05b36364395e4fe",
+    "url": "https://codeload.github.com/RalfBarkow/wiki-client/tar.gz/f3c72d9fc31a3db8a296c7f2d05b36364395e4fe",
+    "hash": "sha256-/F8XcGrP1UI5uuzFhJxnEyCaYYod2fIOayvfDNDfxHA=",
+    "kind": "github-commit-archive"
+  },
+  "client-production-base": {
+    "repository": "https://github.com/fedwiki/wiki-client",
+    "revision": "3f61a4862703f492b0d6bfb8695bd665b943bb38",
+    "url": "https://codeload.github.com/fedwiki/wiki-client/tar.gz/3f61a4862703f492b0d6bfb8695bd665b943bb38",
+    "hash": "sha256-/rp5/xoeQaJ27G+BsSb9vNykKrZa7YQKQ51rsQ03k4g=",
+    "kind": "github-commit-archive"
+  },
+  "journalmatic-upstream": {
+    "repository": "https://github.com/fedwiki/wiki-plugin-journalmatic",
+    "revision": "29bd58246fa4043b1808d1e26bd6bf9df15fc952",
+    "url": "https://codeload.github.com/fedwiki/wiki-plugin-journalmatic/tar.gz/29bd58246fa4043b1808d1e26bd6bf9df15fc952",
+    "hash": "sha256-9d+8F7q+pejy1w+qYsdNVEgEwbiow7+Ohzrq0xAE9q8=",
+    "kind": "github-commit-archive"
+  },
+  "journalmatic-personal": {
+    "repository": "https://github.com/RalfBarkow/wiki-plugin-journalmatic",
+    "revision": "aa5f5863bb8de8f697815b405cfb2f1a0e055ed9",
+    "url": "https://codeload.github.com/RalfBarkow/wiki-plugin-journalmatic/tar.gz/aa5f5863bb8de8f697815b405cfb2f1a0e055ed9",
+    "hash": "sha256-bHbPbx6WM+eAWQskPKeXDfvmoK1JUwEiJZUfXBMFH2E=",
+    "kind": "github-commit-archive"
+  },
+  "mech": {
+    "repository": "https://github.com/RalfBarkow/wiki-plugin-mech",
+    "revision": "4b8051417dec6b0eff40878290a703b1fa60fb52",
+    "url": "https://codeload.github.com/RalfBarkow/wiki-plugin-mech/tar.gz/4b8051417dec6b0eff40878290a703b1fa60fb52",
+    "hash": "sha256-rK2EGdQ0UrXLM0J53KAVS/FXFhqQpjtGSElwzRQtRXM=",
+    "kind": "github-commit-archive"
+  },
+  "solo": {
+    "repository": "https://github.com/wardcunningham/wiki-plugin-solo",
+    "revision": "3ad7796217d564407fd36cf62c37844654fdc967",
+    "url": "https://registry.npmjs.org/wiki-plugin-solo/-/wiki-plugin-solo-0.1.30-1.tgz",
+    "hash": "sha256-HnKwvcEaA8uagQus0wmaC+uNAx5PuZdVVh+wJ7lYqrw=",
+    "kind": "published-npm-tarball",
+    "packageVersion": "0.1.30-1",
+    "revisionRole": "published npm gitHead; package tarball is source authority",
+    "npmIntegrity": "sha512-sJ6hINN+lRsv3KFVaieORIwWSjT01W/zJWOwg8zEcU9QngSay36o2bPNMbWJpMF22dslYbPRnw76Y1BPB6PriQ=="
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "sourceHashesVerified": [
+    "server-upstream",
+    "server-personal",
+    "server-production-base",
+    "client-upstream",
+    "client-personal",
+    "client-production-base",
+    "journalmatic-upstream",
+    "journalmatic-personal",
+    "mech",
+    "solo"
+  ],
+  "patches": {
+    "production-server.patch": "applies; matches personal source",
+    "production-client.patch": "applies; matches personal source",
+    "wiki-server.patch": "applies; matches candidate tree",
+    "wiki-client.patch": "applies; matches candidate tree",
+    "wiki-plugin-journalmatic.patch": "applies; matches candidate tree"
+  },
+  "archives": {
+    "wiki-server": {
+      "expectedSha256": "1b17048869c3a3313dcea6766b15a94b5cce9c803979ebd48850e902202c876e",
+      "reconstructedSha256": "1b17048869c3a3313dcea6766b15a94b5cce9c803979ebd48850e902202c876e",
+      "byteIdentical": true,
+      "normalizedTreeEqual": true,
+      "files": 40
+    },
+    "wiki-client": {
+      "expectedSha256": "70237aa59f7f29c1ae29eaca0da5434b39e74765b6fd6083b76786330dbb5b15",
+      "reconstructedSha256": "70237aa59f7f29c1ae29eaca0da5434b39e74765b6fd6083b76786330dbb5b15",
+      "byteIdentical": true,
+      "normalizedTreeEqual": true,
+      "files": 113
+    },
+    "wiki-plugin-journalmatic": {
+      "expectedSha256": "4b55578f0dc578812433ec918ba52b67bf3a97f8da9e9a066914ccf83910839d",
+      "reconstructedSha256": "4b55578f0dc578812433ec918ba52b67bf3a97f8da9e9a066914ccf83910839d",
+      "byteIdentical": true,
+      "normalizedTreeEqual": true,
+      "files": 28
+    },
+    "wiki-plugin-mech": {
+      "expectedSha256": "3164e097fd30dc1185b90a1f481e2d899645d87981f3dcb68982c6fa4a44b1d9",
+      "reconstructedSha256": "3164e097fd30dc1185b90a1f481e2d899645d87981f3dcb68982c6fa4a44b1d9",
+      "byteIdentical": true,
+      "normalizedTreeEqual": true,
+      "files": 44
+    },
+    "wiki-plugin-solo": {
+      "expectedSha256": "0d63486478ad61bcb942f8e68be01364fa0c3cc64be369597fe931656a931ed9",
+      "reconstructedSha256": "0d63486478ad61bcb942f8e68be01364fa0c3cc64be369597fe931656a931ed9",
+      "byteIdentical": true,
+      "normalizedTreeEqual": true,
+      "files": 11
+    }
+  },
+  "snapshotIndexTree": "9c444d2112749aa2db0726b6a1ed77dadfb7a16d",
+  "snapshotHadVendor": false,
+  "prebuiltArchivesWithheld": true,
+  "reconstructionExitCode": 0,
+  "buildExitCode": 0,
+  "buildCommand": "nix build .#default --out-link result -L",
+  "artifact": "/nix/store/qj488bdrnfchi2w27i0ylys4xbqlx0vk-wiki-p41-0.41.0-rc.3",
+  "matchesRehearsedArtifactExactly": true,
+  "installedComponentVersions": {
+    "wiki-server": "0.28.0",
+    "wiki-client": "0.33.0",
+    "wiki-plugin-mech": "0.1.32-dev.1",
+    "wiki-plugin-solo": "0.1.30-1",
+    "wiki-plugin-journalmatic": "0.2.3"
+  },
+  "provenanceEqual": true,
+  "graphCheckExitCode": 0,
+  "graphReportEqual": true,
+  "runtimeContentChanged": false
+}

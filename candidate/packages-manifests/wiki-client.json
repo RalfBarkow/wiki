@@ -1,0 +1,69 @@
+{
+  "name": "wiki-client",
+  "version": "0.33.0",
+  "description": "Federated Wiki - Client-side Javascript",
+  "keywords": [
+    "wiki",
+    "federated wiki",
+    "wiki client"
+  ],
+  "author": {
+    "name": "Ward Cunningham",
+    "email": "ward@c2.com",
+    "url": "http://ward.fed.wiki.org"
+  },
+  "contributors": [
+    {
+      "name": "Nick Niemeir",
+      "email": "nick.niemeir@gmail.com",
+      "url": "http://nrn.io"
+    },
+    {
+      "name": "Paul Rodwell",
+      "email": "paul.rodwell@btinternet.com",
+      "url": "https://rodwell.me"
+    }
+  ],
+  "scripts": {
+    "build": "npm run test && npm run build:client && npm run build:test",
+    "build:client": "npm run clean:client; node --no-warnings scripts/build-client.mjs",
+    "build:test": "npm run clean:test; node --no-warnings scripts/build-testclient.mjs",
+    "prettier:format": "prettier --write './**/*.js'",
+    "prettier:check": "prettier --check ./**/*.js",
+    "clean": "npm run clean:client; npm run clean:test",
+    "clean:client": "rm client/client.js client/client.js.map meta-client.json",
+    "clean:test": "rm client/test/testclient.js",
+    "test": "mocha test/util.js test/random.js test/page.js test/lineup.js test/drop.js test/revision.js test/resolve.js test/wiki.js",
+    "runtests": "npm run build:test && ((sleep 1; open 'http://localhost:3000/runtests.html')&) && echo '\nBrowser will open to run tests.' && serve client",
+    "update-authors": "node scripts/update-authors.js"
+  },
+  "dependencies": {
+    "async": "^3.2.1",
+    "localforage": "^1.7.3",
+    "underscore": "^1.13.8"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "esbuild": "^0.28.0",
+    "eslint": "^10.3.0",
+    "expect.js": "^0.3.1",
+    "globals": "^17.6.0",
+    "grunt-git-authors": "^3.2.0",
+    "minisearch": "^7.1.2",
+    "mocha": "^12.0.1",
+    "prettier": "^3.8.3",
+    "serve": "^14.2.6",
+    "sinon": "^22.0.0"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fedwiki/wiki-client"
+  },
+  "bugs": {
+    "url": "https://github.com/fedwiki/wiki-client/issues"
+  },
+  "engines": {
+    "node": ">=20.x"
+  }
+}

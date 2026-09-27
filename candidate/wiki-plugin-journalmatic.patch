@@ -1,0 +1,55 @@
+diff --git a/.gitignore a/.gitignore
+deleted file mode 100644
+index 61cc25935441de4225f6d8a5fa8cf1eb6d22b96c..0000000000000000000000000000000000000000
+--- a/.gitignore
++++ /dev/null
+@@ -1,3 +0,0 @@
+-recycle
+-status
+-pages/welcome-visitors
+diff --git a/factory.json b/factory.json
+index 4627a875bf4f09f90a3f06b527e52a9d100768e0..2ab51beb8cdd8e2217e839baac3597fec1a5ed54 100644
+--- a/factory.json
++++ b/factory.json
+@@ -4,2 +4,5 @@
+-  "pages": ["Journal Tools"]
+-}
+\ No newline at end of file
++  "pages": [
++    "About Journalmatic Plugin",
++    "Journal Tools"
++  ]
++}
+diff --git b/pages/about-journalmatic-plugin b/pages/about-journalmatic-plugin
+new file mode 100644
+index 0000000000000000000000000000000000000000..7b072b4d323647b5b607165e4eadd4da1417ce52
+--- /dev/null
++++ b/pages/about-journalmatic-plugin
+@@ -0,0 +1,27 @@
++{
++  "title": "About Journalmatic Plugin",
++  "story": [
++    {
++      "type": "paragraph",
++      "id": "about-journalmatic",
++      "text": "Journalmatic provides frame-based tools for checking journal/page issues and correcting a few common problems. See [[Journal Tools]] to get started."
++    }
++  ],
++  "journal": [
++    {
++      "type": "create",
++      "item": {
++        "title": "About Journalmatic Plugin",
++        "story": [
++          {
++            "type": "paragraph",
++            "id": "about-journalmatic",
++            "text": "Journalmatic provides frame-based tools for checking journal/page issues and correcting a few common problems. See [[Journal Tools]] to get started."
++          }
++        ]
++      },
++      "date": 1769923200000,
++      "certificate": "from codex"
++    }
++  ]
++}

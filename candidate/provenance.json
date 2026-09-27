@@ -1,0 +1,42 @@
+{
+  "candidate": "P41",
+  "metaCommit": "96d3080fa10e259d6d4db71000ee25f4a5721b9d",
+  "metaVersion": "0.41.0-rc.3",
+  "nixpkgsCommit": "5e2305d577ca00acbba631b05cb1094d172b29f3",
+  "nodeVersion": "22.23.3",
+  "components": {
+    "wiki-server": {
+      "version": "0.28.0",
+      "upstreamCommit": "6e8d4e1433da6773016ca35641b797453a667ff0",
+      "personalCommit": "b8a5f36907a35e64d338bf21351fd89226b41bed",
+      "archiveSha256": "1b17048869c3a3313dcea6766b15a94b5cce9c803979ebd48850e902202c876e"
+    },
+    "wiki-client": {
+      "version": "0.33.0",
+      "upstreamCommit": "d59dbd68c2a539d32add72e06d2fd74e9d6d60c2",
+      "personalCommit": "f3c72d9fc31a3db8a296c7f2d05b36364395e4fe",
+      "archiveSha256": "70237aa59f7f29c1ae29eaca0da5434b39e74765b6fd6083b76786330dbb5b15"
+    },
+    "wiki-plugin-mech": {
+      "version": "0.1.32-dev.1",
+      "sourceCommit": "4b8051417dec6b0eff40878290a703b1fa60fb52",
+      "archiveSha256": "3164e097fd30dc1185b90a1f481e2d899645d87981f3dcb68982c6fa4a44b1d9"
+    },
+    "wiki-plugin-solo": {
+      "version": "0.1.30-1",
+      "sourceCommit": "3ad7796217d564407fd36cf62c37844654fdc967",
+      "archiveSha256": "0d63486478ad61bcb942f8e68be01364fa0c3cc64be369597fe931656a931ed9"
+    },
+    "wiki-plugin-journalmatic": {
+      "version": "0.2.3",
+      "upstreamCommit": "29bd58246fa4043b1808d1e26bd6bf9df15fc952",
+      "metadataFrom": "aa5f5863bb8de8f697815b405cfb2f1a0e055ed9",
+      "archiveSha256": "4b55578f0dc578812433ec918ba52b67bf3a97f8da9e9a066914ccf83910839d"
+    }
+  },
+  "security": {
+    "friends": "0.3.1",
+    "passportjs": "0.14.0",
+    "social": "0.1.0"
+  }
+}

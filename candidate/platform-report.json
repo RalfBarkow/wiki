@@ -1,0 +1,9 @@
+{
+  "hostSystem": "x86_64-darwin",
+  "targetSystem": "x86_64-linux",
+  "linuxEvalCommand": "nix eval --raw .#packages.x86_64-linux.default.drvPath",
+  "linuxEvalExitCode": 0,
+  "linuxDerivation": "/nix/store/fcm66qa05ndlhw7rr04dx9071x95i1h7-wiki-p41-0.41.0-rc.3.drv",
+  "linuxBuildAttempted": false,
+  "nextPlatformGate": "Linux builder or VM build and isolated rehearsal"
+}

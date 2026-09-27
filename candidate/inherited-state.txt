@@ -1,0 +1,45 @@
+Observed before resume edits:
+pwd: /Users/rgb/workspace/p41-nix-candidate
+branch: experiment/p41-nix-candidate
+HEAD: 96d3080fa10e259d6d4db71000ee25f4a5721b9d
+result: absent
+old candidate build/fetch processes: none
+
+git status --short:
+M  .gitignore
+M  .npmignore
+A  candidate/assemble.py
+A  candidate/build.mjs
+A  candidate/check-graph.mjs
+A  candidate/fetch-cache.py
+A  candidate/graph-report.json
+A  candidate/packages-manifests/wiki-client.json
+A  candidate/packages-manifests/wiki-plugin-journalmatic.json
+A  candidate/packages-manifests/wiki-plugin-mech.json
+A  candidate/packages-manifests/wiki-plugin-solo.json
+A  candidate/packages-manifests/wiki-server.json
+A  candidate/packages/wiki-client.tgz
+A  candidate/packages/wiki-plugin-journalmatic.tgz
+A  candidate/packages/wiki-plugin-mech.tgz
+A  candidate/packages/wiki-plugin-solo.tgz
+A  candidate/packages/wiki-server.tgz
+A  candidate/production-client.patch
+A  candidate/production-server.patch
+A  candidate/provenance.json
+AD candidate/registry-cache-lock.mjs
+AM candidate/smoke.mjs
+A  flake.lock
+A  flake.nix
+M  package-lock.json
+M  package.json
+?? candidate/README.md
+?? candidate/source-audit.json
+?? candidate/wiki-client.patch
+?? candidate/wiki-plugin-journalmatic.patch
+?? candidate/wiki-server.patch
+
+Unstaged diff: 2 files, 1 insertion, 8 deletions.
+candidate/registry-cache-lock.mjs: its entire 7-line staged file was deleted.
+candidate/smoke.mjs: network sandbox changed numeric loopback specifications
+to localhost:* (one replacement line). No other unstaged changes.
+Staged diff: 26 files, 6824 insertions, 1476 deletions (including 5 archives).

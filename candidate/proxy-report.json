@@ -1,0 +1,14 @@
+{
+  "log": "/tmp/p41-proxy-tests.log",
+  "command": "/usr/bin/sandbox-exec -f /tmp/p41-loopback.sb /nix/store/4418mibqll9d99bsh1zz0xm5vm7pwcdl-nodejs-22.23.3/bin/node --test /Users/rgb/workspace/p41-nix-candidate/node_modules/wiki-server/test/proxy.js",
+  "cwd": "/Users/rgb/workspace/p41-nix-candidate",
+  "tests": 4,
+  "suites": 1,
+  "pass": 4,
+  "fail": 0,
+  "skipped": 0,
+  "cancelled": 0,
+  "todo": 0,
+  "durationMs": 5266.945782,
+  "reconciledPersonalProxyExercised": true
+}

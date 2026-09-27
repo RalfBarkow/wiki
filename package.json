@@ -16,7 +16,7 @@
     "Leander <leander@wesrc.com>",
     "Thomas Kalka <thomas.kalka@co-buero.de>",
     "Santiago Ferreira <santiago.ferreira@wyeworks.com>",
-    "Sebastian Hoß <mail@shoss.de>",
+    "Sebastian Ho\u00df <mail@shoss.de>",
     "Eric Dobbs <eric@dobbse.net>",
     "Callum Macdonald <github.com@callum-macdonald.com>",
     "Joshua Benuck <joshua_benuck@yahoo.com>"
@@ -25,7 +25,7 @@
   "dependencies": {
     "chokidar": "^5.0.0",
     "minimist": "^1.2.7",
-    "wiki-client": "^0.33.0",
+    "wiki-client": "file:candidate/packages/wiki-client.tgz",
     "wiki-plugin-activity": "^0.7.1",
     "wiki-plugin-assets": "^0.7.5",
     "wiki-plugin-audio": "^0.3.0",
@@ -45,7 +45,7 @@
     "wiki-plugin-grep": "^1.1.1",
     "wiki-plugin-html": "^0.7.2",
     "wiki-plugin-image": "^0.8.1",
-    "wiki-plugin-journalmatic": "^0.2.3",
+    "wiki-plugin-journalmatic": "file:candidate/packages/wiki-plugin-journalmatic.tgz",
     "wiki-plugin-line": "^0.6.0",
     "wiki-plugin-map": "^0.10.0",
     "wiki-plugin-markdown": "^0.5.3",
@@ -69,19 +69,31 @@
     "wiki-security-friends": "^0.3.1",
     "wiki-security-passportjs": "^0.14.0",
     "wiki-security-social": "^0.1.0",
-    "wiki-server": "^0.28.0"
+    "wiki-server": "file:candidate/packages/wiki-server.tgz"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
-    "eslint": "^10.5.0",
+    "eslint": "^10.3.0",
     "grunt-git-authors": "^3.2.0",
-    "prettier": "^3.8.4"
+    "prettier": "^3.8.3",
+    "esbuild": "^0.28.0",
+    "expect.js": "^0.3.1",
+    "globals": "^17.6.0",
+    "minisearch": "^7.1.2",
+    "mocha": "^12.0.1",
+    "serve": "^14.2.6",
+    "sinon": "^22.0.0",
+    "semver": "7.7.2",
+    "supertest": "^7.1.4",
+    "playwright": "1.58.2",
+    "mech-esbuild": "npm:esbuild@0.25.12"
   },
   "scripts": {
     "start": "node index.js",
     "prettier:format": "prettier --write '*.js'",
     "prettier:check": "prettier --check *.js",
-    "update-authors": "node scripts/update-authors.js"
+    "update-authors": "node scripts/update-authors.js",
+    "build:p41": "node candidate/build.mjs"
   },
   "repository": {
     "type": "git",
@@ -93,5 +105,9 @@
   "type": "module",
   "engines": {
     "node": ">=22"
+  },
+  "optionalDependencies": {
+    "wiki-plugin-mech": "file:candidate/packages/wiki-plugin-mech.tgz",
+    "wiki-plugin-solo": "file:candidate/packages/wiki-plugin-solo.tgz"
   }
 }

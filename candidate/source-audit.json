@@ -1,0 +1,12 @@
+{
+  "actionHandlerIdenticalToServer028": true,
+  "actionHandlerSha256": "3f8c84e53bba622eba7ae4463e028150bccacf03957c7d8b0d0a408d11fa2175",
+  "pageIoAndQueueIdenticalToServer028": true,
+  "pageIoAndQueueSha256": "7337b72a2772f37c2e7da8abe1886ab2c05ce646b1ee342a64b65e44174e6c93",
+  "knownDefects": [
+    "same-page concurrent lost update",
+    "stale edit accepted",
+    "missing-item edit journalled"
+  ],
+  "consistencyFixAdded": false
+}

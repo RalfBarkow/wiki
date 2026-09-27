@@ -1,0 +1,45 @@
+{
+  "name": "wiki-plugin-solo",
+  "version": "0.1.30-1",
+  "description": "Federated Wiki - Solo Plugin",
+  "keywords": [
+    "solo",
+    "wiki",
+    "federated wiki",
+    "plugin"
+  ],
+  "author": {
+    "name": "Ward Cunningham",
+    "email": "ward@c2.com",
+    "url": "http://ward.asia.wiki.org"
+  },
+  "contributors": [],
+  "scripts": {
+    "build": "npm run clean; npm run test; node --no-warnings scripts/build-client.js",
+    "about": "wiki -p 3010 -d . --security_legacy",
+    "clean": "rm client/solo.js client/solo.js.map",
+    "clean-about": "rm -r assets commons recycle status",
+    "prettier:format": "prettier --write './**/*.js'",
+    "prettier:check": "prettier --check ./**/*.js",
+    "test": "node --test"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.2",
+    "esbuild": "^0.27.2",
+    "eslint": "^9.39.2",
+    "globals": "^16.5.0",
+    "prettier": "^3.7.4"
+  },
+  "license": "MIT",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wardcunningham/wiki-plugin-solo.git"
+  },
+  "bugs": {
+    "url": "https://github.com/wardcunningham/wiki-plugin-solo/issues"
+  },
+  "engines": {
+    "node": ">=20.x"
+  }
+}

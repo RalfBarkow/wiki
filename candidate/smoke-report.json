@@ -1,0 +1,39 @@
+{
+  "artifact": "/nix/store/qj488bdrnfchi2w27i0ylys4xbqlx0vk-wiki-p41-0.41.0-rc.3",
+  "scratch": "/var/folders/y1/yhhpj5wd7cb5325t8__1ct2r0000gn/T/p41-smoke-xoHc5b",
+  "tests": {
+    "egressDeny": "PASS (kernel EPERM)",
+    "A_server": "PASS",
+    "B_farm": "PASS: two sites and rejected unknown host",
+    "C_friends": "PASS: claim persisted; anonymous protected request denied",
+    "D_clientBundle": "PASS",
+    "E_page": "PASS",
+    "F_discovery": "PASS",
+    "G_mech": "PASS",
+    "H_solo": "PASS",
+    "I_journalmatic": "PASS",
+    "mechServer": "PASS",
+    "commons": "PASS: mech reads scratch commons",
+    "proxyFixture": "PASS: anonymous HTTP fallback, buffered JSON, header filtering",
+    "browserPlugins": "PASS: ordinary page rendered; mech/solo registered; journalmatic module initialized",
+    "J_merge": "PASS on installed artifact",
+    "K_optionalIndex": "PASS: installed artifact caches optional-index 404",
+    "M_restart": "PASS: page, owner and synthetic session survive",
+    "L_isolation": "PASS: explicit scratch paths, separate HOME/cwd, no symlinks, production paths denied by sandbox"
+  },
+  "blockedBrowserRequests": [],
+  "browserErrors": [],
+  "config": {
+    "farm": true,
+    "security_type": "friends",
+    "host": "127.0.0.1",
+    "port": 56332,
+    "data": "/var/folders/y1/yhhpj5wd7cb5325t8__1ct2r0000gn/T/p41-smoke-xoHc5b/farm",
+    "commons": "/var/folders/y1/yhhpj5wd7cb5325t8__1ct2r0000gn/T/p41-smoke-xoHc5b/commons",
+    "allowed": "alpha.localhost,beta.localhost",
+    "cookieSecret": "[disposable synthetic secret]",
+    "neighbors": "",
+    "session_duration": 7
+  },
+  "status": "PASS"
+}

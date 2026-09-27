@@ -2,3 +2,8 @@ data
 node_modules
 *.log
 cve-report
+
+.p41-build-home/
+result
+node_modules/
+vendor/

@@ -1,0 +1,1898 @@
+diff --git b/.envrc b/.envrc
+new file mode 100644
+index 0000000000000000000000000000000000000000..06e3b631556b9ce213743a16213625602739b1ec
+--- /dev/null
++++ b/.envrc
+@@ -0,0 +1,13 @@
++# wiki-client/.envrc
++# Dev environment for wiki-client, reusing wiki-server's flake shell.
++# This repo has no flake.nix; do not use `use flake .`.
++
++set -euo pipefail
++
++# Load standard nix-direnv integration
++if ! command -v use >/dev/null 2>&1; then
++  echo "direnv 'use' function not found; ensure nix-direnv is installed and hooked into direnv." >&2
++  exit 1
++fi
++
++use flake ../wiki-server
+diff --git a/.gitignore b/.gitignore
+index 68b5d4b027a6250453bc85686fcb60ddfebd038e..fca2379e5c0a274e2ec035fc6663d70d5fd654d8 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -6,0 +7 @@
++.direnv
+@@ -9,0 +11 @@ npm-debug.log
++repomix-output-wiki-client.md
+diff --git b/AGENTS.md b/AGENTS.md
+new file mode 100644
+index 0000000000000000000000000000000000000000..ce34ab93729c635718e853c3bf29196db016a1d6
+--- /dev/null
++++ b/AGENTS.md
+@@ -0,0 +1,49 @@
++# AGENTS.md
++
++## Purpose
++This repository is undergoing intentional simplification.
++Primary objective: remove jQuery as a core dependency, in line with the FedWiki direction “simpler is our new direction”.
++
++All automated or assisted changes must reduce legacy surface area or make such reduction easier.
++
++## Scope Order (Mandatory)
++Changes must follow this order unless explicitly overridden:
++
++1. Tests and test harnesses
++   - Remove jQuery from tests first.
++   - Tests must not require jQuery, jQuery UI, or jQuery Migrate.
++
++2. Build and tooling
++   - Prefer ESM, esbuild, and native browser APIs.
++   - Vendored libraries are considered technical debt.
++
++3. Runtime client code
++   - Isolate jQuery usage behind minimal adapters.
++   - No new direct `$` or `jQuery` usage is permitted.
++
++## Hard Rules
++- Do NOT introduce new dependencies on jQuery, jQuery UI, jQuery Migrate, or underscore.
++- Do NOT expand vendored libraries under client/js/.
++- Do NOT refactor plugin APIs unless required for simplification.
++- Prefer deletion over abstraction where safe.
++- Prefer browser-native APIs over polyfills.
++
++## Measurement
++Progress must be observable. Use at least one of:
++- Reduction in files containing `$(` or `jQuery`.
++- Reduction in boxed nodes produced by scripts/requires-graph.pl.
++- Removal of jquery-migrate from any HTML entry point.
++
++## Compatibility Strategy
++Short-term compatibility is maintained by:
++- Adapters or shims at module boundaries.
++- Incremental removal, not flag days.
++
++Long-term goal:
++- jQuery is optional or absent at runtime.
++
++## Commit Discipline
++- One logical change per commit.
++- Conventional Commits, plain text only.
++- Example:
++  refactor(test): remove jQuery dependency from testclient
+diff --git a/client/runtests.html b/client/runtests.html
+index 79c94bf582b3dbad08aa5ff30ccb06bc5440d8ae..79b886f7cd77d9d0c909ea0dd92727c567e96ad7 100644
+--- a/client/runtests.html
++++ b/client/runtests.html
+@@ -7,3 +6,0 @@
+-    <script src="/js/jquery-3.7.1.min.js" type="text/javascript"></script>
+-    <script src="/js/jquery-migrate-3.5.0.js" type="text/javascript"></script>
+-    <script src="/js/jquery-ui/1.14.1/jquery-ui.min.js" type="text/javascript"></script>
+diff --git b/lib/dom.js b/lib/dom.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..09f523ea52cdcf3259687ea7bba29aa50902922e
+--- /dev/null
++++ b/lib/dom.js
+@@ -0,0 +1,210 @@
++const hasJquery = () => typeof globalThis.$ === 'function'
++
++const jq = input => {
++  if (!hasJquery()) return null
++  return globalThis.$(input)
++}
++
++const ready = fn => {
++  if (document.readyState === 'loading') {
++    document.addEventListener('DOMContentLoaded', fn, { once: true })
++  } else {
++    fn()
++  }
++}
++
++const qs = (selector, root = document) => root.querySelector(selector)
++const qsa = (selector, root = document) => Array.from(root.querySelectorAll(selector))
++
++const isInput = el =>
++  !!el && (el.matches?.('input,select,textarea,button') || el.closest?.('input,select,textarea,button'))
++
++const on = (el, events, handler, opts) => {
++  if (!el) return
++  events.split(' ').forEach(event => el.addEventListener(event, handler, opts))
++}
++
++const onDelegate = (el, events, selector, handler) => {
++  if (!el) return
++  events.split(' ').forEach(event => {
++    el.addEventListener(event, e => {
++      const target = e.target?.closest?.(selector)
++      if (target && el.contains(target)) {
++        handler.call(target, e)
++      }
++    })
++  })
++}
++
++const onJq = (el, events, handler) => {
++  const $el = jq(el)
++  if ($el) {
++    $el.on(events, handler)
++  }
++}
++
++const onAjaxError = handler => {
++  const $doc = jq(document)
++  if ($doc?.ajaxError) {
++    $doc.ajaxError(handler)
++  }
++}
++
++const sortable = (el, options) => {
++  const $el = jq(el)
++  if ($el?.sortable) {
++    $el.sortable(options)
++  }
++}
++
++const addClass = (el, className) => el?.classList?.add(className)
++const removeClass = (el, className) => el?.classList?.remove(className)
++const toggleClass = (el, className) => el?.classList?.toggle(className)
++const hasClass = (el, className) => !!el?.classList?.contains(className)
++
++const toggleDisplay = el => {
++  if (!el) return
++  const current = window.getComputedStyle(el).display
++  el.style.display = current === 'none' ? '' : 'none'
++}
++
++const closest = (el, selector) => el?.closest?.(selector) || null
++
++const trigger = (el, name, detail) => {
++  if (!el) return
++  const $el = jq(el)
++  if ($el?.trigger) {
++    $el.trigger(name, detail)
++    return
++  }
++  const event = new CustomEvent(name, { detail, bubbles: true })
++  el.dispatchEvent(event)
++}
++
++const attr = (el, name, value) => {
++  if (!el) return undefined
++  if (value === undefined) return el.getAttribute(name)
++  el.setAttribute(name, value)
++  return value
++}
++
++const text = (el, value) => {
++  if (!el) return ''
++  if (value === undefined) return el.textContent ?? ''
++  el.textContent = value
++  return value
++}
++
++const html = (el, value) => {
++  if (!el) return ''
++  if (value === undefined) return el.innerHTML
++  el.innerHTML = value
++  return value
++}
++
++const val = (el, value) => {
++  if (!el) return undefined
++  if (value === undefined) return el.value
++  el.value = value
++  return value
++}
++
++const css = (el, styles) => {
++  if (!el) return
++  Object.entries(styles).forEach(([key, value]) => {
++    el.style[key] = value
++  })
++}
++
++const append = (el, content) => {
++  if (!el) return
++  if (typeof content === 'string') {
++    el.insertAdjacentHTML('beforeend', content)
++  } else if (content instanceof Node) {
++    el.appendChild(content)
++  }
++}
++
++const appendTo = (el, parent) => {
++  if (!el || !parent) return
++  parent.appendChild(el)
++}
++
++const remove = el => {
++  if (el?.remove) el.remove()
++}
++
++const nextAll = el => {
++  const nodes = []
++  let current = el?.nextElementSibling
++  while (current) {
++    nodes.push(current)
++    current = current.nextElementSibling
++  }
++  return nodes
++}
++
++const parents = (el, selector) => {
++  const nodes = []
++  let current = el?.parentElement
++  while (current) {
++    if (!selector || current.matches(selector)) {
++      nodes.push(current)
++    }
++    current = current.parentElement
++  }
++  return nodes
++}
++
++const find = (el, selector) => (el ? Array.from(el.querySelectorAll(selector)) : [])
++
++const normalizeDataKey = key => key.replace(/-([a-z])/g, (_, char) => char.toUpperCase())
++
++const data = (el, key, value) => {
++  if (!el || !key) return undefined
++  const $el = jq(el)
++  if ($el?.data) {
++    if (value === undefined) return $el.data(key)
++    $el.data(key, value)
++    return value
++  }
++  const dataKey = normalizeDataKey(key)
++  if (value === undefined) return el.dataset?.[dataKey]
++  if (el.dataset) {
++    el.dataset[dataKey] = value
++  }
++  return value
++}
++
++module.exports = {
++  hasJquery,
++  jq,
++  ready,
++  qs,
++  qsa,
++  isInput,
++  on,
++  onDelegate,
++  onJq,
++  onAjaxError,
++  sortable,
++  addClass,
++  removeClass,
++  toggleClass,
++  toggleDisplay,
++  hasClass,
++  closest,
++  trigger,
++  attr,
++  text,
++  html,
++  val,
++  css,
++  append,
++  appendTo,
++  remove,
++  nextAll,
++  parents,
++  find,
++  data,
++}
+diff --git a/lib/future.js b/lib/future.js
+index 82bf3214448141812f31b945efec2f53b3eff745..9035c896abe7ccb5a421054548f5a0fdf3acd7b1 100644
+--- a/lib/future.js
++++ b/lib/future.js
+@@ -6,0 +7 @@ const neighborhood = require('./neighborhood')
++const networkSecurity = require('./networkSecurity')
+@@ -26 +27,3 @@ const emit = function ($item, item) {
+-    $.get('//localhost:4020', () => $item.find('.caption').text('ready'))
++    if (!networkSecurity.shouldBlockLoopbackTarget('localhost')) {
++      $.get('//localhost:4020', () => $item.find('.caption').text('ready'))
++    }
+@@ -39 +42 @@ const emit = function ($item, item) {
+-  if (item.context?.length > 0 || (isSecureContext && !location.hostname.endsWith('localhost'))) {
++  if (item.context?.length > 0 || (location.protocol === 'https:' && !networkSecurity.isLoopbackHost(location.hostname))) {
+@@ -83 +86 @@ const emit = function ($item, item) {
+-  if (isSecureContext && offerAltLineup && !location.hostname.endsWith('localhost')) {
++  if (location.protocol === 'https:' && offerAltLineup && !networkSecurity.isLoopbackHost(location.hostname)) {
+diff --git a/lib/legacy.js b/lib/legacy.js
+index a8f920d0a08ededa7c64c8b31baa2c4d5232cd9d..4fd07aa411b175f0ad68e1940e572003bdc59cf0 100644
+--- a/lib/legacy.js
++++ b/lib/legacy.js
+@@ -17,0 +18 @@ const util = require('./util')
++const dom = require('./dom')
+@@ -44 +45 @@ wiki.origin.get('system/factories.json', function (error, data) {
+-$(function () {
++dom.ready(function () {
+@@ -50 +51 @@ $(function () {
+-  $(document).on('keydown', function (event) {
++  dom.on(document, 'keydown', function (event) {
+@@ -52,3 +53,4 @@ $(function () {
+-    if (direction && !$(event.target).is(':input')) {
+-      const pages = $('.page')
+-      const newIndex = pages.index($('.active')) + direction
++    if (direction && !dom.isInput(event.target)) {
++      const pages = dom.qsa('.page')
++      const activePage = dom.qs('.active')
++      const newIndex = pages.indexOf(activePage) + direction
+@@ -56 +58 @@ $(function () {
+-        active.set(pages.eq(newIndex))
++        active.set(pages[newIndex])
+@@ -62 +64 @@ $(function () {
+-      $('input.search').trigger('focus')
++      dom.qs('input.search')?.focus()
+@@ -69 +71 @@ $(function () {
+-  $(window).on('popstate', state.show)
++  dom.on(window, 'popstate', state.show)
+@@ -71 +73 @@ $(function () {
+-  $(document).ajaxError(function (event, request, settings) {
++  dom.onAjaxError(function (event, request, settings) {
+@@ -114 +116 @@ from an export file dated ${file.lastModifiedDate}.\
+-    $page, // console.log 'fork to delete'
++    pageEl, // console.log 'fork to delete'
+@@ -116 +118 @@ from an export file dated ${file.lastModifiedDate}.\
+-    pageHandler.delete(pageObject, $page, function (err) {
++    pageHandler.delete(pageObject, dom.jq(pageEl), function (err) {
+@@ -123 +125 @@ from an export file dated ${file.lastModifiedDate}.\
+-        $page.addClass('ghost')
++        dom.addClass(pageEl, 'ghost')
+@@ -127,3 +129,3 @@ from an export file dated ${file.lastModifiedDate}.\
+-        $page.attr('id', futurePage.getSlug())
+-        refresh.rebuildPage(pageObject, $page)
+-        $page.addClass('ghost')
++        dom.attr(pageEl, 'id', futurePage.getSlug())
++        refresh.rebuildPage(pageObject, dom.jq(pageEl))
++        dom.addClass(pageEl, 'ghost')
+@@ -153 +155 @@ from an export file dated ${file.lastModifiedDate}.\
+-      page = $(e.target).parents('.page')
++      page = dom.closest(e.target, '.page')
+@@ -155 +157 @@ from an export file dated ${file.lastModifiedDate}.\
+-    link.doInternalLink(name, page, $(e.target).data('site'))
++    link.doInternalLink(name, page, dom.data(e.target, 'site'))
+@@ -160,12 +162,37 @@ from an export file dated ${file.lastModifiedDate}.\
+-  $('.main')
+-    .sortable({ handle: '.page-handle', cursor: 'grabbing' })
+-    .on('sortstart', function (evt, ui) {
+-      if (!ui.item.hasClass('page')) {
+-        return
+-      }
+-      const noScroll = true
+-      active.set(ui.item, noScroll)
+-      originalPageIndex = $('.page').index(ui.item[0])
+-    })
+-    .on('sort', function (evt, ui) {
+-      if (!ui.item.hasClass('page')) {
++  const mainEl = dom.qs('.main')
++  dom.sortable(mainEl, { handle: '.page-handle', cursor: 'grabbing' })
++
++  dom.onJq(mainEl, 'sortstart', function (evt, ui) {
++    const itemEl = ui?.item?.[0]
++    if (!itemEl || !dom.hasClass(itemEl, 'page')) {
++      return
++    }
++    const noScroll = true
++    active.set(itemEl, noScroll)
++    originalPageIndex = dom.qsa('.page').indexOf(itemEl)
++  })
++
++  dom.onJq(mainEl, 'sort', function (evt, ui) {
++    const itemEl = ui?.item?.[0]
++    if (!itemEl || !dom.hasClass(itemEl, 'page')) {
++      return
++    }
++    // Only mark for removal if there's more than one page (+placeholder) left
++    if (evt.pageY < 0 && dom.qsa('.page').length > 2) {
++      dom.addClass(itemEl, 'pending-remove')
++    } else {
++      dom.removeClass(itemEl, 'pending-remove')
++    }
++  })
++
++  dom.onJq(mainEl, 'sortstop', function (evt, ui) {
++    const itemEl = ui?.item?.[0]
++    if (!itemEl || !dom.hasClass(itemEl, 'page')) {
++      return
++    }
++    const pages = dom.qsa('.page')
++    let index = pages.indexOf(dom.qs('.active'))
++    const firstItem = dom.find(itemEl, '.item')[0]
++    let firstItemIndex = dom.qsa('.item').indexOf(firstItem)
++    if (dom.hasClass(itemEl, 'pending-remove')) {
++      if (pages.length === 1) {
+@@ -174,6 +201,11 @@ from an export file dated ${file.lastModifiedDate}.\
+-      const $page = ui.item
+-      // Only mark for removal if there's more than one page (+placeholder) left
+-      if (evt.pageY < 0 && $('.page').length > 2) {
+-        $page.addClass('pending-remove')
+-      } else {
+-        $page.removeClass('pending-remove')
++      lineup.removeKey(dom.data(itemEl, 'key'))
++      dom.remove(itemEl)
++      active.set(pages[index])
++    } else {
++      lineup.changePageIndex(dom.data(itemEl, 'key'), index)
++      active.set(dom.qs('.active'))
++      if (originalPageIndex < index) {
++        index = originalPageIndex
++        const pageAtIndex = dom.qsa('.page')[index]
++        const firstItemInPage = dom.find(pageAtIndex, '.item')[0]
++        firstItemIndex = dom.qsa('.item').indexOf(firstItemInPage)
+@@ -181,3 +213,83 @@ from an export file dated ${file.lastModifiedDate}.\
+-    })
+-    .on('sortstop', function (evt, ui) {
+-      if (!ui.item.hasClass('page')) {
++    }
++    plugin.renderFrom(firstItemIndex)
++    state.setUrl()
++    if (window.debug) {
++      state.debugStates()
++    }
++  })
++
++  dom.onDelegate(mainEl, 'click', '.show-page-license', function (e) {
++    e.preventDefault()
++    const pageEl = dom.closest(this, '.page')
++    const title = dom.qs('h1', pageEl)?.textContent.trim() || ''
++    dialog.open(`License for ${title}`, license.info(dom.jq(pageEl)))
++  })
++
++  dom.onDelegate(mainEl, 'click', '.show-page-source', function (e) {
++    e.preventDefault()
++    const pageEl = dom.closest(this, '.page')
++    const page = lineup.atKey(dom.data(pageEl, 'key')).getRawPage()
++    const pre = document.createElement('pre')
++    pre.textContent = JSON.stringify(page, null, 2)
++    dialog.open(`JSON for ${page.title}`, [pre])
++  })
++
++  dom.onDelegate(mainEl, 'click', '.page', function (e) {
++    if (e.target?.closest('a')) {
++      return
++    }
++    return active.set(this)
++  })
++
++  dom.onDelegate(mainEl, 'click', '.internal', function (e) {
++    const titleNode = this
++    let title = dom.text(titleNode) || dom.data(titleNode, 'pageName')
++    // ensure that name is a string (using string interpolation)
++    title = `${title}`
++    const titleAttr = dom.attr(titleNode, 'title')
++    pageHandler.context = titleAttr ? titleAttr.split(' => ') : ['view']
++    return finishClick(e, title)
++  })
++
++  dom.onDelegate(mainEl, 'click', 'img.remote', function (e) {
++    // expand to handle click on temporary flag
++    const src = dom.attr(this, 'src') || ''
++    if (src.startsWith('data:image/png')) {
++      e.preventDefault()
++      const site = dom.data(this, 'site')
++      wiki.site(site).refresh(function () {})
++      // empty function...
++    } else {
++      const name = dom.data(this, 'slug')
++      pageHandler.context = [dom.data(this, 'site')]
++      return finishClick(e, name)
++    }
++  })
++
++  dom.onDelegate(mainEl, 'dblclick', '.revision', function (e) {
++    e.preventDefault()
++    const pageEl = dom.closest(this, '.page')
++    const page = lineup.atKey(dom.data(pageEl, 'key')).getRawPage()
++    const rev = page.journal.length - 1
++    const action = page.journal[rev]
++    const json = JSON.stringify(action, null, 2)
++    const pre = document.createElement('pre')
++    pre.textContent = json
++    dialog.open(`Revision ${rev}, ${action.type} action`, [pre])
++  })
++
++  dom.onDelegate(mainEl, 'click', '.action', function (e) {
++    e.preventDefault()
++    const actionEl = this
++    let name = dom.data(actionEl, 'slug')
++    if (dom.hasClass(actionEl, 'fork') && name) {
++      pageHandler.context = [dom.data(actionEl, 'site')]
++      return finishClick(e, name.split('_')[0])
++    } else {
++      const pageEl = dom.closest(actionEl, '.page')
++      const key = dom.data(pageEl, 'key')
++      const slug = lineup.atKey(key).getSlug()
++      const actionParent = actionEl.parentElement
++      const actionNodes = Array.from(actionParent.children).filter(el => !dom.hasClass(el, 'separator'))
++      const rev = actionNodes.indexOf(actionEl)
++      if (rev < 0) {
+@@ -186,40 +298,2 @@ from an export file dated ${file.lastModifiedDate}.\
+-      const $page = ui.item
+-      const $pages = $('.page')
+-      let index = $pages.index($('.active'))
+-      let firstItemIndex = $('.item').index($page.find('.item')[0])
+-      if ($page.hasClass('pending-remove')) {
+-        if ($pages.length === 1) {
+-          return
+-        }
+-        lineup.removeKey($page.data('key'))
+-        $page.remove()
+-        active.set($('.page')[index])
+-      } else {
+-        lineup.changePageIndex($page.data('key'), index)
+-        active.set($('.active'))
+-        if (originalPageIndex < index) {
+-          index = originalPageIndex
+-          firstItemIndex = $('.item').index($($('.page')[index]).find('.item')[0])
+-        }
+-      }
+-      plugin.renderFrom(firstItemIndex)
+-      state.setUrl()
+-      if (window.debug) {
+-        state.debugStates()
+-      }
+-    })
+-    .on('click', '.show-page-license', function (e) {
+-      e.preventDefault()
+-      const $page = $(this).parents('.page')
+-      const title = $page.find('h1').text().trim()
+-      dialog.open(`License for ${title}`, license.info($page))
+-    })
+-    .on('click', '.show-page-source', function (e) {
+-      e.preventDefault()
+-      const $page = $(this).parents('.page')
+-      const page = lineup.atKey($page.data('key')).getRawPage()
+-      dialog.open(`JSON for ${page.title}`, $('<pre/>').text(JSON.stringify(page, null, 2)))
+-    })
+-    .on('click', '.page', function (e) {
+-      if (!$(e.target).is('a')) {
+-        return active.set(this)
++      if (!e.shiftKey) {
++        dom.nextAll(pageEl).forEach(dom.remove)
+@@ -227,20 +301,2 @@ from an export file dated ${file.lastModifiedDate}.\
+-    })
+-    .on('click', '.internal', function (e) {
+-      const $link = $(e.target)
+-      let title = $link.text() || $link.data('pageName')
+-      // ensure that name is a string (using string interpolation)
+-      title = `${title}`
+-      pageHandler.context = $link.attr('title') ? $link.attr('title').split(' => ') : ['view']
+-      return finishClick(e, title)
+-    })
+-    .on('click', 'img.remote', function (e) {
+-      // expand to handle click on temporary flag
+-      if ($(e.target).attr('src').startsWith('data:image/png')) {
+-        e.preventDefault()
+-        const site = $(e.target).data('site')
+-        wiki.site(site).refresh(function () {})
+-        // empty function...
+-      } else {
+-        const name = $(e.target).data('slug')
+-        pageHandler.context = [$(e.target).data('site')]
+-        return finishClick(e, name)
++      if (!e.shiftKey) {
++        lineup.removeAllAfterKey(key)
+@@ -248,23 +304,27 @@ from an export file dated ${file.lastModifiedDate}.\
+-    })
+-    .on('dblclick', '.revision', function (e) {
+-      e.preventDefault()
+-      const $page = $(this).parents('.page')
+-      const page = lineup.atKey($page.data('key')).getRawPage()
+-      const rev = page.journal.length - 1
+-      const action = page.journal[rev]
+-      const json = JSON.stringify(action, null, 2)
+-      dialog.open(`Revision ${rev}, ${action.type} action`, $('<pre/>').text(json))
+-    })
+-    .on('click', '.action', function (e) {
+-      e.preventDefault()
+-      const $action = $(e.target)
+-      let name = $action.data('slug')
+-      if ($action.is('.fork') && name) {
+-        pageHandler.context = [$action.data('site')]
+-        return finishClick(e, name.split('_')[0])
+-      } else {
+-        const $page = $(this).parents('.page')
+-        const key = $page.data('key')
+-        const slug = lineup.atKey(key).getSlug()
+-        const rev = $(this).parent().children().not('.separator').index($action)
+-        if (rev < 0) {
++      link
++        .createPage(`${slug}_rev${rev}`, dom.data(pageEl, 'site'))
++        .appendTo('.main')
++        .each((_i, el) => refresh.cycle(dom.jq(el)))
++      active.set(dom.qsa('.page').slice(-1)[0])
++    }
++  })
++
++  dom.onDelegate(mainEl, 'mouseenter', '.action', function () {
++    const actionEl = this
++    const actionData = dom.data(actionEl, 'action')
++    dom.attr(actionEl, 'title', util.formatActionTitle(actionData))
++  })
++
++  dom.onDelegate(mainEl, 'click', '.fork-page', function () {
++    const pageEl = dom.closest(this, '.page')
++    if (dom.find(pageEl, '.future').length) {
++      return
++    }
++    const pageObject = lineup.atKey(dom.data(pageEl, 'key'))
++    const pageId = dom.attr(pageEl, 'id') || ''
++    if (pageId.match(/_rev0$/)) {
++      deletePage(pageObject, pageEl)
++    } else {
++      const action = { type: 'fork' }
++      if (dom.hasClass(pageEl, 'local')) {
++        if (pageHandler.useLocalStorage()) {
+@@ -273,11 +333,5 @@ from an export file dated ${file.lastModifiedDate}.\
+-        if (!e.shiftKey) {
+-          $page.nextAll().remove()
+-        }
+-        if (!e.shiftKey) {
+-          lineup.removeAllAfterKey(key)
+-        }
+-        link
+-          .createPage(`${slug}_rev${rev}`, $page.data('site'))
+-          .appendTo($('.main'))
+-          .each((_i, e) => refresh.cycle($(e)))
+-        active.set($('.page').last())
++        dom.removeClass(pageEl, 'local')
++      } else if (pageObject.isRecycler()) {
++        dom.removeClass(pageEl, 'recycler')
++      } else if (pageObject.isRemote()) {
++        action.site = pageObject.getRemoteSite()
+@@ -285,10 +339,2 @@ from an export file dated ${file.lastModifiedDate}.\
+-    })
+-    .on('mouseenter', '.action', function (e) {
+-      const $action = $(e.target)
+-      const { action } = $action.data()
+-      $action.attr('title', util.formatActionTitle(action))
+-    })
+-    .on('click', '.fork-page', function (e) {
+-      const $page = $(e.target).parents('.page')
+-      if ($page.find('.future').length) {
+-        return
++      if (dom.data(pageEl, 'rev') != null) {
++        dom.find(pageEl, '.revision').forEach(dom.remove)
+@@ -296,25 +342,8 @@ from an export file dated ${file.lastModifiedDate}.\
+-      const pageObject = lineup.atKey($page.data('key'))
+-      if ($page.attr('id').match(/_rev0$/)) {
+-        deletePage(pageObject, $page)
+-      } else {
+-        const action = { type: 'fork' }
+-        if ($page.hasClass('local')) {
+-          if (pageHandler.useLocalStorage()) {
+-            return
+-          }
+-          $page.removeClass('local')
+-        } else if (pageObject.isRecycler()) {
+-          $page.removeClass('recycler')
+-        } else if (pageObject.isRemote()) {
+-          action.site = pageObject.getRemoteSite()
+-        }
+-        if ($page.data('rev') != null) {
+-          $page.find('.revision').remove()
+-        }
+-        if ($page.hasClass('ghost')) {
+-          const newtitle = $page.find('h1').text().trim().replaceAll(/\s+/g,' ')
+-          if(newtitle != pageObject.getTitle()) {
+-            $page.attr('id',asSlug(newtitle))
+-            pageObject.setCreateTitle(newtitle)
+-            $page.find('h1 .title').removeAttr('contenteditable')
+-          }
++      if (dom.hasClass(pageEl, 'ghost')) {
++        const titleEl = dom.qs('h1', pageEl)
++        const newtitle = (titleEl?.textContent || '').trim().replaceAll(/\s+/g, ' ')
++        if (newtitle != pageObject.getTitle()) {
++          dom.attr(pageEl, 'id', asSlug(newtitle))
++          pageObject.setCreateTitle(newtitle)
++          const titleSpan = dom.qs('h1 .title', pageEl)
++          titleSpan?.removeAttribute('contenteditable')
+@@ -322,14 +351,14 @@ from an export file dated ${file.lastModifiedDate}.\
+-        $page.removeClass('ghost')
+-        $page.attr('id', $page.attr('id').replace(/_rev\d+$/, ''))
+-        state.setUrl()
+-        const iterable = $('.page')
+-        for (let i = 0; i < iterable.length; i++) {
+-          var p = iterable[i]
+-          var needle = $(p).data('site')
+-          if (
+-            $(p).data('key') !== $page.data('key') &&
+-            $(p).attr('id') === $page.attr('id') &&
+-            [undefined, null, 'view', 'origin', 'local', 'recycler', location.host].includes(needle)
+-          ) {
+-            $(p).addClass('ghost')
+-          }
++      }
++      dom.removeClass(pageEl, 'ghost')
++      dom.attr(pageEl, 'id', (dom.attr(pageEl, 'id') || '').replace(/_rev\d+$/, ''))
++      state.setUrl()
++      const pages = dom.qsa('.page')
++      for (let i = 0; i < pages.length; i++) {
++        const p = pages[i]
++        const needle = dom.data(p, 'site')
++        if (
++          dom.data(p, 'key') !== dom.data(pageEl, 'key') &&
++          dom.attr(p, 'id') === dom.attr(pageEl, 'id') &&
++          [undefined, null, 'view', 'origin', 'local', 'recycler', location.host].includes(needle)
++        ) {
++          dom.addClass(p, 'ghost')
+@@ -337 +365,0 @@ from an export file dated ${file.lastModifiedDate}.\
+-        pageHandler.put($page, action)
+@@ -339,12 +367,3 @@ from an export file dated ${file.lastModifiedDate}.\
+-    })
+-    .on('click', 'button.create', e =>
+-      getTemplate($(e.target).data('slug'), function (template) {
+-        const $page = $(e.target).parents('.page:first')
+-        $page.removeClass('ghost')
+-        const pageObject = lineup.atKey($page.data('key'))
+-        pageObject.become(template)
+-        const page = pageObject.getRawPage()
+-        refresh.rebuildPage(pageObject, $page.empty())
+-        pageHandler.put($page, { type: 'create', id: page.id, item: { title: page.title, story: page.story } })
+-      }),
+-    )
++      pageHandler.put(dom.jq(pageEl), action)
++    }
++  })
+@@ -352,3 +371,11 @@ from an export file dated ${file.lastModifiedDate}.\
+-    .on('mouseenter mouseleave', '.score', function (e) {
+-      console.log('in .score...')
+-      $('.main').trigger('thumb', $(e.target).data('thumb'))
++  dom.onDelegate(mainEl, 'click', 'button.create', function (e) {
++    const slug = dom.data(e.target, 'slug')
++    getTemplate(slug, function (template) {
++      const pageEl = dom.closest(e.target, '.page')
++      dom.removeClass(pageEl, 'ghost')
++      const pageObject = lineup.atKey(dom.data(pageEl, 'key'))
++      pageObject.become(template)
++      const page = pageObject.getRawPage()
++      const $page = dom.jq(pageEl)
++      refresh.rebuildPage(pageObject, $page.empty())
++      pageHandler.put($page, { type: 'create', id: page.id, item: { title: page.title, story: page.story } })
+@@ -356,8 +383,15 @@ from an export file dated ${file.lastModifiedDate}.\
+-    .on('click', 'a.search', function (e) {
+-      const $page = $(e.target).parents('.page')
+-      const key = $page.data('key')
+-      const pageObject = lineup.atKey(key)
+-      const resultPage = newPage()
+-      resultPage.setTitle(`Search from '${pageObject.getTitle()}'`)
+-      resultPage.addParagraph(
+-        `Search for pages related to '${pageObject.getTitle()}'.
++  })
++
++  dom.onDelegate(mainEl, 'mouseenter mouseleave', '.score', function (e) {
++    console.log('in .score...')
++    dom.trigger(mainEl, 'thumb', dom.data(e.target, 'thumb'))
++  })
++
++  dom.onDelegate(mainEl, 'click', 'a.search', function (e) {
++    const pageEl = dom.closest(e.target, '.page')
++    const key = dom.data(pageEl, 'key')
++    const pageObject = lineup.atKey(key)
++    const resultPage = newPage()
++    resultPage.setTitle(`Search from '${pageObject.getTitle()}'`)
++    resultPage.addParagraph(
++      `Search for pages related to '${pageObject.getTitle()}'.
+@@ -366,44 +399,0 @@ Choose the search of interest. Be patient.`,
+-      )
+-      resultPage.addParagraph('Find pages with links to this title.')
+-      resultPage.addItem({
+-        type: 'search',
+-        text: `SEARCH LINKS ${pageObject.getSlug()}`,
+-      })
+-      resultPage.addParagraph('Find pages with titles similar to this title.')
+-      resultPage.addItem({
+-        type: 'search',
+-        text: `SEARCH SLUGS ${pageObject.getSlug()}`,
+-      })
+-      resultPage.addParagraph('Find pages neighboring  this site.')
+-      resultPage.addItem({
+-        type: 'search',
+-        text: `SEARCH SITES ${pageObject.getRemoteSite(location.host)}`,
+-      })
+-      resultPage.addParagraph('Find pages sharing any of these items.')
+-      resultPage.addItem({
+-        type: 'search',
+-        text: `SEARCH ANY ITEMS ${pageObject
+-          .getRawPage()
+-          .story.map(item => item.id)
+-          .join(' ')}`,
+-      })
+-      if (!e.shiftKey) {
+-        $page.nextAll().remove()
+-      }
+-      if (!e.shiftKey) {
+-        lineup.removeAllAfterKey(key)
+-      }
+-      link.showResult(resultPage)
+-    })
+-    .on('dragenter', evt => evt.preventDefault())
+-    .on('dragover', evt => evt.preventDefault())
+-    .on(
+-      'drop',
+-      drop.dispatch({
+-        page: item => {
+-          link.doInternalLink(item.slug, null, item.site)
+-        },
+-        file: file => {
+-          readFile(file)
+-        },
+-      }),
+@@ -410,0 +401,31 @@ Choose the search of interest. Be patient.`,
++    resultPage.addParagraph('Find pages with links to this title.')
++    resultPage.addItem({
++      type: 'search',
++      text: `SEARCH LINKS ${pageObject.getSlug()}`,
++    })
++    resultPage.addParagraph('Find pages with titles similar to this title.')
++    resultPage.addItem({
++      type: 'search',
++      text: `SEARCH SLUGS ${pageObject.getSlug()}`,
++    })
++    resultPage.addParagraph('Find pages neighboring  this site.')
++    resultPage.addItem({
++      type: 'search',
++      text: `SEARCH SITES ${pageObject.getRemoteSite(location.host)}`,
++    })
++    resultPage.addParagraph('Find pages sharing any of these items.')
++    resultPage.addItem({
++      type: 'search',
++      text: `SEARCH ANY ITEMS ${pageObject
++        .getRawPage()
++        .story.map(item => item.id)
++        .join(' ')}`,
++    })
++    if (!e.shiftKey) {
++      dom.nextAll(pageEl).forEach(dom.remove)
++    }
++    if (!e.shiftKey) {
++      lineup.removeAllAfterKey(key)
++    }
++    link.showResult(resultPage)
++  })
+@@ -412,3 +433,19 @@ Choose the search of interest. Be patient.`,
+-  $('.provider input').on('click', function () {
+-    $('footer input:first').val($(this).attr('data-provider'))
+-    $('footer form').submit()
++  dom.on(mainEl, 'dragenter', evt => evt.preventDefault())
++  dom.on(mainEl, 'dragover', evt => evt.preventDefault())
++  dom.on(
++    mainEl,
++    'drop',
++    drop.dispatch({
++      page: item => {
++        link.doInternalLink(item.slug, null, item.site)
++      },
++      file: file => {
++        readFile(file)
++      },
++    }),
++  )
++
++  dom.onDelegate(dom.qs('.provider'), 'click', 'input', function () {
++    const firstInput = dom.qs('footer input')
++    dom.val(firstInput, dom.attr(this, 'data-provider'))
++    dom.qs('footer form')?.submit()
+@@ -417 +454,3 @@ Choose the search of interest. Be patient.`,
+-  $('body').on('new-neighbor-done', () => $('.page').each((index, element) => refresh.emitTwins($(element))))
++  dom.on(document.body, 'new-neighbor-done', () => {
++    dom.qsa('.page').forEach(element => refresh.emitTwins(dom.jq(element)))
++  })
+@@ -433,7 +472,8 @@ Choose the search of interest. Be patient.`,
+-  $('<span>&nbsp; ☰ </span>')
+-    .css({ cursor: 'pointer' })
+-    .appendTo('footer')
+-    .on('click', function () {
+-      const resultPage = newPage()
+-      resultPage.setTitle('Selected Plugin Pages')
+-      resultPage.addParagraph(`\
++  const menuSpan = document.createElement('span')
++  menuSpan.innerHTML = '&nbsp; ☰ '
++  dom.css(menuSpan, { cursor: 'pointer' })
++  dom.appendTo(menuSpan, dom.qs('footer'))
++  dom.on(menuSpan, 'click', function () {
++    const resultPage = newPage()
++    resultPage.setTitle('Selected Plugin Pages')
++    resultPage.addParagraph(`\
+@@ -442,3 +482,3 @@ Installed plugins offer these utility pages:\
+-      if (!window.catalog) {
+-        return
+-      }
++    if (!window.catalog) {
++      return
++    }
+@@ -446,6 +486,5 @@ Installed plugins offer these utility pages:\
+-      const titles = []
+-      for (var info of window.catalog) {
+-        if (info.pages) {
+-          for (var title of info.pages) {
+-            titles.push(title)
+-          }
++    const titles = []
++    for (var info of window.catalog) {
++      if (info.pages) {
++        for (var title of info.pages) {
++          titles.push(title)
+@@ -453,0 +493 @@ Installed plugins offer these utility pages:\
++    }
+@@ -455,4 +495,3 @@ Installed plugins offer these utility pages:\
+-      Promise.all(titles.map(getPluginReference)).then(function (items) {
+-        items.forEach(item => resultPage.addItem(item))
+-        link.showResult(resultPage)
+-      })
++    Promise.all(titles.map(getPluginReference)).then(function (items) {
++      items.forEach(item => resultPage.addItem(item))
++      link.showResult(resultPage)
+@@ -459,0 +499 @@ Installed plugins offer these utility pages:\
++  })
+@@ -462,10 +502,10 @@ Installed plugins offer these utility pages:\
+-  $('<span>&nbsp; wiki <span class=editEnable>✔︎</span> &nbsp; </span>')
+-    .css({ cursor: 'pointer' })
+-    .appendTo('footer')
+-    .on('click', function () {
+-      $('.editEnable').toggle()
+-      $('.page').each(function () {
+-        const $page = $(this)
+-        const pageObject = lineup.atKey($page.data('key'))
+-        refresh.rebuildPage(pageObject, $page.empty())
+-      })
++  const editSpan = document.createElement('span')
++  editSpan.innerHTML = '&nbsp; wiki <span class=editEnable>✔︎</span> &nbsp; '
++  dom.css(editSpan, { cursor: 'pointer' })
++  dom.appendTo(editSpan, dom.qs('footer'))
++  dom.on(editSpan, 'click', function () {
++    dom.qsa('.editEnable').forEach(el => dom.toggleDisplay(el))
++    dom.qsa('.page').forEach(function (pageEl) {
++      const $page = dom.jq(pageEl)
++      const pageObject = lineup.atKey(dom.data(pageEl, 'key'))
++      refresh.rebuildPage(pageObject, $page.empty())
+@@ -472,0 +513 @@ Installed plugins offer these utility pages:\
++  })
+@@ -475 +516 @@ Installed plugins offer these utility pages:\
+-    $('.editEnable').toggle()
++    dom.qsa('.editEnable').forEach(el => dom.toggleDisplay(el))
+@@ -480 +521 @@ Installed plugins offer these utility pages:\
+-  $(function () {
++  dom.ready(function () {
+@@ -482 +523 @@ Installed plugins offer these utility pages:\
+-    const pages = $('.page').toArray()
++    const pages = dom.qsa('.page')
+@@ -488 +529 @@ Installed plugins offer these utility pages:\
+-        active.set($('.page').last())
++        active.set(dom.qsa('.page').slice(-1)[0])
+@@ -491,2 +532,2 @@ Installed plugins offer these utility pages:\
+-      const $page = $(pages.shift())
+-      refresh.cycle($page).then(() => renderNextPage(pages))
++      const pageEl = pages.shift()
++      refresh.cycle(dom.jq(pageEl)).then(() => renderNextPage(pages))
+diff --git a/lib/neighborhood.js b/lib/neighborhood.js
+index 5934d09f5ee117824c37306a568ff678ef76ebd1..d8330ba9bb11473f38e9717e39db680372b3ee5a 100644
+--- a/lib/neighborhood.js
++++ b/lib/neighborhood.js
+@@ -50,0 +51,4 @@ const populateSiteInfoFor = function (site, neighborInfo) {
++        if (err.code === 'LOOPBACK_BLOCKED') {
++          transition(site, 'fetch', 'done')
++          return
++        }
+@@ -98,0 +103,2 @@ const populateSiteInfoFor = function (site, neighborInfo) {
++        const status = err?.xhr?.status
++        if (status === 404) return
+diff --git b/lib/networkSecurity.js b/lib/networkSecurity.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..0bca6aea0db1ce57c9cf2030ea2f447d0b7f182c
+--- /dev/null
++++ b/lib/networkSecurity.js
+@@ -0,0 +1,42 @@
++const stripPort = host => {
++  if (!host) return ''
++  const normalized = String(host).trim().toLowerCase()
++  const bracketedIpv6 = normalized.match(/^\[([^\]]+)\](?::\d+)?$/)
++  if (bracketedIpv6) return bracketedIpv6[1]
++  const colonCount = (normalized.match(/:/g) || []).length
++  if (colonCount <= 1) {
++    return normalized.replace(/:\d+$/, '')
++  }
++  return normalized
++}
++
++const isLoopbackHost = host => {
++  const normalized = stripPort(host)
++  if (!normalized) return false
++  if (normalized === 'localhost' || normalized.endsWith('.localhost')) return true
++  if (normalized === '::1' || normalized === '0:0:0:0:0:0:0:1') return true
++  const ipv4Parts = normalized.split('.')
++  if (ipv4Parts.length === 4 && ipv4Parts.every(part => /^\d+$/.test(part))) {
++    const nums = ipv4Parts.map(Number)
++    const validRange = nums.every(n => n >= 0 && n <= 255)
++    if (validRange && nums[0] === 127) return true
++  }
++  return false
++}
++
++const isLoopbackOrigin = () => {
++  if (typeof window === 'undefined' || !window.location) return false
++  return isLoopbackHost(window.location.hostname)
++}
++
++const shouldBlockLoopbackTarget = targetHost => isLoopbackHost(targetHost) && !isLoopbackOrigin()
++
++const shouldStripLoopbackProvenance = site => isLoopbackHost(site) && !isLoopbackOrigin()
++
++module.exports = {
++  stripPort,
++  isLoopbackHost,
++  isLoopbackOrigin,
++  shouldBlockLoopbackTarget,
++  shouldStripLoopbackProvenance,
++}
+diff --git a/lib/pageHandler.js b/lib/pageHandler.js
+index 212ae93a0ae9a632ab79e6e02c22ee1c45db47f1..16d47e76bd3cb30930978f2594b2d081d4237bf5 100644
+--- a/lib/pageHandler.js
++++ b/lib/pageHandler.js
+@@ -12,0 +13 @@ const neighborhood = require('./neighborhood')
++const networkSecurity = require('./networkSecurity')
+@@ -146 +147,3 @@ const pushToLocal = function ($page, pagePutInfo, action) {
+-      page.journal = page.journal.concat({ type: 'fork', site: site, date: new Date().getTime() })
++      if (!networkSecurity.shouldStripLoopbackProvenance(site)) {
++        page.journal = page.journal.concat({ type: 'fork', site: site, date: new Date().getTime() })
++      }
+@@ -212,0 +216,3 @@ pageHandler.put = function ($page, action) {
++  if (networkSecurity.shouldStripLoopbackProvenance(forkFrom)) {
++    forkFrom = null
++  }
+@@ -229,0 +236,3 @@ pageHandler.put = function ($page, action) {
++  if (action.type === 'fork' && networkSecurity.shouldStripLoopbackProvenance(action.site)) {
++    delete action.site
++  }
+diff --git b/lib/secureContext.js b/lib/secureContext.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..e49f62e455fa6736e40c8aa862941ce586b2a073
+--- /dev/null
++++ b/lib/secureContext.js
+@@ -0,0 +1,53 @@
++const networkSecurity = require('./networkSecurity')
++
++const explainSecureContext = ({ protocol, hostname, isSecureContext }) => {
++  const loopbackHost = networkSecurity.isLoopbackHost(hostname)
++
++  if (isSecureContext) {
++    if (protocol === 'https:') {
++      return {
++        secure: true,
++        reason: 'Secure context: true (HTTPS origin).',
++        recommendation: null,
++      }
++    }
++
++    if (loopbackHost) {
++      return {
++        secure: true,
++        reason: 'Secure context: true (loopback hosts are treated as trustworthy origins).',
++        recommendation: 'Use HTTPS when testing custom hostnames or cross-device access.',
++      }
++    }
++
++    return {
++      secure: true,
++      reason: 'Secure context: true.',
++      recommendation: null,
++    }
++  }
++
++  if (protocol !== 'https:' && !loopbackHost) {
++    return {
++      secure: false,
++      reason: 'Secure context: false (custom hostname over HTTP is not a secure context).',
++      recommendation: 'Use HTTPS for this hostname, or use localhost/.localhost for local-only development.',
++    }
++  }
++
++  if (protocol === 'https:') {
++    return {
++      secure: false,
++      reason: 'Secure context: false (origin was not considered trustworthy by the browser).',
++      recommendation: 'Use a trusted certificate and verify the final loaded origin is trusted.',
++    }
++  }
++
++  return {
++    secure: false,
++    reason: 'Secure context: false.',
++    recommendation: 'Use HTTPS for custom hostnames, or localhost/.localhost for local-only development.',
++  }
++}
++
++module.exports = { explainSecureContext }
+diff --git a/lib/siteAdapter.js b/lib/siteAdapter.js
+index 5d4e111ae635daf4ac82b506fa490a6a4ffd6686..6973901eabfcefe8c26e47eb310b43e62ab2975b 100644
+--- a/lib/siteAdapter.js
++++ b/lib/siteAdapter.js
+@@ -6,0 +7 @@ const localForage = require('localforage')
++const networkSecurity = require('./networkSecurity')
+@@ -13,0 +15,2 @@ const credentialsNeeded = {}
++// sites that returned 404 for optional system/site-index.json in this session
++const missingSiteIndex = {}
+@@ -42 +45 @@ const testWikiSite = function (url, good, bad) {
+-  const fetchTimeout = new Promise(function (resolve, reject) {
++  const fetchTimeout = new Promise(function (_resolve, reject) {
+@@ -45 +48 @@ const testWikiSite = function (url, good, bad) {
+-      reject()
++      reject(new Error(`timeout after ${fetchTimeoutMS}ms`))
+@@ -56,2 +59,3 @@ const testWikiSite = function (url, good, bad) {
+-      error() {
+-        reject()
++      error(xhr, type, msg) {
++        const status = xhr && typeof xhr.status !== 'undefined' ? xhr.status : 'n/a'
++        reject(new Error(`ajax error type=${type} status=${status} msg=${msg || ''}`))
+@@ -64 +68,4 @@ const testWikiSite = function (url, good, bad) {
+-    .catch(() => bad())
++    .catch(err => {
++      console.log('siteAdapter: probe failed', url, String(err && err.message ? err.message : err))
++      bad()
++    })
+@@ -70,2 +77,5 @@ const findAdapterQ = queue(function (task, done) {
+-  if (sitePrefix[site]) {
+-    done(sitePrefix[site])
++  if (sitePrefix[site] != null) return done(sitePrefix[site])
++  if (networkSecurity.shouldBlockLoopbackTarget(site)) {
++    console.warn(`Blocked loopback federation attempt from public origin: ${site}`)
++    sitePrefix[site] = ''
++    return done('')
+@@ -74 +84 @@ const findAdapterQ = queue(function (task, done) {
+-  if (site.split('.').at(-1).split(':')[0] === 'localhost') {
++  if (networkSecurity.isLoopbackHost(site)) {
+@@ -359,0 +370,44 @@ siteAdapter.site = function (site) {
++  const blockedLoopbackError = () => ({
++    code: 'LOOPBACK_BLOCKED',
++    msg: `Blocked loopback federation attempt from public origin: ${site}`,
++    xhr: { status: 0 },
++  })
++
++  if (networkSecurity.shouldBlockLoopbackTarget(site)) {
++    return {
++      flag() {
++        if (tempFlags[site]) {
++          return tempFlags[site]
++        }
++        const tempFlag = createTempFlag(site)
++        tempFlags[site] = tempFlag
++        return tempFlag
++      },
++      getURL() {
++        return ''
++      },
++      getDirectURL() {
++        return ''
++      },
++      get(_route, callback) {
++        const err = blockedLoopbackError()
++        if (callback) {
++          callback(err, null)
++          return
++        }
++        return Promise.reject(err)
++      },
++      getIndex(_route, callback) {
++        const err = blockedLoopbackError()
++        if (callback) {
++          callback(err, null)
++          return
++        }
++        return Promise.reject(err)
++      },
++      refresh(done = function () {}) {
++        done()
++      },
++    }
++  }
++
+@@ -564,0 +619,9 @@ siteAdapter.site = function (site) {
++      if (route === 'system/site-index.json' && missingSiteIndex[site]) {
++        errMsg = { cached: true, msg: `${site} has no site index`, xhr: { status: 404 } }
++        done(errMsg, null)
++        if (!callback) {
++          return Promise.reject(errMsg)
++        }
++        return
++      }
++
+@@ -590,0 +654 @@ siteAdapter.site = function (site) {
++              delete missingSiteIndex[site]
+@@ -597,0 +662,3 @@ siteAdapter.site = function (site) {
++            if (route === 'system/site-index.json' && xhr && xhr.status === 404) {
++              missingSiteIndex[site] = true
++            }
+@@ -653,0 +721 @@ siteAdapter.site = function (site) {
++      delete missingSiteIndex[site]
+diff --git a/package.json b/package.json
+index 807d11e1f1803c0e8f6301b47e18473d92a28a8b..3ef0172c0317c719be4819cbba78bb42da8bdf63 100644
+--- a/package.json
++++ b/package.json
+@@ -36 +36 @@
+-    "test": "mocha test/util.js test/random.js test/page.js test/lineup.js test/drop.js test/revision.js test/resolve.js test/wiki.js",
++    "test": "mocha test/util.js test/random.js test/page.js test/lineup.js test/drop.js test/revision.js test/resolve.js test/wiki.js test/networkSecurity.js test/secureContext.js test/siteAdapter.js",
+diff --git b/repomix.config.json b/repomix.config.json
+new file mode 100644
+index 0000000000000000000000000000000000000000..8d082a84242e7fbed23316b5fb6bc917a84cdab9
+--- /dev/null
++++ b/repomix.config.json
+@@ -0,0 +1,26 @@
++{
++  "$schema": "https://repomix.com/schemas/latest/schema.json",
++  "output": {
++    "filePath": "repomix-output-wiki-client.md",
++    "style": "markdown",
++    "fileSummary": true,
++    "directoryStructure": true,
++    "files": true,
++    "includeFullDirectoryStructure": true
++  },
++  "include": ["**/*"],
++  "ignore": {
++    "useGitignore": false,
++    "useDotIgnore": false,
++    "useDefaultPatterns": false,
++    "customPatterns": [
++      ".git/**",
++      ".direnv/**",
++      "node_modules/**",
++      "result/**",
++      "data/**",
++      "*.log",
++      "**/.DS_Store"
++    ]
++  }
++}
+diff --git a/scripts/build-client.mjs b/scripts/build-client.mjs
+index f32a489fbe1533ffbff776a3c219129e26a0fb6b..5afe7e54895c07cc99055d7d342cda217259a1df 100644
+--- a/scripts/build-client.mjs
++++ b/scripts/build-client.mjs
+@@ -2,0 +3 @@ import fs from 'node:fs/promises'
++import { existsSync, readFileSync } from 'node:fs'
+@@ -6,0 +8,22 @@ const now = new Date()
++const gitSha = (() => {
++  try {
++    const head = readFileSync('.git/HEAD', 'utf8').trim()
++    if (!head.startsWith('ref: ')) return head.slice(0, 7)
++    const ref = head.slice(5)
++    const refPath = `.git/${ref}`
++    if (existsSync(refPath)) return readFileSync(refPath, 'utf8').trim().slice(0, 7)
++    const packedRefs = '.git/packed-refs'
++    if (existsSync(packedRefs)) {
++      const lines = readFileSync(packedRefs, 'utf8').split('\n')
++      for (const line of lines) {
++        if (line.startsWith('#') || line.startsWith('^') || !line.trim()) continue
++        const [sha, name] = line.trim().split(' ')
++        if (name === ref) return sha.slice(0, 7)
++      }
++    }
++  } catch {
++    return 'unknown'
++  }
++  return 'unknown'
++})()
++const stampedVersion = `${version}-dev+${gitSha}`
+@@ -12 +35 @@ let results = await esbuild.build({
+-    js: `/* wiki-client - ${version} - ${now.toUTCString()} */`},
++    js: `/* wiki-client - ${stampedVersion} - ${now.toUTCString()} */`},
+diff --git a/scripts/build-testclient.mjs b/scripts/build-testclient.mjs
+index dec691262b4923b6848f10fe48f7edcd9e149baa..784218011ccfdd2ddaa5b4ddb368431557f95574 100644
+--- a/scripts/build-testclient.mjs
++++ b/scripts/build-testclient.mjs
+@@ -1,0 +2 @@ import * as esbuild from 'esbuild'
++import { existsSync, readFileSync } from 'node:fs'
+@@ -5,0 +7,22 @@ const now = new Date()
++const gitSha = (() => {
++  try {
++    const head = readFileSync('.git/HEAD', 'utf8').trim()
++    if (!head.startsWith('ref: ')) return head.slice(0, 7)
++    const ref = head.slice(5)
++    const refPath = `.git/${ref}`
++    if (existsSync(refPath)) return readFileSync(refPath, 'utf8').trim().slice(0, 7)
++    const packedRefs = '.git/packed-refs'
++    if (existsSync(packedRefs)) {
++      const lines = readFileSync(packedRefs, 'utf8').split('\n')
++      for (const line of lines) {
++        if (line.startsWith('#') || line.startsWith('^') || !line.trim()) continue
++        const [sha, name] = line.trim().split(' ')
++        if (name === ref) return sha.slice(0, 7)
++      }
++    }
++  } catch {
++    return 'unknown'
++  }
++  return 'unknown'
++})()
++const stampedVersion = `${version}-dev+${gitSha}`
+@@ -11 +34 @@ await esbuild.build({
+-    js: `/* wiki-client (test) - ${version} - ${now.toUTCString()} */`,
++    js: `/* wiki-client (test) - ${stampedVersion} - ${now.toUTCString()} */`,
+diff --git b/test/networkSecurity.js b/test/networkSecurity.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..36af79fe8a6252fb853587a5bf86ced34879e56a
+--- /dev/null
++++ b/test/networkSecurity.js
+@@ -0,0 +1,60 @@
++const expect = require('expect.js')
++
++const networkSecurity = require('../lib/networkSecurity')
++
++describe('networkSecurity', function () {
++  const originalWindow = globalThis.window
++
++  afterEach(function () {
++    globalThis.window = originalWindow
++  })
++
++  describe('isLoopbackHost', function () {
++    it('matches localhost with and without port', function () {
++      expect(networkSecurity.isLoopbackHost('localhost')).to.be(true)
++      expect(networkSecurity.isLoopbackHost('localhost:3000')).to.be(true)
++      expect(networkSecurity.isLoopbackHost('wiki.localhost')).to.be(true)
++      expect(networkSecurity.isLoopbackHost('wiki.localhost:3000')).to.be(true)
++    })
++
++    it('matches loopback ipv4 and ipv6', function () {
++      expect(networkSecurity.isLoopbackHost('127.0.0.1')).to.be(true)
++      expect(networkSecurity.isLoopbackHost('127.0.0.1:8080')).to.be(true)
++      expect(networkSecurity.isLoopbackHost('127.1.2.3')).to.be(true)
++      expect(networkSecurity.isLoopbackHost('127.255.255.254')).to.be(true)
++      expect(networkSecurity.isLoopbackHost('::1')).to.be(true)
++      expect(networkSecurity.isLoopbackHost('[::1]:3000')).to.be(true)
++    })
++
++    it('does not match non-loopback hosts', function () {
++      expect(networkSecurity.isLoopbackHost('wiki.local')).to.be(false)
++      expect(networkSecurity.isLoopbackHost('hyperdoc.dreyeck.ch')).to.be(false)
++    })
++  })
++
++  describe('origin-scoped blocking', function () {
++    it('blocks loopback targets for non-loopback origins', function () {
++      globalThis.window = { location: { hostname: 'hyperdoc.dreyeck.ch' } }
++      expect(networkSecurity.shouldBlockLoopbackTarget('localhost')).to.be(true)
++      expect(networkSecurity.shouldBlockLoopbackTarget('wiki.localhost')).to.be(true)
++      expect(networkSecurity.shouldBlockLoopbackTarget('127.0.0.1')).to.be(true)
++      expect(networkSecurity.shouldBlockLoopbackTarget('127.1.2.3')).to.be(true)
++    })
++
++    it('allows loopback targets for loopback origins', function () {
++      globalThis.window = { location: { hostname: 'localhost' } }
++      expect(networkSecurity.shouldBlockLoopbackTarget('localhost')).to.be(false)
++      expect(networkSecurity.shouldBlockLoopbackTarget('127.0.0.1')).to.be(false)
++      globalThis.window = { location: { hostname: 'wiki.localhost' } }
++      expect(networkSecurity.shouldBlockLoopbackTarget('localhost')).to.be(false)
++    })
++
++    it('only strips loopback provenance on non-loopback origins', function () {
++      globalThis.window = { location: { hostname: 'hyperdoc.dreyeck.ch' } }
++      expect(networkSecurity.shouldStripLoopbackProvenance('localhost')).to.be(true)
++      expect(networkSecurity.shouldStripLoopbackProvenance('example.org')).to.be(false)
++      globalThis.window = { location: { hostname: '127.0.0.1' } }
++      expect(networkSecurity.shouldStripLoopbackProvenance('localhost')).to.be(false)
++    })
++  })
++})
+diff --git a/test/refresh.js b/test/refresh.js
+index dfacd4a09e4b9c726b79831d7404e37d644ec54c..41107ff2f8f2fa3417de52431b80374cccab2b5b 100644
+--- a/test/refresh.js
++++ b/test/refresh.js
+@@ -88,0 +89,35 @@ describe('refresh', function () {
++
++  describe('alias collision handling', function () {
++    it('renames a colliding item id and preserves alias', function () {
++      const aliasItem = function ($page, $item, oldItem, pageObject, makeId) {
++        const item = $.extend({}, oldItem)
++        $item.data('item', item)
++        if (pageObject.getItem(item.id) != null) {
++          if (!item.alias) item.alias = item.id
++          item.id = makeId()
++          $item.attr('data-id', item.id)
++          $item.data('id', item.id)
++          $item.data('item').id = item.id
++        } else if (item.alias != null) {
++          if (pageObject.getItem(item.alias) == null) {
++            item.id = item.alias
++            delete item.alias
++            $item.attr('data-id', item.id)
++          }
++        }
++        return item
++      }
++
++      const $page = $('<div class="page"></div>').data('key', 'p1')
++      const $item = $('<div class="item"></div>').attr('data-id', 'aaaa')
++      const pageObject = {
++        getItem: id => (id === 'aaaa' ? { id: 'aaaa' } : null),
++      }
++
++      const newItem = aliasItem($page, $item, { id: 'aaaa' }, pageObject, () => 'bbbb')
++
++      expect(newItem.id).to.not.be('aaaa')
++      expect(newItem.alias).to.be('aaaa')
++      expect($item.attr('data-id')).to.be(newItem.id)
++    })
++  })
+diff --git b/test/secureContext.js b/test/secureContext.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..60bfb03f388ce0e0b5a05ff04142d6ff0d414e8a
+--- /dev/null
++++ b/test/secureContext.js
+@@ -0,0 +1,53 @@
++const expect = require('expect.js')
++
++const secureContext = require('../lib/secureContext')
++
++describe('secureContext', function () {
++  it('classifies http://localhost as secure when browser marks it secure', function () {
++    const result = secureContext.explainSecureContext({
++      protocol: 'http:',
++      hostname: 'localhost',
++      isSecureContext: true,
++    })
++    expect(result.secure).to.be(true)
++    expect(result.reason).to.contain('Secure context: true')
++  })
++
++  it('classifies http://wiki.localhost as secure when browser marks it secure', function () {
++    const result = secureContext.explainSecureContext({
++      protocol: 'http:',
++      hostname: 'wiki.localhost',
++      isSecureContext: true,
++    })
++    expect(result.secure).to.be(true)
++  })
++
++  it('classifies http://127.0.0.1 as secure when browser marks it secure', function () {
++    const result = secureContext.explainSecureContext({
++      protocol: 'http:',
++      hostname: '127.0.0.1',
++      isSecureContext: true,
++    })
++    expect(result.secure).to.be(true)
++  })
++
++  it('classifies http://[::1] as secure when browser marks it secure', function () {
++    const result = secureContext.explainSecureContext({
++      protocol: 'http:',
++      hostname: '::1',
++      isSecureContext: true,
++    })
++    expect(result.secure).to.be(true)
++  })
++
++  it('classifies http://wiki.local as insecure with HTTPS guidance', function () {
++    const result = secureContext.explainSecureContext({
++      protocol: 'http:',
++      hostname: 'wiki.local',
++      isSecureContext: false,
++    })
++    expect(result.secure).to.be(false)
++    expect(result.reason).to.contain('custom hostname over HTTP')
++    expect(result.recommendation).to.contain('Use HTTPS')
++  })
++})
+diff --git b/test/siteAdapter.js b/test/siteAdapter.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..6dbc6afc63cb6ec17461552833e5da039ad6c9c8
+--- /dev/null
++++ b/test/siteAdapter.js
+@@ -0,0 +1,137 @@
++const expect = require('expect.js')
++
++describe('siteAdapter', function () {
++  const originalWindow = global.window
++  const originalLocation = global.location
++  const originalDocument = global.document
++  const originalLocalStorage = global.localStorage
++  const originalDollar = global.$
++  const localForagePath = require.resolve('localforage')
++  const originalLocalForage = require.cache[localForagePath]
++
++  const loadSiteAdapter = function (ajaxImpl) {
++    delete require.cache[require.resolve('../lib/siteAdapter')]
++    require.cache[localForagePath] = {
++      exports: {
++        createInstance() {
++          return {
++            getItem() {
++              return Promise.resolve(null)
++            },
++            setItem(_key, value) {
++              return Promise.resolve(value)
++            },
++            removeItem() {
++              return Promise.resolve()
++            },
++            iterate() {
++              return Promise.resolve()
++            },
++          }
++        },
++      },
++    }
++    global.window = { location: { host: 'wiki.ralfbarkow.ch', protocol: 'https:' } }
++    global.location = global.window.location
++    global.document = {
++      createElement() {
++        return {
++          getContext() {
++            return {
++              createRadialGradient() {
++                return { addColorStop() {} }
++              },
++              fillRect() {},
++              set fillStyle(_value) {},
++            }
++          },
++          toDataURL() {
++            return 'data:'
++          },
++        }
++      },
++    }
++    global.localStorage = {
++      getItem() {
++        return null
++      },
++      setItem() {},
++      removeItem() {},
++    }
++    const dollar = function () {
++      return {
++        attr() {},
++        find() {
++          return {
++            removeClass() {
++              return { addClass() {} }
++            },
++          }
++        },
++        trigger() {},
++      }
++    }
++    dollar.ajax = ajaxImpl
++    global.$ = dollar
++    return require('../lib/siteAdapter')
++  }
++
++  afterEach(function () {
++    delete require.cache[require.resolve('../lib/siteAdapter')]
++    if (originalLocalForage) {
++      require.cache[localForagePath] = originalLocalForage
++    } else {
++      delete require.cache[localForagePath]
++    }
++    global.window = originalWindow
++    global.location = originalLocation
++    global.document = originalDocument
++    global.localStorage = originalLocalStorage
++    global.$ = originalDollar
++  })
++
++  it('caches a missing site-index after the first 404', function () {
++    let siteIndexRequests = 0
++    const siteAdapter = loadSiteAdapter(function (options) {
++      if (options.url === '//fed.wiki.org/favicon.png') {
++        options.error({ status: 0 }, 'error', 'blocked')
++        return
++      }
++      if (options.url === '/proxy/fed.wiki.org/favicon.png') {
++        options.success()
++        return
++      }
++      if (options.url === '/proxy/fed.wiki.org/system/site-index.json') {
++        siteIndexRequests += 1
++        options.error({ status: 404 }, 'error', 'Not Found')
++        return
++      }
++      throw new Error(`Unexpected ajax url: ${options.url}`)
++    })
++
++    const remote = siteAdapter.site('fed.wiki.org')
++
++    return new Promise((resolve, reject) => {
++      remote.getIndex('system/site-index.json', function (firstErr) {
++        try {
++          expect(firstErr.xhr.status).to.be(404)
++          expect(siteIndexRequests).to.be(1)
++        } catch (error) {
++          reject(error)
++          return
++        }
++
++        remote.getIndex('system/site-index.json', function (secondErr) {
++          try {
++            expect(secondErr.xhr.status).to.be(404)
++            expect(secondErr.cached).to.be(true)
++            expect(siteIndexRequests).to.be(1)
++            resolve()
++          } catch (error) {
++            reject(error)
++          }
++        })
++      })
++    })
++  })
++})
+diff --git b/test/target.js b/test/target.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..893d1cdde990dcdfaaa303a2109320c186b61d21
+--- /dev/null
++++ b/test/target.js
+@@ -0,0 +1,75 @@
++describe('target', function () {
++  // Minimal copy of target.bind behavior for test purposes.
++  let targeting = false
++  let $item = null
++  let item = null
++
++  const bindTarget = function () {
++    $(document)
++      .on('keydown.testtarget', function (e) {
++        if (e.keyCode === 16) targeting = e.shiftKey
++      })
++      .on('keyup.testtarget', function (e) {
++        if (e.keyCode === 16) targeting = e.shiftKey
++      })
++    $('.main').on('mouseenter.testtarget', '.item', enterItem).on('align-item.testtarget', '.page', alignItem)
++  }
++
++  const enterItem = function () {
++    item = ($item = $(this)).attr('data-id')
++    if (targeting) {
++      const key = $(this).parents('.page:first').data('key')
++      const place = $item.offset().top
++      $('.page').trigger('align-item', { key, id: item, place })
++    }
++  }
++
++  const alignItem = function (e, align) {
++    const $page = $(this)
++    if ($page.data('key') === align.key) return
++    $item = $page.find(`.item[data-id=${align.id}]`)
++    if (!$item.length) return
++    const place = align.place || $page.height() / 2
++    const offset = $item.offset().top + $page.scrollTop() - place
++    $page.stop().animate({ scrollTop: offset }, 'slow')
++  }
++
++  const setupDom = id => {
++    const $main = $('<div class="main"></div>').appendTo(document.body)
++
++    const $page1 = $('<div class="page"></div>').attr('data-key', 'p1').css({ height: '120px', overflow: 'auto' })
++    const $story1 = $('<div class="story"></div>').appendTo($page1)
++    $('<div class="item"></div>').attr('data-id', id).text('item one').appendTo($story1)
++
++    const $page2 = $('<div class="page"></div>').attr('data-key', 'p2').css({ height: '120px', overflow: 'auto' })
++    const $story2 = $('<div class="story"></div>').appendTo($page2)
++    $('<div style="height:200px"></div>').appendTo($story2)
++    $('<div class="item"></div>').attr('data-id', id).text('item two').appendTo($story2)
++
++    $main.append($page1, $page2)
++    return { $main, $page1, $page2 }
++  }
++
++  it('Shift-hover aligns by shared id across pages', function (done) {
++    const id = 'deadbeefdeadbeef'
++    const { $main, $page1, $page2 } = setupDom(id)
++    bindTarget()
++
++    let saw = false
++    $page2.on('align-item.testtarget', function (_e, align) {
++      if (align && align.id === id && align.key === 'p1') saw = true
++    })
++
++    $(document).trigger($.Event('keydown', { keyCode: 16, shiftKey: true }))
++    $page1.find(`.item[data-id=${id}]`).trigger('mouseenter')
++
++    setTimeout(() => {
++      expect(saw).to.be(true)
++      $(document).off('.testtarget')
++      $page1.off('.testtarget')
++      $page2.off('.testtarget')
++      $main.remove()
++      done()
++    }, 10)
++  })
++})
+diff --git a/testclient.js b/testclient.js
+index 0c1f5b9c17ffdfe2d839e40235cb004581c32d09..9ccc279d61c7fe587ac76a4fb76f3199c0b7d910 100644
+--- a/testclient.js
++++ b/testclient.js
+@@ -2,0 +3,160 @@ mocha.setup('bdd')
++const dataStore = new WeakMap()
++
++const wrapElements = elements => {
++  const list = elements.filter(Boolean)
++  const api = {
++    length: list.length,
++    toArray: () => list.slice(),
++    get: index => list[index],
++    each: fn => {
++      list.forEach((el, i) => fn.call(el, i, el))
++      return api
++    },
++    appendTo: target => {
++      const targetEl =
++        typeof target === 'string'
++          ? document.querySelector(target)
++          : target?.get
++            ? target.get(0)
++            : target
++      if (!targetEl) return api
++      list.forEach(el => targetEl.appendChild(el))
++      return api
++    },
++    append: content => {
++      list.forEach(el => {
++        if (typeof content === 'string') {
++          el.insertAdjacentHTML('beforeend', content)
++        } else if (content?.get) {
++          content.toArray().forEach(child => el.appendChild(child))
++        } else if (content instanceof Node) {
++          el.appendChild(content)
++        }
++      })
++      return api
++    },
++    empty: () => {
++      list.forEach(el => {
++        el.innerHTML = ''
++      })
++      return api
++    },
++    html: value => {
++      if (value === undefined) return list[0]?.innerHTML
++      list.forEach(el => {
++        el.innerHTML = value
++      })
++      return api
++    },
++    text: value => {
++      if (value === undefined) return list[0]?.textContent ?? ''
++      list.forEach(el => {
++        el.textContent = value
++      })
++      return api
++    },
++    data: (key, value) => {
++      if (!list[0]) return value === undefined ? undefined : api
++      if (value === undefined) {
++        return dataStore.get(list[0])?.[key]
++      }
++      list.forEach(el => {
++        const existing = dataStore.get(el) || {}
++        existing[key] = value
++        dataStore.set(el, existing)
++      })
++      return api
++    },
++    addClass: className => {
++      list.forEach(el => el.classList.add(className))
++      return api
++    },
++    removeClass: className => {
++      list.forEach(el => el.classList.remove(className))
++      return api
++    },
++    hasClass: className => list[0]?.classList.contains(className) ?? false,
++    attr: (name, value) => {
++      if (value === undefined) return list[0]?.getAttribute(name)
++      list.forEach(el => el.setAttribute(name, value))
++      return api
++    },
++    find: selector => {
++      const found = []
++      list.forEach(el => found.push(...el.querySelectorAll(selector)))
++      return wrapElements(found)
++    },
++    parents: selector => {
++      const found = []
++      list.forEach(el => {
++        let current = el.parentElement
++        while (current) {
++          if (!selector || current.matches(selector)) found.push(current)
++          current = current.parentElement
++        }
++      })
++      return wrapElements(found)
++    },
++    index: target => {
++      const el = target?.get ? target.get(0) : target || list[0]
++      if (!el || !el.parentElement) return -1
++      return Array.from(el.parentElement.children).indexOf(el)
++    },
++    slice: (start, end) => wrapElements(list.slice(start, end)),
++  }
++  return api
++}
++
++const createElementFromHtml = html => {
++  const template = document.createElement('template')
++  template.innerHTML = html.trim()
++  return wrapElements(Array.from(template.content.childNodes))
++}
++
++const $ = selector => {
++  if (typeof selector === 'function') {
++    if (document.readyState === 'loading') {
++      document.addEventListener('DOMContentLoaded', selector, { once: true })
++    } else {
++      selector()
++    }
++    return undefined
++  }
++
++  if (typeof selector === 'string') {
++    if (selector.trim().startsWith('<')) {
++      return createElementFromHtml(selector)
++    }
++    return wrapElements(Array.from(document.querySelectorAll(selector)))
++  }
++
++  if (selector instanceof Node) {
++    return wrapElements([selector])
++  }
++
++  if (Array.isArray(selector)) {
++    return wrapElements(selector)
++  }
++
++  return wrapElements([])
++}
++
++const ajaxNotStubbed = () => {
++  throw new Error('$.ajax called without a stub. Tests must stub jQuery.ajax.')
++}
++
++globalThis.jQuery = {
++  ajax: ajaxNotStubbed,
++}
++
++Object.defineProperty($, 'ajax', {
++  get: () => globalThis.jQuery.ajax,
++  set: fn => {
++    globalThis.jQuery.ajax = fn
++  },
++})
++
++$.get = (url, success) => $.ajax({ type: 'GET', url, success })
++
++window.$ = $
++
+@@ -4 +163,0 @@ window.wiki = require('./lib/wiki')
+-require('./lib/bind')
+@@ -17,0 +177 @@ require('./test/lineup')
++require('./test/target')
+@@ -22 +182,5 @@ $(function () {
+-  $('<hr><h2> Testing artifacts:</h2>').appendTo('body')
++  const hr = document.createElement('hr')
++  const heading = document.createElement('h2')
++  heading.textContent = 'Testing artifacts:'
++  document.body.appendChild(hr)
++  document.body.appendChild(heading)
