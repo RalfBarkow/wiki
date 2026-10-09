@@ -1,0 +1,3211 @@
+{
+  "kind": "independent actual Wiki client/server fork controls",
+  "moduleCompositionCommitOid": "9a9afef387e8c05587c95171119d627117798f56",
+  "cases": [
+    {
+      "label": "ralfbarkow",
+      "wikiRoot": "/nix/store/zdxp8kp64rklkav8la49gmgsh4dc1jqc-wiki-ralfbarkow-upstream-0.41.0-rc.3/lib/node_modules/wiki",
+      "origin": "http://remote.fixture.test:61998",
+      "source": {
+        "site": "localhost:3000",
+        "snapshotSha256": "02b4d0363aa78be3a949bb400d7c9868146fbca94bc04e880b70dcaf8c7511ee"
+      },
+      "fixtureBoundary": "localhost:3000 is fulfilled by a disposable browser route. No listener or request to the user real localhost service. Real package client/server; fixture security plugin.",
+      "tests": [
+        {
+          "name": "local source reachability from destination origin",
+          "status": "BLOCKED_BY_EXISTING_CLIENT_POLICY_OR_BROWSER",
+          "error": "Blocked loopback federation attempt from public origin: localhost:3000",
+          "actualSourceRequests": 0
+        },
+        {
+          "name": "authorized-origin readable source control",
+          "status": "PASS"
+        },
+        {
+          "name": "source unavailable",
+          "status": "PASS",
+          "error": "unavailable.fixture.test is unreachable"
+        },
+        {
+          "name": "authorized remote write with correct non-loopback fork provenance",
+          "status": "PASS",
+          "forkPageIncluded": true,
+          "journal": [
+            {
+              "type": "create",
+              "date": 1,
+              "item": {
+                "title": "Fork Contract",
+                "story": []
+              }
+            },
+            {
+              "type": "fork",
+              "site": "source.fixture.test",
+              "date": 1791565047209
+            }
+          ]
+        },
+        {
+          "name": "loopback source provenance from preloaded snapshot",
+          "status": "STRIPPED_BY_EXISTING_CLIENT",
+          "site": null,
+          "notOrdinaryAcquisition": true
+        },
+        {
+          "name": "remote write rejected without authorized cookie",
+          "status": "PASS",
+          "httpStatus": 403,
+          "remoteUnchanged": true,
+          "clientLocalFallback": true,
+          "probe": "Actual server authorization route; non-owner local-storage choice separately exercised through the existing client API, not a synthesized UI button"
+        },
+        {
+          "name": "browser rejects source without CORS approval",
+          "status": "PASS",
+          "error": "TypeError"
+        },
+        {
+          "name": "foreign browser origin cannot write without destination authorization",
+          "status": "PASS",
+          "result": "TypeError"
+        }
+      ],
+      "requests": [
+        {
+          "url": "http://remote.fixture.test:61998/view/fork-contract",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/style/style.css",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/theme/style.css",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/js/jquery-ui/1.14.2/jquery-ui.min.css",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/js/jquery-4.0.0.js",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/js/jquery-migrate-4.0.2.js",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/js/jquery-ui/1.14.2/jquery-ui.min.js",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/js/jquery.ui.touch-punch.min.js",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/js/underscore-min.js",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/client.js",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/style/print.css",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/system/factories.json",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/images/crosses.png",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/security/security.js",
+          "method": "GET",
+          "origin": "http://remote.fixture.test:61998"
+        },
+        {
+          "url": "http://remote.fixture.test:61998/images/noise.png",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/fork-contract.json",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/plugins/code/code.js",
+          "method": "GET",
+          "origin": "http://remote.fixture.test:61998"
+        },
+        {
+          "url": "http://remote.fixture.test:61998/plugins/image/image.js",
+          "method": "GET",
+          "origin": "http://remote.fixture.test:61998"
+        },
+        {
+          "url": "http://remote.fixture.test:61998/favicon.png",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/favicon.png",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/system/sitemap.json",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/system/site-index.json",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://source.fixture.test/favicon.png",
+          "method": "GET",
+          "origin": "http://remote.fixture.test:61998"
+        },
+        {
+          "url": "http://source.fixture.test/fork-contract.json",
+          "method": "GET",
+          "origin": "http://remote.fixture.test:61998"
+        },
+        {
+          "url": "http://unavailable.fixture.test/favicon.png",
+          "method": "GET",
+          "origin": "http://remote.fixture.test:61998"
+        },
+        {
+          "url": "https://unavailable.fixture.test/favicon.png",
+          "method": "GET",
+          "origin": "http://remote.fixture.test:61998"
+        },
+        {
+          "url": "http://remote.fixture.test:61998/fixture/login",
+          "method": "POST",
+          "origin": "http://remote.fixture.test:61998"
+        },
+        {
+          "url": "http://remote.fixture.test:61998/view/fork-contract",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/style/style.css",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/theme/style.css",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/js/jquery-ui/1.14.2/jquery-ui.min.css",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/js/jquery-4.0.0.js",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/js/jquery-migrate-4.0.2.js",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/js/jquery-ui/1.14.2/jquery-ui.min.js",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/js/jquery.ui.touch-punch.min.js",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/js/underscore-min.js",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/client.js",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/style/print.css",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/system/factories.json",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/security/security.js",
+          "method": "GET",
+          "origin": "http://remote.fixture.test:61998"
+        },
+        {
+          "url": "http://remote.fixture.test:61998/images/crosses.png",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/images/noise.png",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/fork-contract.json",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/plugins/code/code.js",
+          "method": "GET",
+          "origin": "http://remote.fixture.test:61998"
+        },
+        {
+          "url": "http://remote.fixture.test:61998/plugins/image/image.js",
+          "method": "GET",
+          "origin": "http://remote.fixture.test:61998"
+        },
+        {
+          "url": "http://remote.fixture.test:61998/favicon.png",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/favicon.png",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/system/sitemap.json",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/system/site-index.json",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/page/fork-contract/action",
+          "method": "PUT",
+          "origin": "http://remote.fixture.test:61998"
+        },
+        {
+          "url": "http://remote.fixture.test:61998/favicon.png",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://source.fixture.test/favicon.png",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/view/fork-contract",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/style/style.css",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/theme/style.css",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/js/jquery-ui/1.14.2/jquery-ui.min.css",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/js/jquery-4.0.0.js",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/js/jquery-migrate-4.0.2.js",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/js/jquery-ui/1.14.2/jquery-ui.min.js",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/js/jquery.ui.touch-punch.min.js",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/js/underscore-min.js",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/client.js",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/style/print.css",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/system/factories.json",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/security/security.js",
+          "method": "GET",
+          "origin": "http://remote.fixture.test:61998"
+        },
+        {
+          "url": "http://remote.fixture.test:61998/images/crosses.png",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/images/noise.png",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/fork-contract.json",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/plugins/code/code.js",
+          "method": "GET",
+          "origin": "http://remote.fixture.test:61998"
+        },
+        {
+          "url": "http://remote.fixture.test:61998/plugins/image/image.js",
+          "method": "GET",
+          "origin": "http://remote.fixture.test:61998"
+        },
+        {
+          "url": "http://remote.fixture.test:61998/favicon.png",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://source.fixture.test/favicon.png",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/favicon.png",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/system/sitemap.json",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/system/site-index.json",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://source.fixture.test/system/sitemap.json",
+          "method": "GET",
+          "origin": "http://remote.fixture.test:61998"
+        },
+        {
+          "url": "http://remote.fixture.test:61998/page/fork-contract/action",
+          "method": "PUT",
+          "origin": "http://remote.fixture.test:61998"
+        },
+        {
+          "url": "http://remote.fixture.test:61998/favicon.png",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/view/fork-contract",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/style/style.css",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/theme/style.css",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/js/jquery-ui/1.14.2/jquery-ui.min.css",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/js/jquery-4.0.0.js",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/js/jquery-migrate-4.0.2.js",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/js/jquery-ui/1.14.2/jquery-ui.min.js",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/js/jquery.ui.touch-punch.min.js",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/js/underscore-min.js",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/client.js",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/style/print.css",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/system/factories.json",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/security/security.js",
+          "method": "GET",
+          "origin": "http://remote.fixture.test:61998"
+        },
+        {
+          "url": "http://remote.fixture.test:61998/images/crosses.png",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/images/noise.png",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/fork-contract.json",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/plugins/code/code.js",
+          "method": "GET",
+          "origin": "http://remote.fixture.test:61998"
+        },
+        {
+          "url": "http://remote.fixture.test:61998/plugins/image/image.js",
+          "method": "GET",
+          "origin": "http://remote.fixture.test:61998"
+        },
+        {
+          "url": "http://remote.fixture.test:61998/favicon.png",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/favicon.png",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/system/sitemap.json",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/system/site-index.json",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/page/rejected-fork/action",
+          "method": "PUT",
+          "origin": "http://remote.fixture.test:61998"
+        },
+        {
+          "url": "http://source-cors.fixture.test:61999/no-cors.json",
+          "method": "GET",
+          "origin": "http://remote.fixture.test:61998"
+        },
+        {
+          "url": "http://other.fixture.test/",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:61998/page/foreign-fork/action",
+          "method": "PUT",
+          "origin": "http://other.fixture.test"
+        }
+      ],
+      "writes": [
+        {
+          "url": "http://remote.fixture.test:61998/page/fork-contract/action",
+          "wireMethod": "PUT",
+          "methodOverride": null,
+          "body": {
+            "type": "fork",
+            "site": "source.fixture.test",
+            "date": 1791565047209,
+            "forkPage": {
+              "title": "Fork Contract",
+              "story": [
+                {
+                  "type": "paragraph",
+                  "id": "source-item",
+                  "text": "Trusted local source content"
+                }
+              ],
+              "journal": [
+                {
+                  "type": "create",
+                  "date": 1,
+                  "item": {
+                    "title": "Fork Contract",
+                    "story": []
+                  }
+                }
+              ]
+            }
+          },
+          "cookieSent": true
+        },
+        {
+          "url": "http://remote.fixture.test:61998/page/fork-contract/action",
+          "wireMethod": "PUT",
+          "methodOverride": null,
+          "body": {
+            "type": "fork",
+            "date": 1791565048554,
+            "forkPage": {
+              "title": "Fork Contract",
+              "story": [
+                {
+                  "type": "paragraph",
+                  "id": "source-item",
+                  "text": "Trusted local source content"
+                }
+              ],
+              "journal": [
+                {
+                  "type": "create",
+                  "date": 1,
+                  "item": {
+                    "title": "Fork Contract",
+                    "story": []
+                  }
+                }
+              ]
+            }
+          },
+          "cookieSent": true
+        },
+        {
+          "url": "http://remote.fixture.test:61998/page/rejected-fork/action",
+          "wireMethod": "PUT",
+          "methodOverride": null,
+          "body": {
+            "type": "fork",
+            "site": "source.fixture.test",
+            "date": 1791565050621,
+            "forkPage": {
+              "title": "Fork Contract",
+              "story": [
+                {
+                  "type": "paragraph",
+                  "id": "source-item",
+                  "text": "Trusted local source content"
+                }
+              ],
+              "journal": [
+                {
+                  "type": "create",
+                  "date": 1,
+                  "item": {
+                    "title": "Fork Contract",
+                    "story": []
+                  }
+                }
+              ]
+            }
+          },
+          "cookieSent": false
+        },
+        {
+          "url": "http://remote.fixture.test:61998/page/foreign-fork/action",
+          "wireMethod": "PUT",
+          "methodOverride": null,
+          "body": {
+            "type": "fork",
+            "site": "localhost:3000",
+            "forkPage": {
+              "title": "Foreign",
+              "story": [],
+              "journal": []
+            },
+            "date": 1791565050783
+          },
+          "cookieSent": false
+        }
+      ],
+      "packageProvenance": {
+        "schemaVersion": 1,
+        "recipe": "ralfbarkow",
+        "profile": "upstream",
+        "baseRecipeRecords": {
+          "p41-provenance.json": {
+            "candidate": "P41",
+            "metaCommit": "96d3080fa10e259d6d4db71000ee25f4a5721b9d",
+            "metaVersion": "0.41.0-rc.3",
+            "nixpkgsCommit": "5e2305d577ca00acbba631b05cb1094d172b29f3",
+            "nodeVersion": "22.23.3",
+            "components": {
+              "wiki-server": {
+                "version": "0.28.0",
+                "upstreamCommit": "6e8d4e1433da6773016ca35641b797453a667ff0",
+                "personalCommit": "b8a5f36907a35e64d338bf21351fd89226b41bed",
+                "archiveSha256": "1b17048869c3a3313dcea6766b15a94b5cce9c803979ebd48850e902202c876e"
+              },
+              "wiki-client": {
+                "version": "0.33.0",
+                "upstreamCommit": "d59dbd68c2a539d32add72e06d2fd74e9d6d60c2",
+                "personalCommit": "f3c72d9fc31a3db8a296c7f2d05b36364395e4fe",
+                "archiveSha256": "70237aa59f7f29c1ae29eaca0da5434b39e74765b6fd6083b76786330dbb5b15"
+              },
+              "wiki-plugin-mech": {
+                "version": "0.1.32-dev.1",
+                "sourceCommit": "4b8051417dec6b0eff40878290a703b1fa60fb52",
+                "archiveSha256": "3164e097fd30dc1185b90a1f481e2d899645d87981f3dcb68982c6fa4a44b1d9"
+              },
+              "wiki-plugin-solo": {
+                "version": "0.1.30-1",
+                "sourceCommit": "3ad7796217d564407fd36cf62c37844654fdc967",
+                "archiveSha256": "0d63486478ad61bcb942f8e68be01364fa0c3cc64be369597fe931656a931ed9"
+              },
+              "wiki-plugin-journalmatic": {
+                "version": "0.2.3",
+                "upstreamCommit": "29bd58246fa4043b1808d1e26bd6bf9df15fc952",
+                "metadataFrom": "aa5f5863bb8de8f697815b405cfb2f1a0e055ed9",
+                "archiveSha256": "4b55578f0dc578812433ec918ba52b67bf3a97f8da9e9a066914ccf83910839d"
+              }
+            },
+            "security": {
+              "friends": "0.3.1",
+              "passportjs": "0.14.0",
+              "social": "0.1.0"
+            }
+          }
+        },
+        "mech": {
+          "schemaVersion": 1,
+          "profile": "upstream",
+          "source": {
+            "authority": "https://github.com/WardCunningham/wiki-plugin-mech",
+            "oid": "a028b4bba04e539dcaa090423d38a00a0050489d",
+            "filesSha256": "6943cef3a3bcaec251ebb0e4e8a2170e6eeea90c238c7436b8110beb477fa9f6"
+          },
+          "extension": null,
+          "recipe": {
+            "wiki": {
+              "authority": "https://github.com/RalfBarkow/wiki",
+              "baseCommitOid": "8e6c2e53a47f038f4b0c6d2ef35576cc1d4f456c",
+              "modulePath": "integrations/mech",
+              "moduleVersion": "0.1.0",
+              "extensionCommitOid": null,
+              "workingTree": true,
+              "sourceContentSha256": "4b4dea00306480b43d200f435e79541b5d3dc8dcc0549ee7785166cfeffb3b51",
+              "sourceDigestExcludes": [
+                "evidence/acceptance/"
+              ],
+              "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103"
+            },
+            "node": "v22.18.0",
+            "platform": "darwin",
+            "arch": "x64",
+            "dependencies": {
+              "marked": "18.0.12",
+              "universal-ticker": "0.1.1",
+              "acorn": "8.18.0",
+              "esbuild": "0.28.2"
+            },
+            "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103",
+            "format": "esm",
+            "bundled": true
+          },
+          "artifacts": {
+            "client/mech.js": {
+              "sha256": "db6f746b60af54481fa2f2cc6a6b53c69d34ee32a86e48f2810d9baeda220e67",
+              "bytes": 134254
+            },
+            "client/mech.css": {
+              "sha256": "9d930c433a2cdb14c532cfe7c271720df81a1010adeb05cf734fdae7b0608f27"
+            },
+            "metafile.json": {
+              "sha256": "d5edfff8f570bdbf7cb66953073ca72b863b3248ec3ba951a437f740f3eba44c"
+            }
+          },
+          "packaging": {
+            "moduleSource": {
+              "authority": "https://github.com/RalfBarkow/wiki",
+              "oid": "971794d2066f87f63e7685447352340d5276a959",
+              "path": "integrations/mech",
+              "version": "0.1.0",
+              "sourceContentSha256": "4b4dea00306480b43d200f435e79541b5d3dc8dcc0549ee7785166cfeffb3b51",
+              "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103"
+            },
+            "upstreamTreeOid": "b0d8ebfdefdd259966705718c602e790607155fc",
+            "sourceSnapshotNarHash": "sha256-4NqBv0P9JjXEnEVpCEk54tE0tDwMmc38ZwhZqMiyzLQ=",
+            "profile": "upstream",
+            "builderContentIdentity": {
+              "authority": "https://github.com/RalfBarkow/wiki",
+              "baseCommitOid": "8e6c2e53a47f038f4b0c6d2ef35576cc1d4f456c",
+              "modulePath": "integrations/mech",
+              "moduleVersion": "0.1.0",
+              "extensionCommitOid": null,
+              "workingTree": true,
+              "sourceContentSha256": "4b4dea00306480b43d200f435e79541b5d3dc8dcc0549ee7785166cfeffb3b51",
+              "sourceDigestExcludes": [
+                "evidence/acceptance/"
+              ],
+              "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103"
+            }
+          }
+        },
+        "components": {
+          "chokidar": {
+            "version": "5.0.0",
+            "declared": "^5.0.0"
+          },
+          "minimist": {
+            "version": "1.2.8",
+            "declared": "^1.2.7"
+          },
+          "wiki-client": {
+            "version": "0.33.0",
+            "declared": "file:candidate/packages/wiki-client.tgz"
+          },
+          "wiki-plugin-activity": {
+            "version": "0.7.1",
+            "declared": "^0.7.1"
+          },
+          "wiki-plugin-assets": {
+            "version": "0.7.5",
+            "declared": "^0.7.5"
+          },
+          "wiki-plugin-audio": {
+            "version": "0.3.0",
+            "declared": "^0.3.0"
+          },
+          "wiki-plugin-bars": {
+            "version": "0.6.0",
+            "declared": "^0.6.0"
+          },
+          "wiki-plugin-calculator": {
+            "version": "0.6.0",
+            "declared": "^0.6.0"
+          },
+          "wiki-plugin-calendar": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-changes": {
+            "version": "0.5.0",
+            "declared": "^0.5.0"
+          },
+          "wiki-plugin-chart": {
+            "version": "0.5.0",
+            "declared": "^0.5.0"
+          },
+          "wiki-plugin-code": {
+            "version": "0.6.1",
+            "declared": "^0.6.1"
+          },
+          "wiki-plugin-data": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-factory": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-flagmatic": {
+            "version": "0.3.0",
+            "declared": "^0.3.0"
+          },
+          "wiki-plugin-force": {
+            "version": "0.6.0",
+            "declared": "^0.6.0"
+          },
+          "wiki-plugin-frame": {
+            "version": "0.10.3",
+            "declared": "^0.10.3"
+          },
+          "wiki-plugin-future": {
+            "version": "0.4.1",
+            "declared": "^0.4.1"
+          },
+          "wiki-plugin-graphviz": {
+            "version": "0.11.9",
+            "declared": "^0.11.9"
+          },
+          "wiki-plugin-grep": {
+            "version": "1.1.1",
+            "declared": "^1.1.1"
+          },
+          "wiki-plugin-html": {
+            "version": "0.7.2",
+            "declared": "^0.7.2"
+          },
+          "wiki-plugin-image": {
+            "version": "0.8.1",
+            "declared": "^0.8.1"
+          },
+          "wiki-plugin-journalmatic": {
+            "version": "0.2.3",
+            "declared": "file:candidate/packages/wiki-plugin-journalmatic.tgz"
+          },
+          "wiki-plugin-line": {
+            "version": "0.6.0",
+            "declared": "^0.6.0"
+          },
+          "wiki-plugin-map": {
+            "version": "0.10.0",
+            "declared": "^0.10.0"
+          },
+          "wiki-plugin-markdown": {
+            "version": "0.5.3",
+            "declared": "^0.5.3"
+          },
+          "wiki-plugin-math": {
+            "version": "0.3.0",
+            "declared": "^0.3.0"
+          },
+          "wiki-plugin-metabolism": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-method": {
+            "version": "0.4.1",
+            "declared": "^0.4.1"
+          },
+          "wiki-plugin-pagefold": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-paragraph": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-plugmatic": {
+            "version": "1.5.1",
+            "declared": "^1.5.1"
+          },
+          "wiki-plugin-pushpin": {
+            "version": "0.6.0",
+            "declared": "^0.6.0"
+          },
+          "wiki-plugin-radar": {
+            "version": "0.6.0",
+            "declared": "^0.6.0"
+          },
+          "wiki-plugin-recycler": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-reduce": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-reference": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-rollup": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-roster": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-scatter": {
+            "version": "0.6.0",
+            "declared": "^0.6.0"
+          },
+          "wiki-plugin-search": {
+            "version": "0.3.0",
+            "declared": "^0.3.0"
+          },
+          "wiki-plugin-transport": {
+            "version": "0.3.0",
+            "declared": "^0.3.0"
+          },
+          "wiki-plugin-video": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-security-friends": {
+            "version": "0.3.1",
+            "declared": "^0.3.1"
+          },
+          "wiki-security-passportjs": {
+            "version": "0.14.0",
+            "declared": "^0.14.0"
+          },
+          "wiki-security-social": {
+            "version": "0.1.0",
+            "declared": "^0.1.0"
+          },
+          "wiki-server": {
+            "version": "0.28.0",
+            "declared": "file:candidate/packages/wiki-server.tgz"
+          },
+          "wiki-plugin-mech": {
+            "version": "0.1.48-3",
+            "declared": "github:WardCunningham/wiki-plugin-mech#a028b4bba04e539dcaa090423d38a00a0050489d"
+          },
+          "wiki-plugin-solo": {
+            "version": "0.1.30-1",
+            "declared": "file:candidate/packages/wiki-plugin-solo.tgz"
+          }
+        }
+      },
+      "servedClientSha256": "1d920a887d0332039f50b0eb7069062c4f230f5ed13066a55e69f66bf7f5ee63",
+      "browserVersion": "154.0.8037.98",
+      "intendedLocalToRemoteWorkflow": "BLOCKED: public-origin acquisition intentionally rejected; preloaded provenance intentionally stripped",
+      "status": "PASS: controls; loopback acquisition/provenance retain observed boundaries",
+      "rawRecordSha256": "e52c82008d8c5444e9fee1209c1487ac0beca9e9158554b23e55f02c4454c1a0"
+    },
+    {
+      "label": "dreyeck",
+      "wikiRoot": "/nix/store/ywblwij34ah66fdyv3gb9hgbywkic8h1-wiki-dreyeck-discourse-0.39.2/lib/node_modules/wiki",
+      "origin": "http://remote.fixture.test:62075",
+      "source": {
+        "site": "localhost:3000",
+        "snapshotSha256": "02b4d0363aa78be3a949bb400d7c9868146fbca94bc04e880b70dcaf8c7511ee"
+      },
+      "fixtureBoundary": "localhost:3000 is fulfilled by a disposable browser route. No listener or request to the user real localhost service. Real package client/server; fixture security plugin.",
+      "tests": [
+        {
+          "name": "local source reachability from destination origin",
+          "status": "PASS",
+          "error": null,
+          "actualSourceRequests": 2
+        },
+        {
+          "name": "authorized-origin readable source control",
+          "status": "PASS"
+        },
+        {
+          "name": "source unavailable",
+          "status": "PASS",
+          "error": "unavailable.fixture.test is unreachable"
+        },
+        {
+          "name": "authorized remote write with correct non-loopback fork provenance",
+          "status": "PASS",
+          "forkPageIncluded": true,
+          "journal": [
+            {
+              "type": "create",
+              "date": 1,
+              "item": {
+                "title": "Fork Contract",
+                "story": []
+              }
+            },
+            {
+              "type": "fork",
+              "site": "source.fixture.test",
+              "date": 1791565063726
+            }
+          ]
+        },
+        {
+          "name": "loopback source provenance from preloaded snapshot",
+          "status": "PRESERVED",
+          "site": "localhost:3000",
+          "notOrdinaryAcquisition": false
+        },
+        {
+          "name": "remote write rejected without authorized cookie",
+          "status": "PASS",
+          "httpStatus": 403,
+          "remoteUnchanged": true,
+          "clientLocalFallback": true,
+          "probe": "Actual server authorization route; non-owner local-storage choice separately exercised through the existing client API, not a synthesized UI button"
+        },
+        {
+          "name": "browser rejects source without CORS approval",
+          "status": "PASS",
+          "error": "TypeError"
+        },
+        {
+          "name": "foreign browser origin cannot write without destination authorization",
+          "status": "PASS",
+          "result": "TypeError"
+        }
+      ],
+      "requests": [
+        {
+          "url": "http://remote.fixture.test:62075/view/fork-contract",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/style/style.css",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/theme/style.css",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/js/jquery-ui/1.14.1/jquery-ui.min.css",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/js/jquery-3.7.1.min.js",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/js/jquery-migrate-3.5.0.min.js",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/js/jquery-ui/1.14.1/jquery-ui.min.js",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/js/jquery.ui.touch-punch.min.js",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/js/underscore-min.js",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/client.js",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/style/print.css",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/system/factories.json",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/images/crosses.png",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/security/security.js",
+          "method": "GET",
+          "origin": "http://remote.fixture.test:62075"
+        },
+        {
+          "url": "http://remote.fixture.test:62075/images/noise.png",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/fork-contract.json",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/plugins/image/image.js",
+          "method": "GET",
+          "origin": "http://remote.fixture.test:62075"
+        },
+        {
+          "url": "http://remote.fixture.test:62075/favicon.png",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/favicon.png",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/system/sitemap.json",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/system/site-index.json",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://localhost:3000/favicon.png",
+          "method": "GET",
+          "origin": "http://remote.fixture.test:62075"
+        },
+        {
+          "url": "http://localhost:3000/fork-contract.json",
+          "method": "GET",
+          "origin": "http://remote.fixture.test:62075"
+        },
+        {
+          "url": "http://source.fixture.test/favicon.png",
+          "method": "GET",
+          "origin": "http://remote.fixture.test:62075"
+        },
+        {
+          "url": "http://source.fixture.test/fork-contract.json",
+          "method": "GET",
+          "origin": "http://remote.fixture.test:62075"
+        },
+        {
+          "url": "http://unavailable.fixture.test/favicon.png",
+          "method": "GET",
+          "origin": "http://remote.fixture.test:62075"
+        },
+        {
+          "url": "https://unavailable.fixture.test/favicon.png",
+          "method": "GET",
+          "origin": "http://remote.fixture.test:62075"
+        },
+        {
+          "url": "http://remote.fixture.test:62075/fixture/login",
+          "method": "POST",
+          "origin": "http://remote.fixture.test:62075"
+        },
+        {
+          "url": "http://remote.fixture.test:62075/view/fork-contract",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/style/style.css",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/theme/style.css",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/js/jquery-ui/1.14.1/jquery-ui.min.css",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/js/jquery-3.7.1.min.js",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/js/jquery-migrate-3.5.0.min.js",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/js/jquery-ui/1.14.1/jquery-ui.min.js",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/js/jquery.ui.touch-punch.min.js",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/js/underscore-min.js",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/client.js",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/style/print.css",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/system/factories.json",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/security/security.js",
+          "method": "GET",
+          "origin": "http://remote.fixture.test:62075"
+        },
+        {
+          "url": "http://remote.fixture.test:62075/images/crosses.png",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/images/noise.png",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/fork-contract.json",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/plugins/image/image.js",
+          "method": "GET",
+          "origin": "http://remote.fixture.test:62075"
+        },
+        {
+          "url": "http://remote.fixture.test:62075/favicon.png",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/favicon.png",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/system/sitemap.json",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/system/site-index.json",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/page/fork-contract/action",
+          "method": "PUT",
+          "origin": "http://remote.fixture.test:62075"
+        },
+        {
+          "url": "http://remote.fixture.test:62075/favicon.png",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/favicon.png",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://source.fixture.test/favicon.png",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/view/fork-contract",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/style/style.css",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/theme/style.css",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/js/jquery-ui/1.14.1/jquery-ui.min.css",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/js/jquery-3.7.1.min.js",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/js/jquery-migrate-3.5.0.min.js",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/js/jquery-ui/1.14.1/jquery-ui.min.js",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/js/jquery.ui.touch-punch.min.js",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/js/underscore-min.js",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/client.js",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/style/print.css",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/system/factories.json",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/security/security.js",
+          "method": "GET",
+          "origin": "http://remote.fixture.test:62075"
+        },
+        {
+          "url": "http://remote.fixture.test:62075/images/crosses.png",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/images/noise.png",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/fork-contract.json",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/plugins/image/image.js",
+          "method": "GET",
+          "origin": "http://remote.fixture.test:62075"
+        },
+        {
+          "url": "http://remote.fixture.test:62075/favicon.png",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://source.fixture.test/favicon.png",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/favicon.png",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/system/sitemap.json",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/system/site-index.json",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://source.fixture.test/system/sitemap.json",
+          "method": "GET",
+          "origin": "http://remote.fixture.test:62075"
+        },
+        {
+          "url": "http://remote.fixture.test:62075/page/fork-contract/action",
+          "method": "PUT",
+          "origin": "http://remote.fixture.test:62075"
+        },
+        {
+          "url": "http://remote.fixture.test:62075/favicon.png",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://localhost:3000/favicon.png",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/view/fork-contract",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/style/style.css",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/theme/style.css",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/js/jquery-ui/1.14.1/jquery-ui.min.css",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/js/jquery-3.7.1.min.js",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/js/jquery-migrate-3.5.0.min.js",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/js/jquery-ui/1.14.1/jquery-ui.min.js",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/js/jquery.ui.touch-punch.min.js",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/js/underscore-min.js",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/client.js",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/style/print.css",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/system/factories.json",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/security/security.js",
+          "method": "GET",
+          "origin": "http://remote.fixture.test:62075"
+        },
+        {
+          "url": "http://remote.fixture.test:62075/images/crosses.png",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/images/noise.png",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/fork-contract.json",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/plugins/image/image.js",
+          "method": "GET",
+          "origin": "http://remote.fixture.test:62075"
+        },
+        {
+          "url": "http://remote.fixture.test:62075/favicon.png",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/favicon.png",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://localhost:3000/favicon.png",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/system/sitemap.json",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/system/site-index.json",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://localhost:3000/system/sitemap.json",
+          "method": "GET",
+          "origin": "http://remote.fixture.test:62075"
+        },
+        {
+          "url": "http://remote.fixture.test:62075/page/rejected-fork/action",
+          "method": "PUT",
+          "origin": "http://remote.fixture.test:62075"
+        },
+        {
+          "url": "http://source-cors.fixture.test:62076/no-cors.json",
+          "method": "GET",
+          "origin": "http://remote.fixture.test:62075"
+        },
+        {
+          "url": "http://other.fixture.test/",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62075/page/foreign-fork/action",
+          "method": "PUT",
+          "origin": "http://other.fixture.test"
+        }
+      ],
+      "writes": [
+        {
+          "url": "http://remote.fixture.test:62075/page/fork-contract/action",
+          "wireMethod": "PUT",
+          "methodOverride": null,
+          "body": {
+            "type": "fork",
+            "site": "source.fixture.test",
+            "date": 1791565063726,
+            "forkPage": {
+              "title": "Fork Contract",
+              "story": [
+                {
+                  "type": "paragraph",
+                  "id": "source-item",
+                  "text": "Trusted local source content"
+                }
+              ],
+              "journal": [
+                {
+                  "type": "create",
+                  "date": 1,
+                  "item": {
+                    "title": "Fork Contract",
+                    "story": []
+                  }
+                }
+              ]
+            }
+          },
+          "cookieSent": true
+        },
+        {
+          "url": "http://remote.fixture.test:62075/page/fork-contract/action",
+          "wireMethod": "PUT",
+          "methodOverride": null,
+          "body": {
+            "type": "fork",
+            "site": "localhost:3000",
+            "date": 1791565065117,
+            "forkPage": {
+              "title": "Fork Contract",
+              "story": [
+                {
+                  "type": "paragraph",
+                  "id": "source-item",
+                  "text": "Trusted local source content"
+                }
+              ],
+              "journal": [
+                {
+                  "type": "create",
+                  "date": 1,
+                  "item": {
+                    "title": "Fork Contract",
+                    "story": []
+                  }
+                }
+              ]
+            }
+          },
+          "cookieSent": true
+        },
+        {
+          "url": "http://remote.fixture.test:62075/page/rejected-fork/action",
+          "wireMethod": "PUT",
+          "methodOverride": null,
+          "body": {
+            "type": "fork",
+            "site": "source.fixture.test",
+            "date": 1791565067527,
+            "forkPage": {
+              "title": "Fork Contract",
+              "story": [
+                {
+                  "type": "paragraph",
+                  "id": "source-item",
+                  "text": "Trusted local source content"
+                }
+              ],
+              "journal": [
+                {
+                  "type": "create",
+                  "date": 1,
+                  "item": {
+                    "title": "Fork Contract",
+                    "story": []
+                  }
+                }
+              ]
+            }
+          },
+          "cookieSent": false
+        },
+        {
+          "url": "http://remote.fixture.test:62075/page/foreign-fork/action",
+          "wireMethod": "PUT",
+          "methodOverride": null,
+          "body": {
+            "type": "fork",
+            "site": "localhost:3000",
+            "forkPage": {
+              "title": "Foreign",
+              "story": [],
+              "journal": []
+            },
+            "date": 1791565067683
+          },
+          "cookieSent": false
+        }
+      ],
+      "packageProvenance": {
+        "schemaVersion": 1,
+        "recipe": "dreyeck",
+        "profile": "discourse",
+        "baseRecipeRecords": {
+          "pinned-core-revs.json": {
+            "wiki": "646fa4aa56a6f81e1cc571d6e7725bdcdfc82958",
+            "wiki-server": "9b842d7be8bc5e0990ec574b19fb5554830591a5",
+            "wiki-client": "3f61a4862703f492b0d6bfb8695bd665b943bb38",
+            "wiki-plugin-mech": "abd88d2da6c89029515f2a456356832dffe038ab",
+            "wiki-plugin-solo": "0.1.30-1",
+            "wiki-plugin-journalmatic": "0.2.2"
+          }
+        },
+        "mech": {
+          "schemaVersion": 1,
+          "profile": "discourse",
+          "source": {
+            "authority": "https://github.com/WardCunningham/wiki-plugin-mech",
+            "oid": "a028b4bba04e539dcaa090423d38a00a0050489d",
+            "filesSha256": "6943cef3a3bcaec251ebb0e4e8a2170e6eeea90c238c7436b8110beb477fa9f6"
+          },
+          "extension": {
+            "authority": "https://github.com/RalfBarkow/wiki",
+            "baseCommitOid": "8e6c2e53a47f038f4b0c6d2ef35576cc1d4f456c",
+            "modulePath": "integrations/mech",
+            "moduleVersion": "0.1.0",
+            "extensionCommitOid": null,
+            "workingTree": true,
+            "sourceContentSha256": "4b4dea00306480b43d200f435e79541b5d3dc8dcc0549ee7785166cfeffb3b51",
+            "sourceDigestExcludes": [
+              "evidence/acceptance/"
+            ],
+            "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103"
+          },
+          "recipe": {
+            "wiki": {
+              "authority": "https://github.com/RalfBarkow/wiki",
+              "baseCommitOid": "8e6c2e53a47f038f4b0c6d2ef35576cc1d4f456c",
+              "modulePath": "integrations/mech",
+              "moduleVersion": "0.1.0",
+              "extensionCommitOid": null,
+              "workingTree": true,
+              "sourceContentSha256": "4b4dea00306480b43d200f435e79541b5d3dc8dcc0549ee7785166cfeffb3b51",
+              "sourceDigestExcludes": [
+                "evidence/acceptance/"
+              ],
+              "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103"
+            },
+            "node": "v22.18.0",
+            "platform": "darwin",
+            "arch": "x64",
+            "dependencies": {
+              "marked": "18.0.12",
+              "universal-ticker": "0.1.1",
+              "acorn": "8.18.0",
+              "esbuild": "0.28.2"
+            },
+            "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103",
+            "format": "esm",
+            "bundled": true
+          },
+          "artifacts": {
+            "client/mech.js": {
+              "sha256": "ba933fe338b7938e5fd5f81399325c9335d4bb710c7600b0b7148cf220aa3543",
+              "bytes": 152650
+            },
+            "client/mech.css": {
+              "sha256": "9d930c433a2cdb14c532cfe7c271720df81a1010adeb05cf734fdae7b0608f27"
+            },
+            "metafile.json": {
+              "sha256": "8e350db8b9fe1324627f290db48c6b76ccfe2415d9c08eae44b05c03cd137216"
+            }
+          },
+          "packaging": {
+            "moduleSource": {
+              "authority": "https://github.com/RalfBarkow/wiki",
+              "oid": "971794d2066f87f63e7685447352340d5276a959",
+              "path": "integrations/mech",
+              "version": "0.1.0",
+              "sourceContentSha256": "4b4dea00306480b43d200f435e79541b5d3dc8dcc0549ee7785166cfeffb3b51",
+              "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103"
+            },
+            "upstreamTreeOid": "b0d8ebfdefdd259966705718c602e790607155fc",
+            "sourceSnapshotNarHash": "sha256-4NqBv0P9JjXEnEVpCEk54tE0tDwMmc38ZwhZqMiyzLQ=",
+            "profile": "discourse",
+            "builderContentIdentity": {
+              "authority": "https://github.com/RalfBarkow/wiki",
+              "baseCommitOid": "8e6c2e53a47f038f4b0c6d2ef35576cc1d4f456c",
+              "modulePath": "integrations/mech",
+              "moduleVersion": "0.1.0",
+              "extensionCommitOid": null,
+              "workingTree": true,
+              "sourceContentSha256": "4b4dea00306480b43d200f435e79541b5d3dc8dcc0549ee7785166cfeffb3b51",
+              "sourceDigestExcludes": [
+                "evidence/acceptance/"
+              ],
+              "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103"
+            }
+          }
+        },
+        "components": {
+          "chokidar": {
+            "version": "5.0.0",
+            "declared": "^5.0.0"
+          },
+          "minimist": {
+            "version": "1.2.8",
+            "declared": "^1.2.7"
+          },
+          "wiki-client": {
+            "version": "0.31.6",
+            "declared": "^0.31.6"
+          },
+          "wiki-plugin-activity": {
+            "version": "0.7.1",
+            "declared": "^0.7.1"
+          },
+          "wiki-plugin-assets": {
+            "version": "0.7.3",
+            "declared": "^0.7.3"
+          },
+          "wiki-plugin-audio": {
+            "version": "0.3.0",
+            "declared": "^0.3.0"
+          },
+          "wiki-plugin-bars": {
+            "version": "0.6.0",
+            "declared": "^0.6.0"
+          },
+          "wiki-plugin-calculator": {
+            "version": "0.6.0",
+            "declared": "^0.6.0"
+          },
+          "wiki-plugin-calendar": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-changes": {
+            "version": "0.5.0",
+            "declared": "^0.5.0"
+          },
+          "wiki-plugin-chart": {
+            "version": "0.5.0",
+            "declared": "^0.5.0"
+          },
+          "wiki-plugin-code": {
+            "version": "0.5.0",
+            "declared": "^0.5.0"
+          },
+          "wiki-plugin-data": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-factory": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-flagmatic": {
+            "version": "0.3.0",
+            "declared": "^0.3.0"
+          },
+          "wiki-plugin-force": {
+            "version": "0.6.0",
+            "declared": "^0.6.0"
+          },
+          "wiki-plugin-frame": {
+            "version": "0.10.3",
+            "declared": "^0.10.3"
+          },
+          "wiki-plugin-future": {
+            "version": "0.4.1",
+            "declared": "^0.4.1"
+          },
+          "wiki-plugin-graphviz": {
+            "version": "0.11.9",
+            "declared": "^0.11.9"
+          },
+          "wiki-plugin-grep": {
+            "version": "1.1.1",
+            "declared": "^1.1.1"
+          },
+          "wiki-plugin-html": {
+            "version": "0.6.0",
+            "declared": "^0.6.0"
+          },
+          "wiki-plugin-image": {
+            "version": "0.7.2",
+            "declared": "^0.7.2"
+          },
+          "wiki-plugin-line": {
+            "version": "0.6.0",
+            "declared": "^0.6.0"
+          },
+          "wiki-plugin-map": {
+            "version": "0.9.0",
+            "declared": "^0.9.0"
+          },
+          "wiki-plugin-markdown": {
+            "version": "0.5.2",
+            "declared": "^0.5.2"
+          },
+          "wiki-plugin-math": {
+            "version": "0.2.0",
+            "declared": "^0.2.0"
+          },
+          "wiki-plugin-metabolism": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-method": {
+            "version": "0.4.1",
+            "declared": "^0.4.1"
+          },
+          "wiki-plugin-pagefold": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-paragraph": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-plugmatic": {
+            "version": "1.5.1",
+            "declared": "^1.5.1"
+          },
+          "wiki-plugin-pushpin": {
+            "version": "0.6.0",
+            "declared": "^0.6.0"
+          },
+          "wiki-plugin-radar": {
+            "version": "0.6.0",
+            "declared": "^0.6.0"
+          },
+          "wiki-plugin-recycler": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-reduce": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-reference": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-rollup": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-roster": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-scatter": {
+            "version": "0.6.0",
+            "declared": "^0.6.0"
+          },
+          "wiki-plugin-search": {
+            "version": "0.3.0",
+            "declared": "^0.3.0"
+          },
+          "wiki-plugin-transport": {
+            "version": "0.3.0",
+            "declared": "^0.3.0"
+          },
+          "wiki-plugin-video": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-security-friends": {
+            "version": "0.3.0",
+            "declared": "^0.3.0"
+          },
+          "wiki-security-passportjs": {
+            "version": "0.12.0",
+            "declared": "^0.12.0"
+          },
+          "wiki-server": {
+            "version": "0.26.2",
+            "declared": "^0.26.2"
+          },
+          "wiki-plugin-mech": {
+            "version": "0.1.48-3",
+            "declared": "github:WardCunningham/wiki-plugin-mech#a028b4bba04e539dcaa090423d38a00a0050489d"
+          },
+          "wiki-plugin-solo": {
+            "version": "0.1.30-1",
+            "declared": "0.1.30-1"
+          },
+          "wiki-plugin-journalmatic": {
+            "version": "0.2.2",
+            "declared": "0.2.2"
+          }
+        }
+      },
+      "servedClientSha256": "6204da2896da696b316bc57671a201ef2696fbad8bc358a0b13eccea608a1b20",
+      "browserVersion": "154.0.8037.98",
+      "intendedLocalToRemoteWorkflow": "PASS in isolated HTTP/CORS/authenticated fixtures",
+      "status": "PASS: controls; loopback acquisition/provenance retain observed boundaries",
+      "rawRecordSha256": "5e3056cecc9ded639a27deddc5e7978583209427142342509a13b87e47553d3f"
+    },
+    {
+      "label": "localhost",
+      "wikiRoot": "/nix/store/w9sp9n2sbkdj65ckvx80m7j9j3wx8n5z-wiki-localhost-upstream-0.39.1/lib/node_modules/wiki",
+      "origin": "http://remote.fixture.test:62086",
+      "source": {
+        "site": "localhost:3000",
+        "snapshotSha256": "02b4d0363aa78be3a949bb400d7c9868146fbca94bc04e880b70dcaf8c7511ee"
+      },
+      "fixtureBoundary": "localhost:3000 is fulfilled by a disposable browser route. No listener or request to the user real localhost service. Real package client/server; fixture security plugin.",
+      "tests": [
+        {
+          "name": "local source reachability from destination origin",
+          "status": "PASS",
+          "error": null,
+          "actualSourceRequests": 2
+        },
+        {
+          "name": "authorized-origin readable source control",
+          "status": "PASS"
+        },
+        {
+          "name": "source unavailable",
+          "status": "PASS",
+          "error": "unavailable.fixture.test is unreachable"
+        },
+        {
+          "name": "authorized remote write with correct non-loopback fork provenance",
+          "status": "PASS",
+          "forkPageIncluded": true,
+          "journal": [
+            {
+              "type": "create",
+              "date": 1,
+              "item": {
+                "title": "Fork Contract",
+                "story": []
+              }
+            },
+            {
+              "type": "fork",
+              "site": "source.fixture.test",
+              "date": 1791565061266
+            }
+          ]
+        },
+        {
+          "name": "loopback source provenance from preloaded snapshot",
+          "status": "STRIPPED_BY_EXISTING_CLIENT",
+          "site": null,
+          "notOrdinaryAcquisition": false
+        },
+        {
+          "name": "remote write rejected without authorized cookie",
+          "status": "PASS",
+          "httpStatus": 403,
+          "remoteUnchanged": true,
+          "clientLocalFallback": true,
+          "probe": "Actual server authorization route; non-owner local-storage choice separately exercised through the existing client API, not a synthesized UI button"
+        },
+        {
+          "name": "browser rejects source without CORS approval",
+          "status": "PASS",
+          "error": "TypeError"
+        },
+        {
+          "name": "foreign browser origin cannot write without destination authorization",
+          "status": "PASS",
+          "result": "TypeError"
+        }
+      ],
+      "requests": [
+        {
+          "url": "http://remote.fixture.test:62086/view/fork-contract",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/style/style.css",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/theme/style.css",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/js/jquery-ui/1.14.1/jquery-ui.min.css",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/js/jquery-3.7.1.min.js",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/js/jquery-migrate-3.5.0.min.js",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/js/jquery-ui/1.14.1/jquery-ui.min.js",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/js/jquery.ui.touch-punch.min.js",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/js/underscore-min.js",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/client.js",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/style/print.css",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/system/factories.json",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/images/crosses.png",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/security/security.js",
+          "method": "GET",
+          "origin": "http://remote.fixture.test:62086"
+        },
+        {
+          "url": "http://remote.fixture.test:62086/images/noise.png",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/fork-contract.json",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/plugins/image/image.js",
+          "method": "GET",
+          "origin": "http://remote.fixture.test:62086"
+        },
+        {
+          "url": "http://remote.fixture.test:62086/favicon.png",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/favicon.png",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/system/sitemap.json",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/system/site-index.json",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://localhost:3000/favicon.png?cb=1791565060285",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://localhost:3000/fork-contract.json",
+          "method": "GET",
+          "origin": "http://remote.fixture.test:62086"
+        },
+        {
+          "url": "http://source.fixture.test/favicon.png?cb=1791565060299",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://source.fixture.test/fork-contract.json",
+          "method": "GET",
+          "origin": "http://remote.fixture.test:62086"
+        },
+        {
+          "url": "http://unavailable.fixture.test/favicon.png?cb=1791565060312",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/proxy/unavailable.fixture.test/favicon.png?cb=1791565060315",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "https://unavailable.fixture.test/favicon.png?cb=1791565060358",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/fixture/login",
+          "method": "POST",
+          "origin": "http://remote.fixture.test:62086"
+        },
+        {
+          "url": "http://remote.fixture.test:62086/view/fork-contract",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/style/style.css",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/theme/style.css",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/js/jquery-ui/1.14.1/jquery-ui.min.css",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/js/jquery-3.7.1.min.js",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/js/jquery-migrate-3.5.0.min.js",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/js/jquery-ui/1.14.1/jquery-ui.min.js",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/js/jquery.ui.touch-punch.min.js",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/js/underscore-min.js",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/client.js",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/style/print.css",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/system/factories.json",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/security/security.js",
+          "method": "GET",
+          "origin": "http://remote.fixture.test:62086"
+        },
+        {
+          "url": "http://remote.fixture.test:62086/images/crosses.png",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/images/noise.png",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/fork-contract.json",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/plugins/image/image.js",
+          "method": "GET",
+          "origin": "http://remote.fixture.test:62086"
+        },
+        {
+          "url": "http://remote.fixture.test:62086/favicon.png",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/favicon.png",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/system/sitemap.json",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/system/site-index.json",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/page/fork-contract/action",
+          "method": "PUT",
+          "origin": "http://remote.fixture.test:62086"
+        },
+        {
+          "url": "http://remote.fixture.test:62086/favicon.png",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/favicon.png",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://source.fixture.test/favicon.png",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/view/fork-contract",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/style/style.css",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/theme/style.css",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/js/jquery-ui/1.14.1/jquery-ui.min.css",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/js/jquery-3.7.1.min.js",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/js/jquery-migrate-3.5.0.min.js",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/js/jquery-ui/1.14.1/jquery-ui.min.js",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/js/jquery.ui.touch-punch.min.js",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/js/underscore-min.js",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/client.js",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/style/print.css",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/system/factories.json",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/security/security.js",
+          "method": "GET",
+          "origin": "http://remote.fixture.test:62086"
+        },
+        {
+          "url": "http://remote.fixture.test:62086/images/crosses.png",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/images/noise.png",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/fork-contract.json",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/plugins/image/image.js",
+          "method": "GET",
+          "origin": "http://remote.fixture.test:62086"
+        },
+        {
+          "url": "http://remote.fixture.test:62086/favicon.png",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://source.fixture.test/favicon.png",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/favicon.png",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/system/sitemap.json",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/system/site-index.json",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://source.fixture.test/system/sitemap.json",
+          "method": "GET",
+          "origin": "http://remote.fixture.test:62086"
+        },
+        {
+          "url": "http://remote.fixture.test:62086/page/fork-contract/action",
+          "method": "PUT",
+          "origin": "http://remote.fixture.test:62086"
+        },
+        {
+          "url": "http://remote.fixture.test:62086/favicon.png",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/view/fork-contract",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/style/style.css",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/theme/style.css",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/js/jquery-ui/1.14.1/jquery-ui.min.css",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/js/jquery-3.7.1.min.js",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/js/jquery-migrate-3.5.0.min.js",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/js/jquery-ui/1.14.1/jquery-ui.min.js",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/js/jquery.ui.touch-punch.min.js",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/js/underscore-min.js",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/client.js",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/style/print.css",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/system/factories.json",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/security/security.js",
+          "method": "GET",
+          "origin": "http://remote.fixture.test:62086"
+        },
+        {
+          "url": "http://remote.fixture.test:62086/images/crosses.png",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/images/noise.png",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/fork-contract.json",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/plugins/image/image.js",
+          "method": "GET",
+          "origin": "http://remote.fixture.test:62086"
+        },
+        {
+          "url": "http://remote.fixture.test:62086/favicon.png",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/favicon.png",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/system/sitemap.json",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/system/site-index.json",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/page/rejected-fork/action",
+          "method": "PUT",
+          "origin": "http://remote.fixture.test:62086"
+        },
+        {
+          "url": "http://source-cors.fixture.test:62087/no-cors.json",
+          "method": "GET",
+          "origin": "http://remote.fixture.test:62086"
+        },
+        {
+          "url": "http://other.fixture.test/",
+          "method": "GET",
+          "origin": null
+        },
+        {
+          "url": "http://remote.fixture.test:62086/page/foreign-fork/action",
+          "method": "PUT",
+          "origin": "http://other.fixture.test"
+        }
+      ],
+      "writes": [
+        {
+          "url": "http://remote.fixture.test:62086/page/fork-contract/action",
+          "wireMethod": "PUT",
+          "methodOverride": null,
+          "body": {
+            "type": "fork",
+            "site": "source.fixture.test",
+            "date": 1791565061266,
+            "forkPage": {
+              "title": "Fork Contract",
+              "story": [
+                {
+                  "type": "paragraph",
+                  "id": "source-item",
+                  "text": "Trusted local source content"
+                }
+              ],
+              "journal": [
+                {
+                  "type": "create",
+                  "date": 1,
+                  "item": {
+                    "title": "Fork Contract",
+                    "story": []
+                  }
+                }
+              ]
+            }
+          },
+          "cookieSent": true
+        },
+        {
+          "url": "http://remote.fixture.test:62086/page/fork-contract/action",
+          "wireMethod": "PUT",
+          "methodOverride": null,
+          "body": {
+            "type": "fork",
+            "date": 1791565062776,
+            "forkPage": {
+              "title": "Fork Contract",
+              "story": [
+                {
+                  "type": "paragraph",
+                  "id": "source-item",
+                  "text": "Trusted local source content"
+                }
+              ],
+              "journal": [
+                {
+                  "type": "create",
+                  "date": 1,
+                  "item": {
+                    "title": "Fork Contract",
+                    "story": []
+                  }
+                }
+              ]
+            }
+          },
+          "cookieSent": true
+        },
+        {
+          "url": "http://remote.fixture.test:62086/page/rejected-fork/action",
+          "wireMethod": "PUT",
+          "methodOverride": null,
+          "body": {
+            "type": "fork",
+            "site": "source.fixture.test",
+            "date": 1791565064822,
+            "forkPage": {
+              "title": "Fork Contract",
+              "story": [
+                {
+                  "type": "paragraph",
+                  "id": "source-item",
+                  "text": "Trusted local source content"
+                }
+              ],
+              "journal": [
+                {
+                  "type": "create",
+                  "date": 1,
+                  "item": {
+                    "title": "Fork Contract",
+                    "story": []
+                  }
+                }
+              ]
+            }
+          },
+          "cookieSent": false
+        },
+        {
+          "url": "http://remote.fixture.test:62086/page/foreign-fork/action",
+          "wireMethod": "PUT",
+          "methodOverride": null,
+          "body": {
+            "type": "fork",
+            "site": "localhost:3000",
+            "forkPage": {
+              "title": "Foreign",
+              "story": [],
+              "journal": []
+            },
+            "date": 1791565065003
+          },
+          "cookieSent": false
+        }
+      ],
+      "packageProvenance": {
+        "schemaVersion": 1,
+        "recipe": "localhost",
+        "profile": "upstream",
+        "baseRecipeRecords": {},
+        "mech": {
+          "schemaVersion": 1,
+          "profile": "upstream",
+          "source": {
+            "authority": "https://github.com/WardCunningham/wiki-plugin-mech",
+            "oid": "a028b4bba04e539dcaa090423d38a00a0050489d",
+            "filesSha256": "6943cef3a3bcaec251ebb0e4e8a2170e6eeea90c238c7436b8110beb477fa9f6"
+          },
+          "extension": null,
+          "recipe": {
+            "wiki": {
+              "authority": "https://github.com/RalfBarkow/wiki",
+              "baseCommitOid": "8e6c2e53a47f038f4b0c6d2ef35576cc1d4f456c",
+              "modulePath": "integrations/mech",
+              "moduleVersion": "0.1.0",
+              "extensionCommitOid": null,
+              "workingTree": true,
+              "sourceContentSha256": "4b4dea00306480b43d200f435e79541b5d3dc8dcc0549ee7785166cfeffb3b51",
+              "sourceDigestExcludes": [
+                "evidence/acceptance/"
+              ],
+              "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103"
+            },
+            "node": "v22.18.0",
+            "platform": "darwin",
+            "arch": "x64",
+            "dependencies": {
+              "marked": "18.0.12",
+              "universal-ticker": "0.1.1",
+              "acorn": "8.18.0",
+              "esbuild": "0.28.2"
+            },
+            "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103",
+            "format": "esm",
+            "bundled": true
+          },
+          "artifacts": {
+            "client/mech.js": {
+              "sha256": "db6f746b60af54481fa2f2cc6a6b53c69d34ee32a86e48f2810d9baeda220e67",
+              "bytes": 134254
+            },
+            "client/mech.css": {
+              "sha256": "9d930c433a2cdb14c532cfe7c271720df81a1010adeb05cf734fdae7b0608f27"
+            },
+            "metafile.json": {
+              "sha256": "d5edfff8f570bdbf7cb66953073ca72b863b3248ec3ba951a437f740f3eba44c"
+            }
+          },
+          "packaging": {
+            "moduleSource": {
+              "authority": "https://github.com/RalfBarkow/wiki",
+              "oid": "971794d2066f87f63e7685447352340d5276a959",
+              "path": "integrations/mech",
+              "version": "0.1.0",
+              "sourceContentSha256": "4b4dea00306480b43d200f435e79541b5d3dc8dcc0549ee7785166cfeffb3b51",
+              "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103"
+            },
+            "upstreamTreeOid": "b0d8ebfdefdd259966705718c602e790607155fc",
+            "sourceSnapshotNarHash": "sha256-4NqBv0P9JjXEnEVpCEk54tE0tDwMmc38ZwhZqMiyzLQ=",
+            "profile": "upstream",
+            "builderContentIdentity": {
+              "authority": "https://github.com/RalfBarkow/wiki",
+              "baseCommitOid": "8e6c2e53a47f038f4b0c6d2ef35576cc1d4f456c",
+              "modulePath": "integrations/mech",
+              "moduleVersion": "0.1.0",
+              "extensionCommitOid": null,
+              "workingTree": true,
+              "sourceContentSha256": "4b4dea00306480b43d200f435e79541b5d3dc8dcc0549ee7785166cfeffb3b51",
+              "sourceDigestExcludes": [
+                "evidence/acceptance/"
+              ],
+              "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103"
+            }
+          }
+        },
+        "components": {
+          "chokidar": {
+            "version": "4.0.3",
+            "declared": "^4.0.3"
+          },
+          "minimist": {
+            "version": "1.2.8",
+            "declared": "^1.2.7"
+          },
+          "wiki-client": {
+            "version": "0.31.6",
+            "declared": "^0.31.6"
+          },
+          "wiki-plugin-activity": {
+            "version": "0.7.1",
+            "declared": "^0.7.1"
+          },
+          "wiki-plugin-assets": {
+            "version": "0.7.3",
+            "declared": "^0.7.3"
+          },
+          "wiki-plugin-audio": {
+            "version": "0.3.0",
+            "declared": "^0.3.0"
+          },
+          "wiki-plugin-bars": {
+            "version": "0.6.0",
+            "declared": "^0.6.0"
+          },
+          "wiki-plugin-calculator": {
+            "version": "0.6.0",
+            "declared": "^0.6.0"
+          },
+          "wiki-plugin-calendar": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-changes": {
+            "version": "0.5.0",
+            "declared": "^0.5.0"
+          },
+          "wiki-plugin-chart": {
+            "version": "0.5.0",
+            "declared": "^0.5.0"
+          },
+          "wiki-plugin-code": {
+            "version": "0.5.0",
+            "declared": "^0.5.0"
+          },
+          "wiki-plugin-data": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-factory": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-flagmatic": {
+            "version": "0.3.0",
+            "declared": "^0.3.0"
+          },
+          "wiki-plugin-force": {
+            "version": "0.6.0",
+            "declared": "^0.6.0"
+          },
+          "wiki-plugin-frame": {
+            "version": "0.10.3",
+            "declared": "^0.10.3"
+          },
+          "wiki-plugin-future": {
+            "version": "0.4.1",
+            "declared": "^0.4.1"
+          },
+          "wiki-plugin-graphviz": {
+            "version": "0.11.9",
+            "declared": "^0.11.9"
+          },
+          "wiki-plugin-grep": {
+            "version": "1.1.1",
+            "declared": "^1.1.1"
+          },
+          "wiki-plugin-html": {
+            "version": "0.6.0",
+            "declared": "^0.6.0"
+          },
+          "wiki-plugin-image": {
+            "version": "0.7.2",
+            "declared": "^0.7.2"
+          },
+          "wiki-plugin-line": {
+            "version": "0.6.0",
+            "declared": "^0.6.0"
+          },
+          "wiki-plugin-map": {
+            "version": "0.9.0",
+            "declared": "^0.9.0"
+          },
+          "wiki-plugin-markdown": {
+            "version": "0.5.2",
+            "declared": "^0.5.2"
+          },
+          "wiki-plugin-math": {
+            "version": "0.2.0",
+            "declared": "^0.2.0"
+          },
+          "wiki-plugin-metabolism": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-method": {
+            "version": "0.4.1",
+            "declared": "^0.4.1"
+          },
+          "wiki-plugin-pagefold": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-paragraph": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-plugmatic": {
+            "version": "1.5.1",
+            "declared": "^1.5.1"
+          },
+          "wiki-plugin-pushpin": {
+            "version": "0.6.0",
+            "declared": "^0.6.0"
+          },
+          "wiki-plugin-radar": {
+            "version": "0.6.0",
+            "declared": "^0.6.0"
+          },
+          "wiki-plugin-recycler": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-reduce": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-reference": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-rollup": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-roster": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-scatter": {
+            "version": "0.6.0",
+            "declared": "^0.6.0"
+          },
+          "wiki-plugin-search": {
+            "version": "0.3.0",
+            "declared": "^0.3.0"
+          },
+          "wiki-plugin-transport": {
+            "version": "0.3.0",
+            "declared": "^0.3.0"
+          },
+          "wiki-plugin-video": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-security-friends": {
+            "version": "0.3.0",
+            "declared": "^0.3.0"
+          },
+          "wiki-security-passportjs": {
+            "version": "0.12.0",
+            "declared": "^0.12.0"
+          },
+          "wiki-server": {
+            "version": "0.26.2",
+            "declared": "^0.26.1"
+          },
+          "wiki-plugin-mech": {
+            "version": "0.1.48-3",
+            "declared": "github:WardCunningham/wiki-plugin-mech#a028b4bba04e539dcaa090423d38a00a0050489d"
+          },
+          "wiki-plugin-journalmatic": {
+            "version": "0.2.2",
+            "declared": "git+https://github.com/ralfbarkow/wiki-plugin-journalmatic.git#aa5f5863bb8de8f697815b405cfb2f1a0e055ed9"
+          },
+          "wiki-plugin-solo": {
+            "version": "0.1.30-1",
+            "declared": "0.1.30-1"
+          }
+        }
+      },
+      "servedClientSha256": "c2b8dd40ea3d3a740959eeb3183c6dc89d6c76e6c2cdbd547192d732b862268d",
+      "browserVersion": "154.0.8037.98",
+      "intendedLocalToRemoteWorkflow": "PARTIAL: source acquired but existing client strips loopback journal provenance",
+      "status": "PASS: controls; loopback acquisition/provenance retain observed boundaries",
+      "rawRecordSha256": "75052cc595c154ea861c2f6ec66f2898fc9ca9fcd047243c7ccd1c571ca29037"
+    }
+  ],
+  "productionAuthenticationVerified": false,
+  "productionHTTPSLocalNetworkAccessVerified": false,
+  "clientServerSourceChanges": false,
+  "weakenedPolicy": false,
+  "scope": "source route fixture, real server and real CORS-negative network fixture; no live localhost/remote data",
+  "fixtureDevelopmentObservations": [
+    {
+      "label": "localhost",
+      "status": "FAIL",
+      "reason": "Harness supplied non-PNG favicon bytes. This client uses Image.onload before selecting a site adapter; both loopback and non-loopback acquisition failed before graph or fork operations. The fixture is corrected to a valid trusted 1x1 PNG; application source is unchanged.",
+      "record": {
+        "label": "localhost",
+        "wikiRoot": "/nix/store/w9sp9n2sbkdj65ckvx80m7j9j3wx8n5z-wiki-localhost-upstream-0.39.1/lib/node_modules/wiki",
+        "origin": "http://remote.fixture.test:61784",
+        "source": {
+          "site": "localhost:3000",
+          "snapshotSha256": "02b4d0363aa78be3a949bb400d7c9868146fbca94bc04e880b70dcaf8c7511ee"
+        },
+        "fixtureBoundary": "localhost:3000 is fulfilled by a disposable browser route. No listener or request to the user real localhost service. Real package client/server; fixture security plugin.",
+        "tests": [
+          {
+            "name": "local source reachability from destination origin",
+            "status": "BLOCKED_BY_EXISTING_CLIENT_POLICY_OR_BROWSER",
+            "error": "localhost:3000 is unreachable",
+            "actualSourceRequests": 1
+          }
+        ],
+        "requests": [
+          {
+            "url": "http://remote.fixture.test:61784/view/fork-contract",
+            "method": "GET",
+            "origin": null
+          },
+          {
+            "url": "http://remote.fixture.test:61784/style/style.css",
+            "method": "GET",
+            "origin": null
+          },
+          {
+            "url": "http://remote.fixture.test:61784/theme/style.css",
+            "method": "GET",
+            "origin": null
+          },
+          {
+            "url": "http://remote.fixture.test:61784/js/jquery-ui/1.14.1/jquery-ui.min.css",
+            "method": "GET",
+            "origin": null
+          },
+          {
+            "url": "http://remote.fixture.test:61784/js/jquery-3.7.1.min.js",
+            "method": "GET",
+            "origin": null
+          },
+          {
+            "url": "http://remote.fixture.test:61784/js/jquery-migrate-3.5.0.min.js",
+            "method": "GET",
+            "origin": null
+          },
+          {
+            "url": "http://remote.fixture.test:61784/js/jquery-ui/1.14.1/jquery-ui.min.js",
+            "method": "GET",
+            "origin": null
+          },
+          {
+            "url": "http://remote.fixture.test:61784/js/jquery.ui.touch-punch.min.js",
+            "method": "GET",
+            "origin": null
+          },
+          {
+            "url": "http://remote.fixture.test:61784/js/underscore-min.js",
+            "method": "GET",
+            "origin": null
+          },
+          {
+            "url": "http://remote.fixture.test:61784/client.js",
+            "method": "GET",
+            "origin": null
+          },
+          {
+            "url": "http://remote.fixture.test:61784/style/print.css",
+            "method": "GET",
+            "origin": null
+          },
+          {
+            "url": "http://remote.fixture.test:61784/system/factories.json",
+            "method": "GET",
+            "origin": null
+          },
+          {
+            "url": "http://remote.fixture.test:61784/images/crosses.png",
+            "method": "GET",
+            "origin": null
+          },
+          {
+            "url": "http://remote.fixture.test:61784/security/security.js",
+            "method": "GET",
+            "origin": "http://remote.fixture.test:61784"
+          },
+          {
+            "url": "http://remote.fixture.test:61784/images/noise.png",
+            "method": "GET",
+            "origin": null
+          },
+          {
+            "url": "http://remote.fixture.test:61784/fork-contract.json",
+            "method": "GET",
+            "origin": null
+          },
+          {
+            "url": "http://remote.fixture.test:61784/plugins/image/image.js",
+            "method": "GET",
+            "origin": "http://remote.fixture.test:61784"
+          },
+          {
+            "url": "http://remote.fixture.test:61784/favicon.png",
+            "method": "GET",
+            "origin": null
+          },
+          {
+            "url": "http://remote.fixture.test:61784/favicon.png",
+            "method": "GET",
+            "origin": null
+          },
+          {
+            "url": "http://remote.fixture.test:61784/system/sitemap.json",
+            "method": "GET",
+            "origin": null
+          },
+          {
+            "url": "http://remote.fixture.test:61784/system/site-index.json",
+            "method": "GET",
+            "origin": null
+          },
+          {
+            "url": "http://localhost:3000/favicon.png?cb=1791564676093",
+            "method": "GET",
+            "origin": null
+          },
+          {
+            "url": "http://remote.fixture.test:61784/proxy/localhost:3000/favicon.png?cb=1791564676099",
+            "method": "GET",
+            "origin": null
+          },
+          {
+            "url": "https://localhost:3000/favicon.png?cb=1791564676106",
+            "method": "GET",
+            "origin": null
+          },
+          {
+            "url": "http://source.fixture.test/favicon.png?cb=1791564676120",
+            "method": "GET",
+            "origin": null
+          },
+          {
+            "url": "http://remote.fixture.test:61784/proxy/source.fixture.test/favicon.png?cb=1791564676123",
+            "method": "GET",
+            "origin": null
+          },
+          {
+            "url": "https://source.fixture.test/favicon.png?cb=1791564676190",
+            "method": "GET",
+            "origin": null
+          }
+        ],
+        "writes": [],
+        "status": "FAIL",
+        "error": "Expected values to be strictly deep-equal:\n+ actual - expected\n\n+ null\n- {\n-   journal: [\n-     {\n-       date: 1,\n-       item: {\n-         story: [],\n-         title: 'Fork Contract'\n-       },\n-       type: 'create'\n-     }\n-   ],\n-   story: [\n-     {\n-       id: 'source-item',\n-       text: 'Trusted local source content',\n-       type: 'paragraph'\n-     }\n-   ],\n-   title: 'Fork Contract'\n- }\n"
+      }
+    }
+  ],
+  "harnessContentSha256": "fe1515852026e96a3dc760f91856a6398bf0fdafc9e6577c47e5aa75a42c329c",
+  "serverFixtureContentSha256": "3bdab13d717a536e9ee01587bc7628b181b078cd5bc4f8982dea2bf7ba85cd93",
+  "outcomeSummary": {
+    "dreyeck": "PASS in isolated HTTP fixtures",
+    "ralfbarkow": "BLOCKED before local source acquisition",
+    "localhost": "PARTIAL: local source acquisition succeeds; journal provenance stripped"
+  }
+}
