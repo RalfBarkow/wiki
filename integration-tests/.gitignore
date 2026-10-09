@@ -1,0 +1,4 @@
+.artifacts/
+# Explicitly reconstructed display dependency; source/integrity recipe is authored.
+fixtures/highlight.js
+fixtures/highlight.css

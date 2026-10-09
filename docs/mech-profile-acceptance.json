@@ -1,0 +1,3130 @@
+{
+  "kind": "local package profile source/build/browser evidence; no deployment",
+  "sourcePins": {
+    "upstreamMech": {
+      "authority": "https://github.com/WardCunningham/wiki-plugin-mech",
+      "oid": "a028b4bba04e539dcaa090423d38a00a0050489d",
+      "treeOid": "b0d8ebfdefdd259966705718c602e790607155fc",
+      "narHash": "sha256-4NqBv0P9JjXEnEVpCEk54tE0tDwMmc38ZwhZqMiyzLQ=",
+      "commitObject": "tree b0d8ebfdefdd259966705718c602e790607155fc\nparent 54b769596f27ad97b79fa83061e0b238090fdc59\nauthor Ward Cunningham <ward@c2.com> 1789065056 -0700\ncommitter Ward Cunningham <ward@c2.com> 1789065056 -0700\n\nupdate dev dependencies\n"
+    },
+    "dreyeckRecipe": {
+      "authority": "https://github.com/RalfBarkow/wiki",
+      "oid": "548ee4c31ec7824bf19954b745f12b3b5212fc2b",
+      "treeOid": "aa6e58e9afef7be54fe9d54467f8cdca2f04b52c",
+      "narHash": "sha256-DqXoT3YPLgYUr9THr8kTDMi8+f/ofl4jDlZs4ogjIto="
+    },
+    "module": {
+      "authority": "https://github.com/RalfBarkow/wiki",
+      "oid": "971794d2066f87f63e7685447352340d5276a959",
+      "path": "integrations/mech",
+      "version": "0.1.0",
+      "sourceContentSha256": "4b4dea00306480b43d200f435e79541b5d3dc8dcc0549ee7785166cfeffb3b51",
+      "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103"
+    },
+    "ralfbarkowRecipe": {
+      "authority": "https://github.com/RalfBarkow/wiki",
+      "oid": "b42eb888d6e5d59803667c6320e0779523fc265c",
+      "narHash": "sha256-OpFyJA8X/MxkAW7zryqXuBxG5w85PNGwdU8BgExelCM=",
+      "nixpkgs": {
+        "lastModified": 1790450978,
+        "narHash": "sha256-/eLCD/X9kaWJqPR47+fDozEC87Hjmm3i8gJbYmDAD7g=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "5e2305d577ca00acbba631b05cb1094d172b29f3",
+        "type": "github"
+      }
+    }
+  },
+  "moduleSourceUnchanged": true,
+  "historicalAcceptanceRecordsUnchanged": true,
+  "originalRootLocksAndCoreSourcesUnchanged": true,
+  "profileOutputs": {
+    "mech-upstream": {
+      "outPath": "/nix/store/xj28msdll0r2iv21iga9lbzmg68wybld-wiki-plugin-mech-upstream-0.1.48-3",
+      "mech": {
+        "schemaVersion": 1,
+        "profile": "upstream",
+        "source": {
+          "authority": "https://github.com/WardCunningham/wiki-plugin-mech",
+          "oid": "a028b4bba04e539dcaa090423d38a00a0050489d",
+          "filesSha256": "6943cef3a3bcaec251ebb0e4e8a2170e6eeea90c238c7436b8110beb477fa9f6"
+        },
+        "extension": null,
+        "recipe": {
+          "wiki": {
+            "authority": "https://github.com/RalfBarkow/wiki",
+            "baseCommitOid": "8e6c2e53a47f038f4b0c6d2ef35576cc1d4f456c",
+            "modulePath": "integrations/mech",
+            "moduleVersion": "0.1.0",
+            "extensionCommitOid": null,
+            "workingTree": true,
+            "sourceContentSha256": "4b4dea00306480b43d200f435e79541b5d3dc8dcc0549ee7785166cfeffb3b51",
+            "sourceDigestExcludes": [
+              "evidence/acceptance/"
+            ],
+            "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103"
+          },
+          "node": "v22.18.0",
+          "platform": "darwin",
+          "arch": "x64",
+          "dependencies": {
+            "marked": "18.0.12",
+            "universal-ticker": "0.1.1",
+            "acorn": "8.18.0",
+            "esbuild": "0.28.2"
+          },
+          "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103",
+          "format": "esm",
+          "bundled": true
+        },
+        "artifacts": {
+          "client/mech.js": {
+            "sha256": "db6f746b60af54481fa2f2cc6a6b53c69d34ee32a86e48f2810d9baeda220e67",
+            "bytes": 134254
+          },
+          "client/mech.css": {
+            "sha256": "9d930c433a2cdb14c532cfe7c271720df81a1010adeb05cf734fdae7b0608f27"
+          },
+          "metafile.json": {
+            "sha256": "d5edfff8f570bdbf7cb66953073ca72b863b3248ec3ba951a437f740f3eba44c"
+          }
+        },
+        "packaging": {
+          "moduleSource": {
+            "authority": "https://github.com/RalfBarkow/wiki",
+            "oid": "971794d2066f87f63e7685447352340d5276a959",
+            "path": "integrations/mech",
+            "version": "0.1.0",
+            "sourceContentSha256": "4b4dea00306480b43d200f435e79541b5d3dc8dcc0549ee7785166cfeffb3b51",
+            "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103"
+          },
+          "upstreamTreeOid": "b0d8ebfdefdd259966705718c602e790607155fc",
+          "sourceSnapshotNarHash": "sha256-4NqBv0P9JjXEnEVpCEk54tE0tDwMmc38ZwhZqMiyzLQ=",
+          "profile": "upstream",
+          "builderContentIdentity": {
+            "authority": "https://github.com/RalfBarkow/wiki",
+            "baseCommitOid": "8e6c2e53a47f038f4b0c6d2ef35576cc1d4f456c",
+            "modulePath": "integrations/mech",
+            "moduleVersion": "0.1.0",
+            "extensionCommitOid": null,
+            "workingTree": true,
+            "sourceContentSha256": "4b4dea00306480b43d200f435e79541b5d3dc8dcc0549ee7785166cfeffb3b51",
+            "sourceDigestExcludes": [
+              "evidence/acceptance/"
+            ],
+            "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103"
+          }
+        }
+      },
+      "mechBytesSha256": "db6f746b60af54481fa2f2cc6a6b53c69d34ee32a86e48f2810d9baeda220e67",
+      "mechPackageVersion": "0.1.48-3"
+    },
+    "mech-discourse": {
+      "outPath": "/nix/store/rxvbinnjkw5ci51dzdr7nm4aks30v9a8-wiki-plugin-mech-discourse-0.1.48-3",
+      "mech": {
+        "schemaVersion": 1,
+        "profile": "discourse",
+        "source": {
+          "authority": "https://github.com/WardCunningham/wiki-plugin-mech",
+          "oid": "a028b4bba04e539dcaa090423d38a00a0050489d",
+          "filesSha256": "6943cef3a3bcaec251ebb0e4e8a2170e6eeea90c238c7436b8110beb477fa9f6"
+        },
+        "extension": {
+          "authority": "https://github.com/RalfBarkow/wiki",
+          "baseCommitOid": "8e6c2e53a47f038f4b0c6d2ef35576cc1d4f456c",
+          "modulePath": "integrations/mech",
+          "moduleVersion": "0.1.0",
+          "extensionCommitOid": null,
+          "workingTree": true,
+          "sourceContentSha256": "4b4dea00306480b43d200f435e79541b5d3dc8dcc0549ee7785166cfeffb3b51",
+          "sourceDigestExcludes": [
+            "evidence/acceptance/"
+          ],
+          "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103"
+        },
+        "recipe": {
+          "wiki": {
+            "authority": "https://github.com/RalfBarkow/wiki",
+            "baseCommitOid": "8e6c2e53a47f038f4b0c6d2ef35576cc1d4f456c",
+            "modulePath": "integrations/mech",
+            "moduleVersion": "0.1.0",
+            "extensionCommitOid": null,
+            "workingTree": true,
+            "sourceContentSha256": "4b4dea00306480b43d200f435e79541b5d3dc8dcc0549ee7785166cfeffb3b51",
+            "sourceDigestExcludes": [
+              "evidence/acceptance/"
+            ],
+            "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103"
+          },
+          "node": "v22.18.0",
+          "platform": "darwin",
+          "arch": "x64",
+          "dependencies": {
+            "marked": "18.0.12",
+            "universal-ticker": "0.1.1",
+            "acorn": "8.18.0",
+            "esbuild": "0.28.2"
+          },
+          "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103",
+          "format": "esm",
+          "bundled": true
+        },
+        "artifacts": {
+          "client/mech.js": {
+            "sha256": "ba933fe338b7938e5fd5f81399325c9335d4bb710c7600b0b7148cf220aa3543",
+            "bytes": 152650
+          },
+          "client/mech.css": {
+            "sha256": "9d930c433a2cdb14c532cfe7c271720df81a1010adeb05cf734fdae7b0608f27"
+          },
+          "metafile.json": {
+            "sha256": "8e350db8b9fe1324627f290db48c6b76ccfe2415d9c08eae44b05c03cd137216"
+          }
+        },
+        "packaging": {
+          "moduleSource": {
+            "authority": "https://github.com/RalfBarkow/wiki",
+            "oid": "971794d2066f87f63e7685447352340d5276a959",
+            "path": "integrations/mech",
+            "version": "0.1.0",
+            "sourceContentSha256": "4b4dea00306480b43d200f435e79541b5d3dc8dcc0549ee7785166cfeffb3b51",
+            "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103"
+          },
+          "upstreamTreeOid": "b0d8ebfdefdd259966705718c602e790607155fc",
+          "sourceSnapshotNarHash": "sha256-4NqBv0P9JjXEnEVpCEk54tE0tDwMmc38ZwhZqMiyzLQ=",
+          "profile": "discourse",
+          "builderContentIdentity": {
+            "authority": "https://github.com/RalfBarkow/wiki",
+            "baseCommitOid": "8e6c2e53a47f038f4b0c6d2ef35576cc1d4f456c",
+            "modulePath": "integrations/mech",
+            "moduleVersion": "0.1.0",
+            "extensionCommitOid": null,
+            "workingTree": true,
+            "sourceContentSha256": "4b4dea00306480b43d200f435e79541b5d3dc8dcc0549ee7785166cfeffb3b51",
+            "sourceDigestExcludes": [
+              "evidence/acceptance/"
+            ],
+            "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103"
+          }
+        }
+      },
+      "mechBytesSha256": "ba933fe338b7938e5fd5f81399325c9335d4bb710c7600b0b7148cf220aa3543",
+      "mechPackageVersion": "0.1.48-3"
+    },
+    "wiki-upstream": {
+      "outPath": "/nix/store/zdxp8kp64rklkav8la49gmgsh4dc1jqc-wiki-ralfbarkow-upstream-0.41.0-rc.3",
+      "mech": {
+        "schemaVersion": 1,
+        "profile": "upstream",
+        "source": {
+          "authority": "https://github.com/WardCunningham/wiki-plugin-mech",
+          "oid": "a028b4bba04e539dcaa090423d38a00a0050489d",
+          "filesSha256": "6943cef3a3bcaec251ebb0e4e8a2170e6eeea90c238c7436b8110beb477fa9f6"
+        },
+        "extension": null,
+        "recipe": {
+          "wiki": {
+            "authority": "https://github.com/RalfBarkow/wiki",
+            "baseCommitOid": "8e6c2e53a47f038f4b0c6d2ef35576cc1d4f456c",
+            "modulePath": "integrations/mech",
+            "moduleVersion": "0.1.0",
+            "extensionCommitOid": null,
+            "workingTree": true,
+            "sourceContentSha256": "4b4dea00306480b43d200f435e79541b5d3dc8dcc0549ee7785166cfeffb3b51",
+            "sourceDigestExcludes": [
+              "evidence/acceptance/"
+            ],
+            "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103"
+          },
+          "node": "v22.18.0",
+          "platform": "darwin",
+          "arch": "x64",
+          "dependencies": {
+            "marked": "18.0.12",
+            "universal-ticker": "0.1.1",
+            "acorn": "8.18.0",
+            "esbuild": "0.28.2"
+          },
+          "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103",
+          "format": "esm",
+          "bundled": true
+        },
+        "artifacts": {
+          "client/mech.js": {
+            "sha256": "db6f746b60af54481fa2f2cc6a6b53c69d34ee32a86e48f2810d9baeda220e67",
+            "bytes": 134254
+          },
+          "client/mech.css": {
+            "sha256": "9d930c433a2cdb14c532cfe7c271720df81a1010adeb05cf734fdae7b0608f27"
+          },
+          "metafile.json": {
+            "sha256": "d5edfff8f570bdbf7cb66953073ca72b863b3248ec3ba951a437f740f3eba44c"
+          }
+        },
+        "packaging": {
+          "moduleSource": {
+            "authority": "https://github.com/RalfBarkow/wiki",
+            "oid": "971794d2066f87f63e7685447352340d5276a959",
+            "path": "integrations/mech",
+            "version": "0.1.0",
+            "sourceContentSha256": "4b4dea00306480b43d200f435e79541b5d3dc8dcc0549ee7785166cfeffb3b51",
+            "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103"
+          },
+          "upstreamTreeOid": "b0d8ebfdefdd259966705718c602e790607155fc",
+          "sourceSnapshotNarHash": "sha256-4NqBv0P9JjXEnEVpCEk54tE0tDwMmc38ZwhZqMiyzLQ=",
+          "profile": "upstream",
+          "builderContentIdentity": {
+            "authority": "https://github.com/RalfBarkow/wiki",
+            "baseCommitOid": "8e6c2e53a47f038f4b0c6d2ef35576cc1d4f456c",
+            "modulePath": "integrations/mech",
+            "moduleVersion": "0.1.0",
+            "extensionCommitOid": null,
+            "workingTree": true,
+            "sourceContentSha256": "4b4dea00306480b43d200f435e79541b5d3dc8dcc0549ee7785166cfeffb3b51",
+            "sourceDigestExcludes": [
+              "evidence/acceptance/"
+            ],
+            "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103"
+          }
+        }
+      },
+      "mechBytesSha256": "db6f746b60af54481fa2f2cc6a6b53c69d34ee32a86e48f2810d9baeda220e67",
+      "mechPackageVersion": "0.1.48-3",
+      "composition": {
+        "schemaVersion": 1,
+        "recipe": "ralfbarkow",
+        "profile": "upstream",
+        "baseRecipeRecords": {
+          "p41-provenance.json": {
+            "candidate": "P41",
+            "metaCommit": "96d3080fa10e259d6d4db71000ee25f4a5721b9d",
+            "metaVersion": "0.41.0-rc.3",
+            "nixpkgsCommit": "5e2305d577ca00acbba631b05cb1094d172b29f3",
+            "nodeVersion": "22.23.3",
+            "components": {
+              "wiki-server": {
+                "version": "0.28.0",
+                "upstreamCommit": "6e8d4e1433da6773016ca35641b797453a667ff0",
+                "personalCommit": "b8a5f36907a35e64d338bf21351fd89226b41bed",
+                "archiveSha256": "1b17048869c3a3313dcea6766b15a94b5cce9c803979ebd48850e902202c876e"
+              },
+              "wiki-client": {
+                "version": "0.33.0",
+                "upstreamCommit": "d59dbd68c2a539d32add72e06d2fd74e9d6d60c2",
+                "personalCommit": "f3c72d9fc31a3db8a296c7f2d05b36364395e4fe",
+                "archiveSha256": "70237aa59f7f29c1ae29eaca0da5434b39e74765b6fd6083b76786330dbb5b15"
+              },
+              "wiki-plugin-mech": {
+                "version": "0.1.32-dev.1",
+                "sourceCommit": "4b8051417dec6b0eff40878290a703b1fa60fb52",
+                "archiveSha256": "3164e097fd30dc1185b90a1f481e2d899645d87981f3dcb68982c6fa4a44b1d9"
+              },
+              "wiki-plugin-solo": {
+                "version": "0.1.30-1",
+                "sourceCommit": "3ad7796217d564407fd36cf62c37844654fdc967",
+                "archiveSha256": "0d63486478ad61bcb942f8e68be01364fa0c3cc64be369597fe931656a931ed9"
+              },
+              "wiki-plugin-journalmatic": {
+                "version": "0.2.3",
+                "upstreamCommit": "29bd58246fa4043b1808d1e26bd6bf9df15fc952",
+                "metadataFrom": "aa5f5863bb8de8f697815b405cfb2f1a0e055ed9",
+                "archiveSha256": "4b55578f0dc578812433ec918ba52b67bf3a97f8da9e9a066914ccf83910839d"
+              }
+            },
+            "security": {
+              "friends": "0.3.1",
+              "passportjs": "0.14.0",
+              "social": "0.1.0"
+            }
+          }
+        },
+        "mech": {
+          "schemaVersion": 1,
+          "profile": "upstream",
+          "source": {
+            "authority": "https://github.com/WardCunningham/wiki-plugin-mech",
+            "oid": "a028b4bba04e539dcaa090423d38a00a0050489d",
+            "filesSha256": "6943cef3a3bcaec251ebb0e4e8a2170e6eeea90c238c7436b8110beb477fa9f6"
+          },
+          "extension": null,
+          "recipe": {
+            "wiki": {
+              "authority": "https://github.com/RalfBarkow/wiki",
+              "baseCommitOid": "8e6c2e53a47f038f4b0c6d2ef35576cc1d4f456c",
+              "modulePath": "integrations/mech",
+              "moduleVersion": "0.1.0",
+              "extensionCommitOid": null,
+              "workingTree": true,
+              "sourceContentSha256": "4b4dea00306480b43d200f435e79541b5d3dc8dcc0549ee7785166cfeffb3b51",
+              "sourceDigestExcludes": [
+                "evidence/acceptance/"
+              ],
+              "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103"
+            },
+            "node": "v22.18.0",
+            "platform": "darwin",
+            "arch": "x64",
+            "dependencies": {
+              "marked": "18.0.12",
+              "universal-ticker": "0.1.1",
+              "acorn": "8.18.0",
+              "esbuild": "0.28.2"
+            },
+            "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103",
+            "format": "esm",
+            "bundled": true
+          },
+          "artifacts": {
+            "client/mech.js": {
+              "sha256": "db6f746b60af54481fa2f2cc6a6b53c69d34ee32a86e48f2810d9baeda220e67",
+              "bytes": 134254
+            },
+            "client/mech.css": {
+              "sha256": "9d930c433a2cdb14c532cfe7c271720df81a1010adeb05cf734fdae7b0608f27"
+            },
+            "metafile.json": {
+              "sha256": "d5edfff8f570bdbf7cb66953073ca72b863b3248ec3ba951a437f740f3eba44c"
+            }
+          },
+          "packaging": {
+            "moduleSource": {
+              "authority": "https://github.com/RalfBarkow/wiki",
+              "oid": "971794d2066f87f63e7685447352340d5276a959",
+              "path": "integrations/mech",
+              "version": "0.1.0",
+              "sourceContentSha256": "4b4dea00306480b43d200f435e79541b5d3dc8dcc0549ee7785166cfeffb3b51",
+              "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103"
+            },
+            "upstreamTreeOid": "b0d8ebfdefdd259966705718c602e790607155fc",
+            "sourceSnapshotNarHash": "sha256-4NqBv0P9JjXEnEVpCEk54tE0tDwMmc38ZwhZqMiyzLQ=",
+            "profile": "upstream",
+            "builderContentIdentity": {
+              "authority": "https://github.com/RalfBarkow/wiki",
+              "baseCommitOid": "8e6c2e53a47f038f4b0c6d2ef35576cc1d4f456c",
+              "modulePath": "integrations/mech",
+              "moduleVersion": "0.1.0",
+              "extensionCommitOid": null,
+              "workingTree": true,
+              "sourceContentSha256": "4b4dea00306480b43d200f435e79541b5d3dc8dcc0549ee7785166cfeffb3b51",
+              "sourceDigestExcludes": [
+                "evidence/acceptance/"
+              ],
+              "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103"
+            }
+          }
+        },
+        "components": {
+          "chokidar": {
+            "version": "5.0.0",
+            "declared": "^5.0.0"
+          },
+          "minimist": {
+            "version": "1.2.8",
+            "declared": "^1.2.7"
+          },
+          "wiki-client": {
+            "version": "0.33.0",
+            "declared": "file:candidate/packages/wiki-client.tgz"
+          },
+          "wiki-plugin-activity": {
+            "version": "0.7.1",
+            "declared": "^0.7.1"
+          },
+          "wiki-plugin-assets": {
+            "version": "0.7.5",
+            "declared": "^0.7.5"
+          },
+          "wiki-plugin-audio": {
+            "version": "0.3.0",
+            "declared": "^0.3.0"
+          },
+          "wiki-plugin-bars": {
+            "version": "0.6.0",
+            "declared": "^0.6.0"
+          },
+          "wiki-plugin-calculator": {
+            "version": "0.6.0",
+            "declared": "^0.6.0"
+          },
+          "wiki-plugin-calendar": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-changes": {
+            "version": "0.5.0",
+            "declared": "^0.5.0"
+          },
+          "wiki-plugin-chart": {
+            "version": "0.5.0",
+            "declared": "^0.5.0"
+          },
+          "wiki-plugin-code": {
+            "version": "0.6.1",
+            "declared": "^0.6.1"
+          },
+          "wiki-plugin-data": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-factory": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-flagmatic": {
+            "version": "0.3.0",
+            "declared": "^0.3.0"
+          },
+          "wiki-plugin-force": {
+            "version": "0.6.0",
+            "declared": "^0.6.0"
+          },
+          "wiki-plugin-frame": {
+            "version": "0.10.3",
+            "declared": "^0.10.3"
+          },
+          "wiki-plugin-future": {
+            "version": "0.4.1",
+            "declared": "^0.4.1"
+          },
+          "wiki-plugin-graphviz": {
+            "version": "0.11.9",
+            "declared": "^0.11.9"
+          },
+          "wiki-plugin-grep": {
+            "version": "1.1.1",
+            "declared": "^1.1.1"
+          },
+          "wiki-plugin-html": {
+            "version": "0.7.2",
+            "declared": "^0.7.2"
+          },
+          "wiki-plugin-image": {
+            "version": "0.8.1",
+            "declared": "^0.8.1"
+          },
+          "wiki-plugin-journalmatic": {
+            "version": "0.2.3",
+            "declared": "file:candidate/packages/wiki-plugin-journalmatic.tgz"
+          },
+          "wiki-plugin-line": {
+            "version": "0.6.0",
+            "declared": "^0.6.0"
+          },
+          "wiki-plugin-map": {
+            "version": "0.10.0",
+            "declared": "^0.10.0"
+          },
+          "wiki-plugin-markdown": {
+            "version": "0.5.3",
+            "declared": "^0.5.3"
+          },
+          "wiki-plugin-math": {
+            "version": "0.3.0",
+            "declared": "^0.3.0"
+          },
+          "wiki-plugin-metabolism": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-method": {
+            "version": "0.4.1",
+            "declared": "^0.4.1"
+          },
+          "wiki-plugin-pagefold": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-paragraph": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-plugmatic": {
+            "version": "1.5.1",
+            "declared": "^1.5.1"
+          },
+          "wiki-plugin-pushpin": {
+            "version": "0.6.0",
+            "declared": "^0.6.0"
+          },
+          "wiki-plugin-radar": {
+            "version": "0.6.0",
+            "declared": "^0.6.0"
+          },
+          "wiki-plugin-recycler": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-reduce": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-reference": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-rollup": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-roster": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-scatter": {
+            "version": "0.6.0",
+            "declared": "^0.6.0"
+          },
+          "wiki-plugin-search": {
+            "version": "0.3.0",
+            "declared": "^0.3.0"
+          },
+          "wiki-plugin-transport": {
+            "version": "0.3.0",
+            "declared": "^0.3.0"
+          },
+          "wiki-plugin-video": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-security-friends": {
+            "version": "0.3.1",
+            "declared": "^0.3.1"
+          },
+          "wiki-security-passportjs": {
+            "version": "0.14.0",
+            "declared": "^0.14.0"
+          },
+          "wiki-security-social": {
+            "version": "0.1.0",
+            "declared": "^0.1.0"
+          },
+          "wiki-server": {
+            "version": "0.28.0",
+            "declared": "file:candidate/packages/wiki-server.tgz"
+          },
+          "wiki-plugin-mech": {
+            "version": "0.1.48-3",
+            "declared": "github:WardCunningham/wiki-plugin-mech#a028b4bba04e539dcaa090423d38a00a0050489d"
+          },
+          "wiki-plugin-solo": {
+            "version": "0.1.30-1",
+            "declared": "file:candidate/packages/wiki-plugin-solo.tgz"
+          }
+        }
+      },
+      "clientBundleSha256": "1d920a887d0332039f50b0eb7069062c4f230f5ed13066a55e69f66bf7f5ee63",
+      "serverSourceSha256": "780c6651a48db8109e1b09d4c3d4ee924dd2f3e22ae9a1105a6df70fd0507588"
+    },
+    "wiki-discourse": {
+      "outPath": "/nix/store/ywblwij34ah66fdyv3gb9hgbywkic8h1-wiki-dreyeck-discourse-0.39.2",
+      "mech": {
+        "schemaVersion": 1,
+        "profile": "discourse",
+        "source": {
+          "authority": "https://github.com/WardCunningham/wiki-plugin-mech",
+          "oid": "a028b4bba04e539dcaa090423d38a00a0050489d",
+          "filesSha256": "6943cef3a3bcaec251ebb0e4e8a2170e6eeea90c238c7436b8110beb477fa9f6"
+        },
+        "extension": {
+          "authority": "https://github.com/RalfBarkow/wiki",
+          "baseCommitOid": "8e6c2e53a47f038f4b0c6d2ef35576cc1d4f456c",
+          "modulePath": "integrations/mech",
+          "moduleVersion": "0.1.0",
+          "extensionCommitOid": null,
+          "workingTree": true,
+          "sourceContentSha256": "4b4dea00306480b43d200f435e79541b5d3dc8dcc0549ee7785166cfeffb3b51",
+          "sourceDigestExcludes": [
+            "evidence/acceptance/"
+          ],
+          "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103"
+        },
+        "recipe": {
+          "wiki": {
+            "authority": "https://github.com/RalfBarkow/wiki",
+            "baseCommitOid": "8e6c2e53a47f038f4b0c6d2ef35576cc1d4f456c",
+            "modulePath": "integrations/mech",
+            "moduleVersion": "0.1.0",
+            "extensionCommitOid": null,
+            "workingTree": true,
+            "sourceContentSha256": "4b4dea00306480b43d200f435e79541b5d3dc8dcc0549ee7785166cfeffb3b51",
+            "sourceDigestExcludes": [
+              "evidence/acceptance/"
+            ],
+            "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103"
+          },
+          "node": "v22.18.0",
+          "platform": "darwin",
+          "arch": "x64",
+          "dependencies": {
+            "marked": "18.0.12",
+            "universal-ticker": "0.1.1",
+            "acorn": "8.18.0",
+            "esbuild": "0.28.2"
+          },
+          "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103",
+          "format": "esm",
+          "bundled": true
+        },
+        "artifacts": {
+          "client/mech.js": {
+            "sha256": "ba933fe338b7938e5fd5f81399325c9335d4bb710c7600b0b7148cf220aa3543",
+            "bytes": 152650
+          },
+          "client/mech.css": {
+            "sha256": "9d930c433a2cdb14c532cfe7c271720df81a1010adeb05cf734fdae7b0608f27"
+          },
+          "metafile.json": {
+            "sha256": "8e350db8b9fe1324627f290db48c6b76ccfe2415d9c08eae44b05c03cd137216"
+          }
+        },
+        "packaging": {
+          "moduleSource": {
+            "authority": "https://github.com/RalfBarkow/wiki",
+            "oid": "971794d2066f87f63e7685447352340d5276a959",
+            "path": "integrations/mech",
+            "version": "0.1.0",
+            "sourceContentSha256": "4b4dea00306480b43d200f435e79541b5d3dc8dcc0549ee7785166cfeffb3b51",
+            "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103"
+          },
+          "upstreamTreeOid": "b0d8ebfdefdd259966705718c602e790607155fc",
+          "sourceSnapshotNarHash": "sha256-4NqBv0P9JjXEnEVpCEk54tE0tDwMmc38ZwhZqMiyzLQ=",
+          "profile": "discourse",
+          "builderContentIdentity": {
+            "authority": "https://github.com/RalfBarkow/wiki",
+            "baseCommitOid": "8e6c2e53a47f038f4b0c6d2ef35576cc1d4f456c",
+            "modulePath": "integrations/mech",
+            "moduleVersion": "0.1.0",
+            "extensionCommitOid": null,
+            "workingTree": true,
+            "sourceContentSha256": "4b4dea00306480b43d200f435e79541b5d3dc8dcc0549ee7785166cfeffb3b51",
+            "sourceDigestExcludes": [
+              "evidence/acceptance/"
+            ],
+            "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103"
+          }
+        }
+      },
+      "mechBytesSha256": "ba933fe338b7938e5fd5f81399325c9335d4bb710c7600b0b7148cf220aa3543",
+      "mechPackageVersion": "0.1.48-3",
+      "composition": {
+        "schemaVersion": 1,
+        "recipe": "dreyeck",
+        "profile": "discourse",
+        "baseRecipeRecords": {
+          "pinned-core-revs.json": {
+            "wiki": "646fa4aa56a6f81e1cc571d6e7725bdcdfc82958",
+            "wiki-server": "9b842d7be8bc5e0990ec574b19fb5554830591a5",
+            "wiki-client": "3f61a4862703f492b0d6bfb8695bd665b943bb38",
+            "wiki-plugin-mech": "abd88d2da6c89029515f2a456356832dffe038ab",
+            "wiki-plugin-solo": "0.1.30-1",
+            "wiki-plugin-journalmatic": "0.2.2"
+          }
+        },
+        "mech": {
+          "schemaVersion": 1,
+          "profile": "discourse",
+          "source": {
+            "authority": "https://github.com/WardCunningham/wiki-plugin-mech",
+            "oid": "a028b4bba04e539dcaa090423d38a00a0050489d",
+            "filesSha256": "6943cef3a3bcaec251ebb0e4e8a2170e6eeea90c238c7436b8110beb477fa9f6"
+          },
+          "extension": {
+            "authority": "https://github.com/RalfBarkow/wiki",
+            "baseCommitOid": "8e6c2e53a47f038f4b0c6d2ef35576cc1d4f456c",
+            "modulePath": "integrations/mech",
+            "moduleVersion": "0.1.0",
+            "extensionCommitOid": null,
+            "workingTree": true,
+            "sourceContentSha256": "4b4dea00306480b43d200f435e79541b5d3dc8dcc0549ee7785166cfeffb3b51",
+            "sourceDigestExcludes": [
+              "evidence/acceptance/"
+            ],
+            "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103"
+          },
+          "recipe": {
+            "wiki": {
+              "authority": "https://github.com/RalfBarkow/wiki",
+              "baseCommitOid": "8e6c2e53a47f038f4b0c6d2ef35576cc1d4f456c",
+              "modulePath": "integrations/mech",
+              "moduleVersion": "0.1.0",
+              "extensionCommitOid": null,
+              "workingTree": true,
+              "sourceContentSha256": "4b4dea00306480b43d200f435e79541b5d3dc8dcc0549ee7785166cfeffb3b51",
+              "sourceDigestExcludes": [
+                "evidence/acceptance/"
+              ],
+              "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103"
+            },
+            "node": "v22.18.0",
+            "platform": "darwin",
+            "arch": "x64",
+            "dependencies": {
+              "marked": "18.0.12",
+              "universal-ticker": "0.1.1",
+              "acorn": "8.18.0",
+              "esbuild": "0.28.2"
+            },
+            "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103",
+            "format": "esm",
+            "bundled": true
+          },
+          "artifacts": {
+            "client/mech.js": {
+              "sha256": "ba933fe338b7938e5fd5f81399325c9335d4bb710c7600b0b7148cf220aa3543",
+              "bytes": 152650
+            },
+            "client/mech.css": {
+              "sha256": "9d930c433a2cdb14c532cfe7c271720df81a1010adeb05cf734fdae7b0608f27"
+            },
+            "metafile.json": {
+              "sha256": "8e350db8b9fe1324627f290db48c6b76ccfe2415d9c08eae44b05c03cd137216"
+            }
+          },
+          "packaging": {
+            "moduleSource": {
+              "authority": "https://github.com/RalfBarkow/wiki",
+              "oid": "971794d2066f87f63e7685447352340d5276a959",
+              "path": "integrations/mech",
+              "version": "0.1.0",
+              "sourceContentSha256": "4b4dea00306480b43d200f435e79541b5d3dc8dcc0549ee7785166cfeffb3b51",
+              "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103"
+            },
+            "upstreamTreeOid": "b0d8ebfdefdd259966705718c602e790607155fc",
+            "sourceSnapshotNarHash": "sha256-4NqBv0P9JjXEnEVpCEk54tE0tDwMmc38ZwhZqMiyzLQ=",
+            "profile": "discourse",
+            "builderContentIdentity": {
+              "authority": "https://github.com/RalfBarkow/wiki",
+              "baseCommitOid": "8e6c2e53a47f038f4b0c6d2ef35576cc1d4f456c",
+              "modulePath": "integrations/mech",
+              "moduleVersion": "0.1.0",
+              "extensionCommitOid": null,
+              "workingTree": true,
+              "sourceContentSha256": "4b4dea00306480b43d200f435e79541b5d3dc8dcc0549ee7785166cfeffb3b51",
+              "sourceDigestExcludes": [
+                "evidence/acceptance/"
+              ],
+              "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103"
+            }
+          }
+        },
+        "components": {
+          "chokidar": {
+            "version": "5.0.0",
+            "declared": "^5.0.0"
+          },
+          "minimist": {
+            "version": "1.2.8",
+            "declared": "^1.2.7"
+          },
+          "wiki-client": {
+            "version": "0.31.6",
+            "declared": "^0.31.6"
+          },
+          "wiki-plugin-activity": {
+            "version": "0.7.1",
+            "declared": "^0.7.1"
+          },
+          "wiki-plugin-assets": {
+            "version": "0.7.3",
+            "declared": "^0.7.3"
+          },
+          "wiki-plugin-audio": {
+            "version": "0.3.0",
+            "declared": "^0.3.0"
+          },
+          "wiki-plugin-bars": {
+            "version": "0.6.0",
+            "declared": "^0.6.0"
+          },
+          "wiki-plugin-calculator": {
+            "version": "0.6.0",
+            "declared": "^0.6.0"
+          },
+          "wiki-plugin-calendar": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-changes": {
+            "version": "0.5.0",
+            "declared": "^0.5.0"
+          },
+          "wiki-plugin-chart": {
+            "version": "0.5.0",
+            "declared": "^0.5.0"
+          },
+          "wiki-plugin-code": {
+            "version": "0.5.0",
+            "declared": "^0.5.0"
+          },
+          "wiki-plugin-data": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-factory": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-flagmatic": {
+            "version": "0.3.0",
+            "declared": "^0.3.0"
+          },
+          "wiki-plugin-force": {
+            "version": "0.6.0",
+            "declared": "^0.6.0"
+          },
+          "wiki-plugin-frame": {
+            "version": "0.10.3",
+            "declared": "^0.10.3"
+          },
+          "wiki-plugin-future": {
+            "version": "0.4.1",
+            "declared": "^0.4.1"
+          },
+          "wiki-plugin-graphviz": {
+            "version": "0.11.9",
+            "declared": "^0.11.9"
+          },
+          "wiki-plugin-grep": {
+            "version": "1.1.1",
+            "declared": "^1.1.1"
+          },
+          "wiki-plugin-html": {
+            "version": "0.6.0",
+            "declared": "^0.6.0"
+          },
+          "wiki-plugin-image": {
+            "version": "0.7.2",
+            "declared": "^0.7.2"
+          },
+          "wiki-plugin-line": {
+            "version": "0.6.0",
+            "declared": "^0.6.0"
+          },
+          "wiki-plugin-map": {
+            "version": "0.9.0",
+            "declared": "^0.9.0"
+          },
+          "wiki-plugin-markdown": {
+            "version": "0.5.2",
+            "declared": "^0.5.2"
+          },
+          "wiki-plugin-math": {
+            "version": "0.2.0",
+            "declared": "^0.2.0"
+          },
+          "wiki-plugin-metabolism": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-method": {
+            "version": "0.4.1",
+            "declared": "^0.4.1"
+          },
+          "wiki-plugin-pagefold": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-paragraph": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-plugmatic": {
+            "version": "1.5.1",
+            "declared": "^1.5.1"
+          },
+          "wiki-plugin-pushpin": {
+            "version": "0.6.0",
+            "declared": "^0.6.0"
+          },
+          "wiki-plugin-radar": {
+            "version": "0.6.0",
+            "declared": "^0.6.0"
+          },
+          "wiki-plugin-recycler": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-reduce": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-reference": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-rollup": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-roster": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-scatter": {
+            "version": "0.6.0",
+            "declared": "^0.6.0"
+          },
+          "wiki-plugin-search": {
+            "version": "0.3.0",
+            "declared": "^0.3.0"
+          },
+          "wiki-plugin-transport": {
+            "version": "0.3.0",
+            "declared": "^0.3.0"
+          },
+          "wiki-plugin-video": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-security-friends": {
+            "version": "0.3.0",
+            "declared": "^0.3.0"
+          },
+          "wiki-security-passportjs": {
+            "version": "0.12.0",
+            "declared": "^0.12.0"
+          },
+          "wiki-server": {
+            "version": "0.26.2",
+            "declared": "^0.26.2"
+          },
+          "wiki-plugin-mech": {
+            "version": "0.1.48-3",
+            "declared": "github:WardCunningham/wiki-plugin-mech#a028b4bba04e539dcaa090423d38a00a0050489d"
+          },
+          "wiki-plugin-solo": {
+            "version": "0.1.30-1",
+            "declared": "0.1.30-1"
+          },
+          "wiki-plugin-journalmatic": {
+            "version": "0.2.2",
+            "declared": "0.2.2"
+          }
+        }
+      },
+      "clientBundleSha256": "6204da2896da696b316bc57671a201ef2696fbad8bc358a0b13eccea608a1b20",
+      "serverSourceSha256": "e6fc124a827e5f47274480807e05a202e9dc44bea12317f14264481401368c55"
+    },
+    "wiki-localhost-upstream": {
+      "outPath": "/nix/store/w9sp9n2sbkdj65ckvx80m7j9j3wx8n5z-wiki-localhost-upstream-0.39.1",
+      "mech": {
+        "schemaVersion": 1,
+        "profile": "upstream",
+        "source": {
+          "authority": "https://github.com/WardCunningham/wiki-plugin-mech",
+          "oid": "a028b4bba04e539dcaa090423d38a00a0050489d",
+          "filesSha256": "6943cef3a3bcaec251ebb0e4e8a2170e6eeea90c238c7436b8110beb477fa9f6"
+        },
+        "extension": null,
+        "recipe": {
+          "wiki": {
+            "authority": "https://github.com/RalfBarkow/wiki",
+            "baseCommitOid": "8e6c2e53a47f038f4b0c6d2ef35576cc1d4f456c",
+            "modulePath": "integrations/mech",
+            "moduleVersion": "0.1.0",
+            "extensionCommitOid": null,
+            "workingTree": true,
+            "sourceContentSha256": "4b4dea00306480b43d200f435e79541b5d3dc8dcc0549ee7785166cfeffb3b51",
+            "sourceDigestExcludes": [
+              "evidence/acceptance/"
+            ],
+            "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103"
+          },
+          "node": "v22.18.0",
+          "platform": "darwin",
+          "arch": "x64",
+          "dependencies": {
+            "marked": "18.0.12",
+            "universal-ticker": "0.1.1",
+            "acorn": "8.18.0",
+            "esbuild": "0.28.2"
+          },
+          "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103",
+          "format": "esm",
+          "bundled": true
+        },
+        "artifacts": {
+          "client/mech.js": {
+            "sha256": "db6f746b60af54481fa2f2cc6a6b53c69d34ee32a86e48f2810d9baeda220e67",
+            "bytes": 134254
+          },
+          "client/mech.css": {
+            "sha256": "9d930c433a2cdb14c532cfe7c271720df81a1010adeb05cf734fdae7b0608f27"
+          },
+          "metafile.json": {
+            "sha256": "d5edfff8f570bdbf7cb66953073ca72b863b3248ec3ba951a437f740f3eba44c"
+          }
+        },
+        "packaging": {
+          "moduleSource": {
+            "authority": "https://github.com/RalfBarkow/wiki",
+            "oid": "971794d2066f87f63e7685447352340d5276a959",
+            "path": "integrations/mech",
+            "version": "0.1.0",
+            "sourceContentSha256": "4b4dea00306480b43d200f435e79541b5d3dc8dcc0549ee7785166cfeffb3b51",
+            "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103"
+          },
+          "upstreamTreeOid": "b0d8ebfdefdd259966705718c602e790607155fc",
+          "sourceSnapshotNarHash": "sha256-4NqBv0P9JjXEnEVpCEk54tE0tDwMmc38ZwhZqMiyzLQ=",
+          "profile": "upstream",
+          "builderContentIdentity": {
+            "authority": "https://github.com/RalfBarkow/wiki",
+            "baseCommitOid": "8e6c2e53a47f038f4b0c6d2ef35576cc1d4f456c",
+            "modulePath": "integrations/mech",
+            "moduleVersion": "0.1.0",
+            "extensionCommitOid": null,
+            "workingTree": true,
+            "sourceContentSha256": "4b4dea00306480b43d200f435e79541b5d3dc8dcc0549ee7785166cfeffb3b51",
+            "sourceDigestExcludes": [
+              "evidence/acceptance/"
+            ],
+            "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103"
+          }
+        }
+      },
+      "mechBytesSha256": "db6f746b60af54481fa2f2cc6a6b53c69d34ee32a86e48f2810d9baeda220e67",
+      "mechPackageVersion": "0.1.48-3",
+      "composition": {
+        "schemaVersion": 1,
+        "recipe": "localhost",
+        "profile": "upstream",
+        "baseRecipeRecords": {},
+        "mech": {
+          "schemaVersion": 1,
+          "profile": "upstream",
+          "source": {
+            "authority": "https://github.com/WardCunningham/wiki-plugin-mech",
+            "oid": "a028b4bba04e539dcaa090423d38a00a0050489d",
+            "filesSha256": "6943cef3a3bcaec251ebb0e4e8a2170e6eeea90c238c7436b8110beb477fa9f6"
+          },
+          "extension": null,
+          "recipe": {
+            "wiki": {
+              "authority": "https://github.com/RalfBarkow/wiki",
+              "baseCommitOid": "8e6c2e53a47f038f4b0c6d2ef35576cc1d4f456c",
+              "modulePath": "integrations/mech",
+              "moduleVersion": "0.1.0",
+              "extensionCommitOid": null,
+              "workingTree": true,
+              "sourceContentSha256": "4b4dea00306480b43d200f435e79541b5d3dc8dcc0549ee7785166cfeffb3b51",
+              "sourceDigestExcludes": [
+                "evidence/acceptance/"
+              ],
+              "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103"
+            },
+            "node": "v22.18.0",
+            "platform": "darwin",
+            "arch": "x64",
+            "dependencies": {
+              "marked": "18.0.12",
+              "universal-ticker": "0.1.1",
+              "acorn": "8.18.0",
+              "esbuild": "0.28.2"
+            },
+            "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103",
+            "format": "esm",
+            "bundled": true
+          },
+          "artifacts": {
+            "client/mech.js": {
+              "sha256": "db6f746b60af54481fa2f2cc6a6b53c69d34ee32a86e48f2810d9baeda220e67",
+              "bytes": 134254
+            },
+            "client/mech.css": {
+              "sha256": "9d930c433a2cdb14c532cfe7c271720df81a1010adeb05cf734fdae7b0608f27"
+            },
+            "metafile.json": {
+              "sha256": "d5edfff8f570bdbf7cb66953073ca72b863b3248ec3ba951a437f740f3eba44c"
+            }
+          },
+          "packaging": {
+            "moduleSource": {
+              "authority": "https://github.com/RalfBarkow/wiki",
+              "oid": "971794d2066f87f63e7685447352340d5276a959",
+              "path": "integrations/mech",
+              "version": "0.1.0",
+              "sourceContentSha256": "4b4dea00306480b43d200f435e79541b5d3dc8dcc0549ee7785166cfeffb3b51",
+              "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103"
+            },
+            "upstreamTreeOid": "b0d8ebfdefdd259966705718c602e790607155fc",
+            "sourceSnapshotNarHash": "sha256-4NqBv0P9JjXEnEVpCEk54tE0tDwMmc38ZwhZqMiyzLQ=",
+            "profile": "upstream",
+            "builderContentIdentity": {
+              "authority": "https://github.com/RalfBarkow/wiki",
+              "baseCommitOid": "8e6c2e53a47f038f4b0c6d2ef35576cc1d4f456c",
+              "modulePath": "integrations/mech",
+              "moduleVersion": "0.1.0",
+              "extensionCommitOid": null,
+              "workingTree": true,
+              "sourceContentSha256": "4b4dea00306480b43d200f435e79541b5d3dc8dcc0549ee7785166cfeffb3b51",
+              "sourceDigestExcludes": [
+                "evidence/acceptance/"
+              ],
+              "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103"
+            }
+          }
+        },
+        "components": {
+          "chokidar": {
+            "version": "4.0.3",
+            "declared": "^4.0.3"
+          },
+          "minimist": {
+            "version": "1.2.8",
+            "declared": "^1.2.7"
+          },
+          "wiki-client": {
+            "version": "0.31.6",
+            "declared": "^0.31.6"
+          },
+          "wiki-plugin-activity": {
+            "version": "0.7.1",
+            "declared": "^0.7.1"
+          },
+          "wiki-plugin-assets": {
+            "version": "0.7.3",
+            "declared": "^0.7.3"
+          },
+          "wiki-plugin-audio": {
+            "version": "0.3.0",
+            "declared": "^0.3.0"
+          },
+          "wiki-plugin-bars": {
+            "version": "0.6.0",
+            "declared": "^0.6.0"
+          },
+          "wiki-plugin-calculator": {
+            "version": "0.6.0",
+            "declared": "^0.6.0"
+          },
+          "wiki-plugin-calendar": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-changes": {
+            "version": "0.5.0",
+            "declared": "^0.5.0"
+          },
+          "wiki-plugin-chart": {
+            "version": "0.5.0",
+            "declared": "^0.5.0"
+          },
+          "wiki-plugin-code": {
+            "version": "0.5.0",
+            "declared": "^0.5.0"
+          },
+          "wiki-plugin-data": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-factory": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-flagmatic": {
+            "version": "0.3.0",
+            "declared": "^0.3.0"
+          },
+          "wiki-plugin-force": {
+            "version": "0.6.0",
+            "declared": "^0.6.0"
+          },
+          "wiki-plugin-frame": {
+            "version": "0.10.3",
+            "declared": "^0.10.3"
+          },
+          "wiki-plugin-future": {
+            "version": "0.4.1",
+            "declared": "^0.4.1"
+          },
+          "wiki-plugin-graphviz": {
+            "version": "0.11.9",
+            "declared": "^0.11.9"
+          },
+          "wiki-plugin-grep": {
+            "version": "1.1.1",
+            "declared": "^1.1.1"
+          },
+          "wiki-plugin-html": {
+            "version": "0.6.0",
+            "declared": "^0.6.0"
+          },
+          "wiki-plugin-image": {
+            "version": "0.7.2",
+            "declared": "^0.7.2"
+          },
+          "wiki-plugin-line": {
+            "version": "0.6.0",
+            "declared": "^0.6.0"
+          },
+          "wiki-plugin-map": {
+            "version": "0.9.0",
+            "declared": "^0.9.0"
+          },
+          "wiki-plugin-markdown": {
+            "version": "0.5.2",
+            "declared": "^0.5.2"
+          },
+          "wiki-plugin-math": {
+            "version": "0.2.0",
+            "declared": "^0.2.0"
+          },
+          "wiki-plugin-metabolism": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-method": {
+            "version": "0.4.1",
+            "declared": "^0.4.1"
+          },
+          "wiki-plugin-pagefold": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-paragraph": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-plugmatic": {
+            "version": "1.5.1",
+            "declared": "^1.5.1"
+          },
+          "wiki-plugin-pushpin": {
+            "version": "0.6.0",
+            "declared": "^0.6.0"
+          },
+          "wiki-plugin-radar": {
+            "version": "0.6.0",
+            "declared": "^0.6.0"
+          },
+          "wiki-plugin-recycler": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-reduce": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-reference": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-rollup": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-roster": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-scatter": {
+            "version": "0.6.0",
+            "declared": "^0.6.0"
+          },
+          "wiki-plugin-search": {
+            "version": "0.3.0",
+            "declared": "^0.3.0"
+          },
+          "wiki-plugin-transport": {
+            "version": "0.3.0",
+            "declared": "^0.3.0"
+          },
+          "wiki-plugin-video": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-security-friends": {
+            "version": "0.3.0",
+            "declared": "^0.3.0"
+          },
+          "wiki-security-passportjs": {
+            "version": "0.12.0",
+            "declared": "^0.12.0"
+          },
+          "wiki-server": {
+            "version": "0.26.2",
+            "declared": "^0.26.1"
+          },
+          "wiki-plugin-mech": {
+            "version": "0.1.48-3",
+            "declared": "github:WardCunningham/wiki-plugin-mech#a028b4bba04e539dcaa090423d38a00a0050489d"
+          },
+          "wiki-plugin-journalmatic": {
+            "version": "0.2.2",
+            "declared": "git+https://github.com/ralfbarkow/wiki-plugin-journalmatic.git#aa5f5863bb8de8f697815b405cfb2f1a0e055ed9"
+          },
+          "wiki-plugin-solo": {
+            "version": "0.1.30-1",
+            "declared": "0.1.30-1"
+          }
+        }
+      },
+      "clientBundleSha256": "c2b8dd40ea3d3a740959eeb3183c6dc89d6c76e6c2cdbd547192d732b862268d",
+      "serverSourceSha256": "d38df666f14634b74f670068942358683753b3f4d63af4b3610eab3536f7ea9a"
+    },
+    "wiki-localhost-discourse": {
+      "outPath": "/nix/store/8bpz586sfgm8vn5c61ciwd5wabjch827-wiki-localhost-discourse-0.39.1",
+      "mech": {
+        "schemaVersion": 1,
+        "profile": "discourse",
+        "source": {
+          "authority": "https://github.com/WardCunningham/wiki-plugin-mech",
+          "oid": "a028b4bba04e539dcaa090423d38a00a0050489d",
+          "filesSha256": "6943cef3a3bcaec251ebb0e4e8a2170e6eeea90c238c7436b8110beb477fa9f6"
+        },
+        "extension": {
+          "authority": "https://github.com/RalfBarkow/wiki",
+          "baseCommitOid": "8e6c2e53a47f038f4b0c6d2ef35576cc1d4f456c",
+          "modulePath": "integrations/mech",
+          "moduleVersion": "0.1.0",
+          "extensionCommitOid": null,
+          "workingTree": true,
+          "sourceContentSha256": "4b4dea00306480b43d200f435e79541b5d3dc8dcc0549ee7785166cfeffb3b51",
+          "sourceDigestExcludes": [
+            "evidence/acceptance/"
+          ],
+          "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103"
+        },
+        "recipe": {
+          "wiki": {
+            "authority": "https://github.com/RalfBarkow/wiki",
+            "baseCommitOid": "8e6c2e53a47f038f4b0c6d2ef35576cc1d4f456c",
+            "modulePath": "integrations/mech",
+            "moduleVersion": "0.1.0",
+            "extensionCommitOid": null,
+            "workingTree": true,
+            "sourceContentSha256": "4b4dea00306480b43d200f435e79541b5d3dc8dcc0549ee7785166cfeffb3b51",
+            "sourceDigestExcludes": [
+              "evidence/acceptance/"
+            ],
+            "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103"
+          },
+          "node": "v22.18.0",
+          "platform": "darwin",
+          "arch": "x64",
+          "dependencies": {
+            "marked": "18.0.12",
+            "universal-ticker": "0.1.1",
+            "acorn": "8.18.0",
+            "esbuild": "0.28.2"
+          },
+          "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103",
+          "format": "esm",
+          "bundled": true
+        },
+        "artifacts": {
+          "client/mech.js": {
+            "sha256": "ba933fe338b7938e5fd5f81399325c9335d4bb710c7600b0b7148cf220aa3543",
+            "bytes": 152650
+          },
+          "client/mech.css": {
+            "sha256": "9d930c433a2cdb14c532cfe7c271720df81a1010adeb05cf734fdae7b0608f27"
+          },
+          "metafile.json": {
+            "sha256": "8e350db8b9fe1324627f290db48c6b76ccfe2415d9c08eae44b05c03cd137216"
+          }
+        },
+        "packaging": {
+          "moduleSource": {
+            "authority": "https://github.com/RalfBarkow/wiki",
+            "oid": "971794d2066f87f63e7685447352340d5276a959",
+            "path": "integrations/mech",
+            "version": "0.1.0",
+            "sourceContentSha256": "4b4dea00306480b43d200f435e79541b5d3dc8dcc0549ee7785166cfeffb3b51",
+            "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103"
+          },
+          "upstreamTreeOid": "b0d8ebfdefdd259966705718c602e790607155fc",
+          "sourceSnapshotNarHash": "sha256-4NqBv0P9JjXEnEVpCEk54tE0tDwMmc38ZwhZqMiyzLQ=",
+          "profile": "discourse",
+          "builderContentIdentity": {
+            "authority": "https://github.com/RalfBarkow/wiki",
+            "baseCommitOid": "8e6c2e53a47f038f4b0c6d2ef35576cc1d4f456c",
+            "modulePath": "integrations/mech",
+            "moduleVersion": "0.1.0",
+            "extensionCommitOid": null,
+            "workingTree": true,
+            "sourceContentSha256": "4b4dea00306480b43d200f435e79541b5d3dc8dcc0549ee7785166cfeffb3b51",
+            "sourceDigestExcludes": [
+              "evidence/acceptance/"
+            ],
+            "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103"
+          }
+        }
+      },
+      "mechBytesSha256": "ba933fe338b7938e5fd5f81399325c9335d4bb710c7600b0b7148cf220aa3543",
+      "mechPackageVersion": "0.1.48-3",
+      "composition": {
+        "schemaVersion": 1,
+        "recipe": "localhost",
+        "profile": "discourse",
+        "baseRecipeRecords": {},
+        "mech": {
+          "schemaVersion": 1,
+          "profile": "discourse",
+          "source": {
+            "authority": "https://github.com/WardCunningham/wiki-plugin-mech",
+            "oid": "a028b4bba04e539dcaa090423d38a00a0050489d",
+            "filesSha256": "6943cef3a3bcaec251ebb0e4e8a2170e6eeea90c238c7436b8110beb477fa9f6"
+          },
+          "extension": {
+            "authority": "https://github.com/RalfBarkow/wiki",
+            "baseCommitOid": "8e6c2e53a47f038f4b0c6d2ef35576cc1d4f456c",
+            "modulePath": "integrations/mech",
+            "moduleVersion": "0.1.0",
+            "extensionCommitOid": null,
+            "workingTree": true,
+            "sourceContentSha256": "4b4dea00306480b43d200f435e79541b5d3dc8dcc0549ee7785166cfeffb3b51",
+            "sourceDigestExcludes": [
+              "evidence/acceptance/"
+            ],
+            "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103"
+          },
+          "recipe": {
+            "wiki": {
+              "authority": "https://github.com/RalfBarkow/wiki",
+              "baseCommitOid": "8e6c2e53a47f038f4b0c6d2ef35576cc1d4f456c",
+              "modulePath": "integrations/mech",
+              "moduleVersion": "0.1.0",
+              "extensionCommitOid": null,
+              "workingTree": true,
+              "sourceContentSha256": "4b4dea00306480b43d200f435e79541b5d3dc8dcc0549ee7785166cfeffb3b51",
+              "sourceDigestExcludes": [
+                "evidence/acceptance/"
+              ],
+              "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103"
+            },
+            "node": "v22.18.0",
+            "platform": "darwin",
+            "arch": "x64",
+            "dependencies": {
+              "marked": "18.0.12",
+              "universal-ticker": "0.1.1",
+              "acorn": "8.18.0",
+              "esbuild": "0.28.2"
+            },
+            "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103",
+            "format": "esm",
+            "bundled": true
+          },
+          "artifacts": {
+            "client/mech.js": {
+              "sha256": "ba933fe338b7938e5fd5f81399325c9335d4bb710c7600b0b7148cf220aa3543",
+              "bytes": 152650
+            },
+            "client/mech.css": {
+              "sha256": "9d930c433a2cdb14c532cfe7c271720df81a1010adeb05cf734fdae7b0608f27"
+            },
+            "metafile.json": {
+              "sha256": "8e350db8b9fe1324627f290db48c6b76ccfe2415d9c08eae44b05c03cd137216"
+            }
+          },
+          "packaging": {
+            "moduleSource": {
+              "authority": "https://github.com/RalfBarkow/wiki",
+              "oid": "971794d2066f87f63e7685447352340d5276a959",
+              "path": "integrations/mech",
+              "version": "0.1.0",
+              "sourceContentSha256": "4b4dea00306480b43d200f435e79541b5d3dc8dcc0549ee7785166cfeffb3b51",
+              "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103"
+            },
+            "upstreamTreeOid": "b0d8ebfdefdd259966705718c602e790607155fc",
+            "sourceSnapshotNarHash": "sha256-4NqBv0P9JjXEnEVpCEk54tE0tDwMmc38ZwhZqMiyzLQ=",
+            "profile": "discourse",
+            "builderContentIdentity": {
+              "authority": "https://github.com/RalfBarkow/wiki",
+              "baseCommitOid": "8e6c2e53a47f038f4b0c6d2ef35576cc1d4f456c",
+              "modulePath": "integrations/mech",
+              "moduleVersion": "0.1.0",
+              "extensionCommitOid": null,
+              "workingTree": true,
+              "sourceContentSha256": "4b4dea00306480b43d200f435e79541b5d3dc8dcc0549ee7785166cfeffb3b51",
+              "sourceDigestExcludes": [
+                "evidence/acceptance/"
+              ],
+              "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103"
+            }
+          }
+        },
+        "components": {
+          "chokidar": {
+            "version": "4.0.3",
+            "declared": "^4.0.3"
+          },
+          "minimist": {
+            "version": "1.2.8",
+            "declared": "^1.2.7"
+          },
+          "wiki-client": {
+            "version": "0.31.6",
+            "declared": "^0.31.6"
+          },
+          "wiki-plugin-activity": {
+            "version": "0.7.1",
+            "declared": "^0.7.1"
+          },
+          "wiki-plugin-assets": {
+            "version": "0.7.3",
+            "declared": "^0.7.3"
+          },
+          "wiki-plugin-audio": {
+            "version": "0.3.0",
+            "declared": "^0.3.0"
+          },
+          "wiki-plugin-bars": {
+            "version": "0.6.0",
+            "declared": "^0.6.0"
+          },
+          "wiki-plugin-calculator": {
+            "version": "0.6.0",
+            "declared": "^0.6.0"
+          },
+          "wiki-plugin-calendar": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-changes": {
+            "version": "0.5.0",
+            "declared": "^0.5.0"
+          },
+          "wiki-plugin-chart": {
+            "version": "0.5.0",
+            "declared": "^0.5.0"
+          },
+          "wiki-plugin-code": {
+            "version": "0.5.0",
+            "declared": "^0.5.0"
+          },
+          "wiki-plugin-data": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-factory": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-flagmatic": {
+            "version": "0.3.0",
+            "declared": "^0.3.0"
+          },
+          "wiki-plugin-force": {
+            "version": "0.6.0",
+            "declared": "^0.6.0"
+          },
+          "wiki-plugin-frame": {
+            "version": "0.10.3",
+            "declared": "^0.10.3"
+          },
+          "wiki-plugin-future": {
+            "version": "0.4.1",
+            "declared": "^0.4.1"
+          },
+          "wiki-plugin-graphviz": {
+            "version": "0.11.9",
+            "declared": "^0.11.9"
+          },
+          "wiki-plugin-grep": {
+            "version": "1.1.1",
+            "declared": "^1.1.1"
+          },
+          "wiki-plugin-html": {
+            "version": "0.6.0",
+            "declared": "^0.6.0"
+          },
+          "wiki-plugin-image": {
+            "version": "0.7.2",
+            "declared": "^0.7.2"
+          },
+          "wiki-plugin-line": {
+            "version": "0.6.0",
+            "declared": "^0.6.0"
+          },
+          "wiki-plugin-map": {
+            "version": "0.9.0",
+            "declared": "^0.9.0"
+          },
+          "wiki-plugin-markdown": {
+            "version": "0.5.2",
+            "declared": "^0.5.2"
+          },
+          "wiki-plugin-math": {
+            "version": "0.2.0",
+            "declared": "^0.2.0"
+          },
+          "wiki-plugin-metabolism": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-method": {
+            "version": "0.4.1",
+            "declared": "^0.4.1"
+          },
+          "wiki-plugin-pagefold": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-paragraph": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-plugmatic": {
+            "version": "1.5.1",
+            "declared": "^1.5.1"
+          },
+          "wiki-plugin-pushpin": {
+            "version": "0.6.0",
+            "declared": "^0.6.0"
+          },
+          "wiki-plugin-radar": {
+            "version": "0.6.0",
+            "declared": "^0.6.0"
+          },
+          "wiki-plugin-recycler": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-reduce": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-reference": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-rollup": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-roster": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-scatter": {
+            "version": "0.6.0",
+            "declared": "^0.6.0"
+          },
+          "wiki-plugin-search": {
+            "version": "0.3.0",
+            "declared": "^0.3.0"
+          },
+          "wiki-plugin-transport": {
+            "version": "0.3.0",
+            "declared": "^0.3.0"
+          },
+          "wiki-plugin-video": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-security-friends": {
+            "version": "0.3.0",
+            "declared": "^0.3.0"
+          },
+          "wiki-security-passportjs": {
+            "version": "0.12.0",
+            "declared": "^0.12.0"
+          },
+          "wiki-server": {
+            "version": "0.26.2",
+            "declared": "^0.26.1"
+          },
+          "wiki-plugin-mech": {
+            "version": "0.1.48-3",
+            "declared": "github:WardCunningham/wiki-plugin-mech#a028b4bba04e539dcaa090423d38a00a0050489d"
+          },
+          "wiki-plugin-journalmatic": {
+            "version": "0.2.2",
+            "declared": "git+https://github.com/ralfbarkow/wiki-plugin-journalmatic.git#aa5f5863bb8de8f697815b405cfb2f1a0e055ed9"
+          },
+          "wiki-plugin-solo": {
+            "version": "0.1.30-1",
+            "declared": "0.1.30-1"
+          }
+        }
+      },
+      "clientBundleSha256": "c26155186be4719b447ccd6ce45816a10e9c1afc7d95b022cf026247687c0e7e",
+      "serverSourceSha256": "d38df666f14634b74f670068942358683753b3f4d63af4b3610eab3536f7ea9a"
+    },
+    "wiki-dreyeck-upstream": {
+      "outPath": "/nix/store/z0s3y818a8cgs68s8yj2ffixbhkmjaxm-wiki-dreyeck-upstream-0.39.2",
+      "mech": {
+        "schemaVersion": 1,
+        "profile": "upstream",
+        "source": {
+          "authority": "https://github.com/WardCunningham/wiki-plugin-mech",
+          "oid": "a028b4bba04e539dcaa090423d38a00a0050489d",
+          "filesSha256": "6943cef3a3bcaec251ebb0e4e8a2170e6eeea90c238c7436b8110beb477fa9f6"
+        },
+        "extension": null,
+        "recipe": {
+          "wiki": {
+            "authority": "https://github.com/RalfBarkow/wiki",
+            "baseCommitOid": "8e6c2e53a47f038f4b0c6d2ef35576cc1d4f456c",
+            "modulePath": "integrations/mech",
+            "moduleVersion": "0.1.0",
+            "extensionCommitOid": null,
+            "workingTree": true,
+            "sourceContentSha256": "4b4dea00306480b43d200f435e79541b5d3dc8dcc0549ee7785166cfeffb3b51",
+            "sourceDigestExcludes": [
+              "evidence/acceptance/"
+            ],
+            "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103"
+          },
+          "node": "v22.18.0",
+          "platform": "darwin",
+          "arch": "x64",
+          "dependencies": {
+            "marked": "18.0.12",
+            "universal-ticker": "0.1.1",
+            "acorn": "8.18.0",
+            "esbuild": "0.28.2"
+          },
+          "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103",
+          "format": "esm",
+          "bundled": true
+        },
+        "artifacts": {
+          "client/mech.js": {
+            "sha256": "db6f746b60af54481fa2f2cc6a6b53c69d34ee32a86e48f2810d9baeda220e67",
+            "bytes": 134254
+          },
+          "client/mech.css": {
+            "sha256": "9d930c433a2cdb14c532cfe7c271720df81a1010adeb05cf734fdae7b0608f27"
+          },
+          "metafile.json": {
+            "sha256": "d5edfff8f570bdbf7cb66953073ca72b863b3248ec3ba951a437f740f3eba44c"
+          }
+        },
+        "packaging": {
+          "moduleSource": {
+            "authority": "https://github.com/RalfBarkow/wiki",
+            "oid": "971794d2066f87f63e7685447352340d5276a959",
+            "path": "integrations/mech",
+            "version": "0.1.0",
+            "sourceContentSha256": "4b4dea00306480b43d200f435e79541b5d3dc8dcc0549ee7785166cfeffb3b51",
+            "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103"
+          },
+          "upstreamTreeOid": "b0d8ebfdefdd259966705718c602e790607155fc",
+          "sourceSnapshotNarHash": "sha256-4NqBv0P9JjXEnEVpCEk54tE0tDwMmc38ZwhZqMiyzLQ=",
+          "profile": "upstream",
+          "builderContentIdentity": {
+            "authority": "https://github.com/RalfBarkow/wiki",
+            "baseCommitOid": "8e6c2e53a47f038f4b0c6d2ef35576cc1d4f456c",
+            "modulePath": "integrations/mech",
+            "moduleVersion": "0.1.0",
+            "extensionCommitOid": null,
+            "workingTree": true,
+            "sourceContentSha256": "4b4dea00306480b43d200f435e79541b5d3dc8dcc0549ee7785166cfeffb3b51",
+            "sourceDigestExcludes": [
+              "evidence/acceptance/"
+            ],
+            "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103"
+          }
+        }
+      },
+      "mechBytesSha256": "db6f746b60af54481fa2f2cc6a6b53c69d34ee32a86e48f2810d9baeda220e67",
+      "mechPackageVersion": "0.1.48-3",
+      "composition": {
+        "schemaVersion": 1,
+        "recipe": "dreyeck",
+        "profile": "upstream",
+        "baseRecipeRecords": {
+          "pinned-core-revs.json": {
+            "wiki": "646fa4aa56a6f81e1cc571d6e7725bdcdfc82958",
+            "wiki-server": "9b842d7be8bc5e0990ec574b19fb5554830591a5",
+            "wiki-client": "3f61a4862703f492b0d6bfb8695bd665b943bb38",
+            "wiki-plugin-mech": "abd88d2da6c89029515f2a456356832dffe038ab",
+            "wiki-plugin-solo": "0.1.30-1",
+            "wiki-plugin-journalmatic": "0.2.2"
+          }
+        },
+        "mech": {
+          "schemaVersion": 1,
+          "profile": "upstream",
+          "source": {
+            "authority": "https://github.com/WardCunningham/wiki-plugin-mech",
+            "oid": "a028b4bba04e539dcaa090423d38a00a0050489d",
+            "filesSha256": "6943cef3a3bcaec251ebb0e4e8a2170e6eeea90c238c7436b8110beb477fa9f6"
+          },
+          "extension": null,
+          "recipe": {
+            "wiki": {
+              "authority": "https://github.com/RalfBarkow/wiki",
+              "baseCommitOid": "8e6c2e53a47f038f4b0c6d2ef35576cc1d4f456c",
+              "modulePath": "integrations/mech",
+              "moduleVersion": "0.1.0",
+              "extensionCommitOid": null,
+              "workingTree": true,
+              "sourceContentSha256": "4b4dea00306480b43d200f435e79541b5d3dc8dcc0549ee7785166cfeffb3b51",
+              "sourceDigestExcludes": [
+                "evidence/acceptance/"
+              ],
+              "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103"
+            },
+            "node": "v22.18.0",
+            "platform": "darwin",
+            "arch": "x64",
+            "dependencies": {
+              "marked": "18.0.12",
+              "universal-ticker": "0.1.1",
+              "acorn": "8.18.0",
+              "esbuild": "0.28.2"
+            },
+            "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103",
+            "format": "esm",
+            "bundled": true
+          },
+          "artifacts": {
+            "client/mech.js": {
+              "sha256": "db6f746b60af54481fa2f2cc6a6b53c69d34ee32a86e48f2810d9baeda220e67",
+              "bytes": 134254
+            },
+            "client/mech.css": {
+              "sha256": "9d930c433a2cdb14c532cfe7c271720df81a1010adeb05cf734fdae7b0608f27"
+            },
+            "metafile.json": {
+              "sha256": "d5edfff8f570bdbf7cb66953073ca72b863b3248ec3ba951a437f740f3eba44c"
+            }
+          },
+          "packaging": {
+            "moduleSource": {
+              "authority": "https://github.com/RalfBarkow/wiki",
+              "oid": "971794d2066f87f63e7685447352340d5276a959",
+              "path": "integrations/mech",
+              "version": "0.1.0",
+              "sourceContentSha256": "4b4dea00306480b43d200f435e79541b5d3dc8dcc0549ee7785166cfeffb3b51",
+              "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103"
+            },
+            "upstreamTreeOid": "b0d8ebfdefdd259966705718c602e790607155fc",
+            "sourceSnapshotNarHash": "sha256-4NqBv0P9JjXEnEVpCEk54tE0tDwMmc38ZwhZqMiyzLQ=",
+            "profile": "upstream",
+            "builderContentIdentity": {
+              "authority": "https://github.com/RalfBarkow/wiki",
+              "baseCommitOid": "8e6c2e53a47f038f4b0c6d2ef35576cc1d4f456c",
+              "modulePath": "integrations/mech",
+              "moduleVersion": "0.1.0",
+              "extensionCommitOid": null,
+              "workingTree": true,
+              "sourceContentSha256": "4b4dea00306480b43d200f435e79541b5d3dc8dcc0549ee7785166cfeffb3b51",
+              "sourceDigestExcludes": [
+                "evidence/acceptance/"
+              ],
+              "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103"
+            }
+          }
+        },
+        "components": {
+          "chokidar": {
+            "version": "5.0.0",
+            "declared": "^5.0.0"
+          },
+          "minimist": {
+            "version": "1.2.8",
+            "declared": "^1.2.7"
+          },
+          "wiki-client": {
+            "version": "0.31.6",
+            "declared": "^0.31.6"
+          },
+          "wiki-plugin-activity": {
+            "version": "0.7.1",
+            "declared": "^0.7.1"
+          },
+          "wiki-plugin-assets": {
+            "version": "0.7.3",
+            "declared": "^0.7.3"
+          },
+          "wiki-plugin-audio": {
+            "version": "0.3.0",
+            "declared": "^0.3.0"
+          },
+          "wiki-plugin-bars": {
+            "version": "0.6.0",
+            "declared": "^0.6.0"
+          },
+          "wiki-plugin-calculator": {
+            "version": "0.6.0",
+            "declared": "^0.6.0"
+          },
+          "wiki-plugin-calendar": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-changes": {
+            "version": "0.5.0",
+            "declared": "^0.5.0"
+          },
+          "wiki-plugin-chart": {
+            "version": "0.5.0",
+            "declared": "^0.5.0"
+          },
+          "wiki-plugin-code": {
+            "version": "0.5.0",
+            "declared": "^0.5.0"
+          },
+          "wiki-plugin-data": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-factory": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-flagmatic": {
+            "version": "0.3.0",
+            "declared": "^0.3.0"
+          },
+          "wiki-plugin-force": {
+            "version": "0.6.0",
+            "declared": "^0.6.0"
+          },
+          "wiki-plugin-frame": {
+            "version": "0.10.3",
+            "declared": "^0.10.3"
+          },
+          "wiki-plugin-future": {
+            "version": "0.4.1",
+            "declared": "^0.4.1"
+          },
+          "wiki-plugin-graphviz": {
+            "version": "0.11.9",
+            "declared": "^0.11.9"
+          },
+          "wiki-plugin-grep": {
+            "version": "1.1.1",
+            "declared": "^1.1.1"
+          },
+          "wiki-plugin-html": {
+            "version": "0.6.0",
+            "declared": "^0.6.0"
+          },
+          "wiki-plugin-image": {
+            "version": "0.7.2",
+            "declared": "^0.7.2"
+          },
+          "wiki-plugin-line": {
+            "version": "0.6.0",
+            "declared": "^0.6.0"
+          },
+          "wiki-plugin-map": {
+            "version": "0.9.0",
+            "declared": "^0.9.0"
+          },
+          "wiki-plugin-markdown": {
+            "version": "0.5.2",
+            "declared": "^0.5.2"
+          },
+          "wiki-plugin-math": {
+            "version": "0.2.0",
+            "declared": "^0.2.0"
+          },
+          "wiki-plugin-metabolism": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-method": {
+            "version": "0.4.1",
+            "declared": "^0.4.1"
+          },
+          "wiki-plugin-pagefold": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-paragraph": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-plugmatic": {
+            "version": "1.5.1",
+            "declared": "^1.5.1"
+          },
+          "wiki-plugin-pushpin": {
+            "version": "0.6.0",
+            "declared": "^0.6.0"
+          },
+          "wiki-plugin-radar": {
+            "version": "0.6.0",
+            "declared": "^0.6.0"
+          },
+          "wiki-plugin-recycler": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-reduce": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-reference": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-rollup": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-roster": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-scatter": {
+            "version": "0.6.0",
+            "declared": "^0.6.0"
+          },
+          "wiki-plugin-search": {
+            "version": "0.3.0",
+            "declared": "^0.3.0"
+          },
+          "wiki-plugin-transport": {
+            "version": "0.3.0",
+            "declared": "^0.3.0"
+          },
+          "wiki-plugin-video": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-security-friends": {
+            "version": "0.3.0",
+            "declared": "^0.3.0"
+          },
+          "wiki-security-passportjs": {
+            "version": "0.12.0",
+            "declared": "^0.12.0"
+          },
+          "wiki-server": {
+            "version": "0.26.2",
+            "declared": "^0.26.2"
+          },
+          "wiki-plugin-mech": {
+            "version": "0.1.48-3",
+            "declared": "github:WardCunningham/wiki-plugin-mech#a028b4bba04e539dcaa090423d38a00a0050489d"
+          },
+          "wiki-plugin-solo": {
+            "version": "0.1.30-1",
+            "declared": "0.1.30-1"
+          },
+          "wiki-plugin-journalmatic": {
+            "version": "0.2.2",
+            "declared": "0.2.2"
+          }
+        }
+      },
+      "clientBundleSha256": "6204da2896da696b316bc57671a201ef2696fbad8bc358a0b13eccea608a1b20",
+      "serverSourceSha256": "e6fc124a827e5f47274480807e05a202e9dc44bea12317f14264481401368c55"
+    },
+    "wiki-ralfbarkow-discourse": {
+      "outPath": "/nix/store/sy57wssxzwq4bvs8bci8y6d3x5an30jj-wiki-ralfbarkow-discourse-0.41.0-rc.3",
+      "mech": {
+        "schemaVersion": 1,
+        "profile": "discourse",
+        "source": {
+          "authority": "https://github.com/WardCunningham/wiki-plugin-mech",
+          "oid": "a028b4bba04e539dcaa090423d38a00a0050489d",
+          "filesSha256": "6943cef3a3bcaec251ebb0e4e8a2170e6eeea90c238c7436b8110beb477fa9f6"
+        },
+        "extension": {
+          "authority": "https://github.com/RalfBarkow/wiki",
+          "baseCommitOid": "8e6c2e53a47f038f4b0c6d2ef35576cc1d4f456c",
+          "modulePath": "integrations/mech",
+          "moduleVersion": "0.1.0",
+          "extensionCommitOid": null,
+          "workingTree": true,
+          "sourceContentSha256": "4b4dea00306480b43d200f435e79541b5d3dc8dcc0549ee7785166cfeffb3b51",
+          "sourceDigestExcludes": [
+            "evidence/acceptance/"
+          ],
+          "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103"
+        },
+        "recipe": {
+          "wiki": {
+            "authority": "https://github.com/RalfBarkow/wiki",
+            "baseCommitOid": "8e6c2e53a47f038f4b0c6d2ef35576cc1d4f456c",
+            "modulePath": "integrations/mech",
+            "moduleVersion": "0.1.0",
+            "extensionCommitOid": null,
+            "workingTree": true,
+            "sourceContentSha256": "4b4dea00306480b43d200f435e79541b5d3dc8dcc0549ee7785166cfeffb3b51",
+            "sourceDigestExcludes": [
+              "evidence/acceptance/"
+            ],
+            "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103"
+          },
+          "node": "v22.18.0",
+          "platform": "darwin",
+          "arch": "x64",
+          "dependencies": {
+            "marked": "18.0.12",
+            "universal-ticker": "0.1.1",
+            "acorn": "8.18.0",
+            "esbuild": "0.28.2"
+          },
+          "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103",
+          "format": "esm",
+          "bundled": true
+        },
+        "artifacts": {
+          "client/mech.js": {
+            "sha256": "ba933fe338b7938e5fd5f81399325c9335d4bb710c7600b0b7148cf220aa3543",
+            "bytes": 152650
+          },
+          "client/mech.css": {
+            "sha256": "9d930c433a2cdb14c532cfe7c271720df81a1010adeb05cf734fdae7b0608f27"
+          },
+          "metafile.json": {
+            "sha256": "8e350db8b9fe1324627f290db48c6b76ccfe2415d9c08eae44b05c03cd137216"
+          }
+        },
+        "packaging": {
+          "moduleSource": {
+            "authority": "https://github.com/RalfBarkow/wiki",
+            "oid": "971794d2066f87f63e7685447352340d5276a959",
+            "path": "integrations/mech",
+            "version": "0.1.0",
+            "sourceContentSha256": "4b4dea00306480b43d200f435e79541b5d3dc8dcc0549ee7785166cfeffb3b51",
+            "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103"
+          },
+          "upstreamTreeOid": "b0d8ebfdefdd259966705718c602e790607155fc",
+          "sourceSnapshotNarHash": "sha256-4NqBv0P9JjXEnEVpCEk54tE0tDwMmc38ZwhZqMiyzLQ=",
+          "profile": "discourse",
+          "builderContentIdentity": {
+            "authority": "https://github.com/RalfBarkow/wiki",
+            "baseCommitOid": "8e6c2e53a47f038f4b0c6d2ef35576cc1d4f456c",
+            "modulePath": "integrations/mech",
+            "moduleVersion": "0.1.0",
+            "extensionCommitOid": null,
+            "workingTree": true,
+            "sourceContentSha256": "4b4dea00306480b43d200f435e79541b5d3dc8dcc0549ee7785166cfeffb3b51",
+            "sourceDigestExcludes": [
+              "evidence/acceptance/"
+            ],
+            "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103"
+          }
+        }
+      },
+      "mechBytesSha256": "ba933fe338b7938e5fd5f81399325c9335d4bb710c7600b0b7148cf220aa3543",
+      "mechPackageVersion": "0.1.48-3",
+      "composition": {
+        "schemaVersion": 1,
+        "recipe": "ralfbarkow",
+        "profile": "discourse",
+        "baseRecipeRecords": {
+          "p41-provenance.json": {
+            "candidate": "P41",
+            "metaCommit": "96d3080fa10e259d6d4db71000ee25f4a5721b9d",
+            "metaVersion": "0.41.0-rc.3",
+            "nixpkgsCommit": "5e2305d577ca00acbba631b05cb1094d172b29f3",
+            "nodeVersion": "22.23.3",
+            "components": {
+              "wiki-server": {
+                "version": "0.28.0",
+                "upstreamCommit": "6e8d4e1433da6773016ca35641b797453a667ff0",
+                "personalCommit": "b8a5f36907a35e64d338bf21351fd89226b41bed",
+                "archiveSha256": "1b17048869c3a3313dcea6766b15a94b5cce9c803979ebd48850e902202c876e"
+              },
+              "wiki-client": {
+                "version": "0.33.0",
+                "upstreamCommit": "d59dbd68c2a539d32add72e06d2fd74e9d6d60c2",
+                "personalCommit": "f3c72d9fc31a3db8a296c7f2d05b36364395e4fe",
+                "archiveSha256": "70237aa59f7f29c1ae29eaca0da5434b39e74765b6fd6083b76786330dbb5b15"
+              },
+              "wiki-plugin-mech": {
+                "version": "0.1.32-dev.1",
+                "sourceCommit": "4b8051417dec6b0eff40878290a703b1fa60fb52",
+                "archiveSha256": "3164e097fd30dc1185b90a1f481e2d899645d87981f3dcb68982c6fa4a44b1d9"
+              },
+              "wiki-plugin-solo": {
+                "version": "0.1.30-1",
+                "sourceCommit": "3ad7796217d564407fd36cf62c37844654fdc967",
+                "archiveSha256": "0d63486478ad61bcb942f8e68be01364fa0c3cc64be369597fe931656a931ed9"
+              },
+              "wiki-plugin-journalmatic": {
+                "version": "0.2.3",
+                "upstreamCommit": "29bd58246fa4043b1808d1e26bd6bf9df15fc952",
+                "metadataFrom": "aa5f5863bb8de8f697815b405cfb2f1a0e055ed9",
+                "archiveSha256": "4b55578f0dc578812433ec918ba52b67bf3a97f8da9e9a066914ccf83910839d"
+              }
+            },
+            "security": {
+              "friends": "0.3.1",
+              "passportjs": "0.14.0",
+              "social": "0.1.0"
+            }
+          }
+        },
+        "mech": {
+          "schemaVersion": 1,
+          "profile": "discourse",
+          "source": {
+            "authority": "https://github.com/WardCunningham/wiki-plugin-mech",
+            "oid": "a028b4bba04e539dcaa090423d38a00a0050489d",
+            "filesSha256": "6943cef3a3bcaec251ebb0e4e8a2170e6eeea90c238c7436b8110beb477fa9f6"
+          },
+          "extension": {
+            "authority": "https://github.com/RalfBarkow/wiki",
+            "baseCommitOid": "8e6c2e53a47f038f4b0c6d2ef35576cc1d4f456c",
+            "modulePath": "integrations/mech",
+            "moduleVersion": "0.1.0",
+            "extensionCommitOid": null,
+            "workingTree": true,
+            "sourceContentSha256": "4b4dea00306480b43d200f435e79541b5d3dc8dcc0549ee7785166cfeffb3b51",
+            "sourceDigestExcludes": [
+              "evidence/acceptance/"
+            ],
+            "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103"
+          },
+          "recipe": {
+            "wiki": {
+              "authority": "https://github.com/RalfBarkow/wiki",
+              "baseCommitOid": "8e6c2e53a47f038f4b0c6d2ef35576cc1d4f456c",
+              "modulePath": "integrations/mech",
+              "moduleVersion": "0.1.0",
+              "extensionCommitOid": null,
+              "workingTree": true,
+              "sourceContentSha256": "4b4dea00306480b43d200f435e79541b5d3dc8dcc0549ee7785166cfeffb3b51",
+              "sourceDigestExcludes": [
+                "evidence/acceptance/"
+              ],
+              "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103"
+            },
+            "node": "v22.18.0",
+            "platform": "darwin",
+            "arch": "x64",
+            "dependencies": {
+              "marked": "18.0.12",
+              "universal-ticker": "0.1.1",
+              "acorn": "8.18.0",
+              "esbuild": "0.28.2"
+            },
+            "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103",
+            "format": "esm",
+            "bundled": true
+          },
+          "artifacts": {
+            "client/mech.js": {
+              "sha256": "ba933fe338b7938e5fd5f81399325c9335d4bb710c7600b0b7148cf220aa3543",
+              "bytes": 152650
+            },
+            "client/mech.css": {
+              "sha256": "9d930c433a2cdb14c532cfe7c271720df81a1010adeb05cf734fdae7b0608f27"
+            },
+            "metafile.json": {
+              "sha256": "8e350db8b9fe1324627f290db48c6b76ccfe2415d9c08eae44b05c03cd137216"
+            }
+          },
+          "packaging": {
+            "moduleSource": {
+              "authority": "https://github.com/RalfBarkow/wiki",
+              "oid": "971794d2066f87f63e7685447352340d5276a959",
+              "path": "integrations/mech",
+              "version": "0.1.0",
+              "sourceContentSha256": "4b4dea00306480b43d200f435e79541b5d3dc8dcc0549ee7785166cfeffb3b51",
+              "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103"
+            },
+            "upstreamTreeOid": "b0d8ebfdefdd259966705718c602e790607155fc",
+            "sourceSnapshotNarHash": "sha256-4NqBv0P9JjXEnEVpCEk54tE0tDwMmc38ZwhZqMiyzLQ=",
+            "profile": "discourse",
+            "builderContentIdentity": {
+              "authority": "https://github.com/RalfBarkow/wiki",
+              "baseCommitOid": "8e6c2e53a47f038f4b0c6d2ef35576cc1d4f456c",
+              "modulePath": "integrations/mech",
+              "moduleVersion": "0.1.0",
+              "extensionCommitOid": null,
+              "workingTree": true,
+              "sourceContentSha256": "4b4dea00306480b43d200f435e79541b5d3dc8dcc0549ee7785166cfeffb3b51",
+              "sourceDigestExcludes": [
+                "evidence/acceptance/"
+              ],
+              "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103"
+            }
+          }
+        },
+        "components": {
+          "chokidar": {
+            "version": "5.0.0",
+            "declared": "^5.0.0"
+          },
+          "minimist": {
+            "version": "1.2.8",
+            "declared": "^1.2.7"
+          },
+          "wiki-client": {
+            "version": "0.33.0",
+            "declared": "file:candidate/packages/wiki-client.tgz"
+          },
+          "wiki-plugin-activity": {
+            "version": "0.7.1",
+            "declared": "^0.7.1"
+          },
+          "wiki-plugin-assets": {
+            "version": "0.7.5",
+            "declared": "^0.7.5"
+          },
+          "wiki-plugin-audio": {
+            "version": "0.3.0",
+            "declared": "^0.3.0"
+          },
+          "wiki-plugin-bars": {
+            "version": "0.6.0",
+            "declared": "^0.6.0"
+          },
+          "wiki-plugin-calculator": {
+            "version": "0.6.0",
+            "declared": "^0.6.0"
+          },
+          "wiki-plugin-calendar": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-changes": {
+            "version": "0.5.0",
+            "declared": "^0.5.0"
+          },
+          "wiki-plugin-chart": {
+            "version": "0.5.0",
+            "declared": "^0.5.0"
+          },
+          "wiki-plugin-code": {
+            "version": "0.6.1",
+            "declared": "^0.6.1"
+          },
+          "wiki-plugin-data": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-factory": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-flagmatic": {
+            "version": "0.3.0",
+            "declared": "^0.3.0"
+          },
+          "wiki-plugin-force": {
+            "version": "0.6.0",
+            "declared": "^0.6.0"
+          },
+          "wiki-plugin-frame": {
+            "version": "0.10.3",
+            "declared": "^0.10.3"
+          },
+          "wiki-plugin-future": {
+            "version": "0.4.1",
+            "declared": "^0.4.1"
+          },
+          "wiki-plugin-graphviz": {
+            "version": "0.11.9",
+            "declared": "^0.11.9"
+          },
+          "wiki-plugin-grep": {
+            "version": "1.1.1",
+            "declared": "^1.1.1"
+          },
+          "wiki-plugin-html": {
+            "version": "0.7.2",
+            "declared": "^0.7.2"
+          },
+          "wiki-plugin-image": {
+            "version": "0.8.1",
+            "declared": "^0.8.1"
+          },
+          "wiki-plugin-journalmatic": {
+            "version": "0.2.3",
+            "declared": "file:candidate/packages/wiki-plugin-journalmatic.tgz"
+          },
+          "wiki-plugin-line": {
+            "version": "0.6.0",
+            "declared": "^0.6.0"
+          },
+          "wiki-plugin-map": {
+            "version": "0.10.0",
+            "declared": "^0.10.0"
+          },
+          "wiki-plugin-markdown": {
+            "version": "0.5.3",
+            "declared": "^0.5.3"
+          },
+          "wiki-plugin-math": {
+            "version": "0.3.0",
+            "declared": "^0.3.0"
+          },
+          "wiki-plugin-metabolism": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-method": {
+            "version": "0.4.1",
+            "declared": "^0.4.1"
+          },
+          "wiki-plugin-pagefold": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-paragraph": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-plugmatic": {
+            "version": "1.5.1",
+            "declared": "^1.5.1"
+          },
+          "wiki-plugin-pushpin": {
+            "version": "0.6.0",
+            "declared": "^0.6.0"
+          },
+          "wiki-plugin-radar": {
+            "version": "0.6.0",
+            "declared": "^0.6.0"
+          },
+          "wiki-plugin-recycler": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-reduce": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-reference": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-rollup": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-roster": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-plugin-scatter": {
+            "version": "0.6.0",
+            "declared": "^0.6.0"
+          },
+          "wiki-plugin-search": {
+            "version": "0.3.0",
+            "declared": "^0.3.0"
+          },
+          "wiki-plugin-transport": {
+            "version": "0.3.0",
+            "declared": "^0.3.0"
+          },
+          "wiki-plugin-video": {
+            "version": "0.4.0",
+            "declared": "^0.4.0"
+          },
+          "wiki-security-friends": {
+            "version": "0.3.1",
+            "declared": "^0.3.1"
+          },
+          "wiki-security-passportjs": {
+            "version": "0.14.0",
+            "declared": "^0.14.0"
+          },
+          "wiki-security-social": {
+            "version": "0.1.0",
+            "declared": "^0.1.0"
+          },
+          "wiki-server": {
+            "version": "0.28.0",
+            "declared": "file:candidate/packages/wiki-server.tgz"
+          },
+          "wiki-plugin-mech": {
+            "version": "0.1.48-3",
+            "declared": "github:WardCunningham/wiki-plugin-mech#a028b4bba04e539dcaa090423d38a00a0050489d"
+          },
+          "wiki-plugin-solo": {
+            "version": "0.1.30-1",
+            "declared": "file:candidate/packages/wiki-plugin-solo.tgz"
+          }
+        }
+      },
+      "clientBundleSha256": "1d920a887d0332039f50b0eb7069062c4f230f5ed13066a55e69f66bf7f5ee63",
+      "serverSourceSha256": "780c6651a48db8109e1b09d4c3d4ee924dd2f3e22ae9a1105a6df70fd0507588"
+    }
+  },
+  "actualWikiBrowserCases": [
+    {
+      "profile": "upstream",
+      "wikiRoot": "/nix/store/zdxp8kp64rklkav8la49gmgsh4dc1jqc-wiki-ralfbarkow-upstream-0.41.0-rc.3/lib/node_modules/wiki",
+      "pageErrors": [],
+      "consoleErrors": [],
+      "status": "CLICK\u25b6\nCODE trails \u21d2 2 aspects\nCLICK\u25b6\nSOLO\nCLICK\u25b6\nPREVIEW synopsis items",
+      "servedMechSha256": "db6f746b60af54481fa2f2cc6a6b53c69d34ee32a86e48f2810d9baeda220e67",
+      "commands": [
+        "CLICK",
+        "HELLO",
+        "FROM",
+        "SENSOR",
+        "REPORT",
+        "SOURCE",
+        "PREVIEW",
+        "NEIGHBORS",
+        "WALK",
+        "TICK",
+        "UNTIL",
+        "FORWARD",
+        "TURN",
+        "FILE",
+        "KWIC",
+        "SHOW",
+        "RANDOM",
+        "SLEEP",
+        "TOGETHER",
+        "PLUGIN",
+        "GET",
+        "DELTA",
+        "ROSTER",
+        "LINEUP",
+        "LISTEN",
+        "MESSAGE",
+        "SOLO",
+        "POPUP",
+        "PRINT",
+        "CODE",
+        "DOWNLOAD"
+      ],
+      "pluginRegistry": [
+        "activity",
+        "assets",
+        "audio",
+        "bars",
+        "calculator",
+        "calendar",
+        "changes",
+        "chart",
+        "code",
+        "data",
+        "factory",
+        "flagmatic",
+        "force",
+        "frame",
+        "future",
+        "graphviz",
+        "grep",
+        "html",
+        "image",
+        "journalmatic",
+        "line",
+        "map",
+        "markdown",
+        "math",
+        "metabolism",
+        "method",
+        "pagefold",
+        "paragraph",
+        "plugmatic",
+        "pushpin",
+        "radar",
+        "recycler",
+        "reduce",
+        "reference",
+        "rollup",
+        "roster",
+        "scatter",
+        "search",
+        "transport",
+        "video",
+        "mech",
+        "solo"
+      ],
+      "batch": {
+        "type": "batch",
+        "sources": [
+          {
+            "source": "Trails Rendered",
+            "aspects": [
+              {
+                "name": "trail 1",
+                "graph": {
+                  "nodes": [
+                    {
+                      "type": "",
+                      "in": [],
+                      "out": [
+                        0
+                      ],
+                      "props": {
+                        "name": "Susan\nKare"
+                      }
+                    },
+                    {
+                      "type": "",
+                      "in": [
+                        0
+                      ],
+                      "out": [
+                        1
+                      ],
+                      "props": {
+                        "name": "John\nDewey"
+                      }
+                    },
+                    {
+                      "type": "",
+                      "in": [
+                        1
+                      ],
+                      "out": [],
+                      "props": {
+                        "name": "Reflective\nPractice"
+                      }
+                    }
+                  ],
+                  "rels": [
+                    {
+                      "type": "Trail",
+                      "from": 0,
+                      "to": 1,
+                      "props": {}
+                    },
+                    {
+                      "type": "Trail",
+                      "from": 1,
+                      "to": 2,
+                      "props": {}
+                    }
+                  ]
+                }
+              },
+              {
+                "name": "trail 2",
+                "graph": {
+                  "nodes": [
+                    {
+                      "type": "",
+                      "in": [],
+                      "out": [
+                        0
+                      ],
+                      "props": {
+                        "name": "Jean\nLave"
+                      }
+                    },
+                    {
+                      "type": "",
+                      "in": [
+                        0
+                      ],
+                      "out": [
+                        1
+                      ],
+                      "props": {
+                        "name": "Dorothy\nSmith"
+                      }
+                    },
+                    {
+                      "type": "",
+                      "in": [
+                        1
+                      ],
+                      "out": [],
+                      "props": {
+                        "name": "Reflective\nPractice"
+                      }
+                    }
+                  ],
+                  "rels": [
+                    {
+                      "type": "Trail",
+                      "from": 0,
+                      "to": 1,
+                      "props": {}
+                    },
+                    {
+                      "type": "Trail",
+                      "from": 1,
+                      "to": 2,
+                      "props": {}
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ],
+        "pageKey": "2c6e3e1a"
+      },
+      "combined": {
+        "nodeNames": [
+          "Susan\nKare",
+          "John\nDewey",
+          "Reflective\nPractice",
+          "Jean\nLave",
+          "Dorothy\nSmith"
+        ],
+        "edgeCount": 4
+      },
+      "acceptance": "PASS"
+    },
+    {
+      "profile": "discourse",
+      "wikiRoot": "/nix/store/ywblwij34ah66fdyv3gb9hgbywkic8h1-wiki-dreyeck-discourse-0.39.2/lib/node_modules/wiki",
+      "pageErrors": [],
+      "consoleErrors": [],
+      "status": "CLICK\u25b6\nCODE trails \u21d2 2 aspects\nCLICK\u25b6\nSOLO\nCLICK\u25b6\nPREVIEW synopsis items",
+      "servedMechSha256": "ba933fe338b7938e5fd5f81399325c9335d4bb710c7600b0b7148cf220aa3543",
+      "commands": [
+        "CLICK",
+        "HELLO",
+        "FROM",
+        "SENSOR",
+        "REPORT",
+        "SOURCE",
+        "PREVIEW",
+        "NEIGHBORS",
+        "WALK",
+        "TICK",
+        "UNTIL",
+        "FORWARD",
+        "TURN",
+        "FILE",
+        "KWIC",
+        "SHOW",
+        "RANDOM",
+        "SLEEP",
+        "TOGETHER",
+        "PLUGIN",
+        "GET",
+        "DELTA",
+        "ROSTER",
+        "LINEUP",
+        "LISTEN",
+        "MESSAGE",
+        "SOLO",
+        "POPUP",
+        "PRINT",
+        "CODE",
+        "DOWNLOAD",
+        "EXTRACT",
+        "EDGES",
+        "DEBUG"
+      ],
+      "pluginRegistry": [
+        "activity",
+        "assets",
+        "audio",
+        "bars",
+        "calculator",
+        "calendar",
+        "changes",
+        "chart",
+        "code",
+        "data",
+        "factory",
+        "flagmatic",
+        "force",
+        "frame",
+        "future",
+        "graphviz",
+        "grep",
+        "html",
+        "image",
+        "line",
+        "map",
+        "markdown",
+        "math",
+        "metabolism",
+        "method",
+        "pagefold",
+        "paragraph",
+        "plugmatic",
+        "pushpin",
+        "radar",
+        "recycler",
+        "reduce",
+        "reference",
+        "rollup",
+        "roster",
+        "scatter",
+        "search",
+        "transport",
+        "video",
+        "mech",
+        "solo",
+        "journalmatic"
+      ],
+      "batch": {
+        "type": "batch",
+        "sources": [
+          {
+            "source": "Trails Rendered",
+            "aspects": [
+              {
+                "name": "trail 1",
+                "graph": {
+                  "nodes": [
+                    {
+                      "type": "",
+                      "in": [],
+                      "out": [
+                        0
+                      ],
+                      "props": {
+                        "name": "Susan\nKare"
+                      }
+                    },
+                    {
+                      "type": "",
+                      "in": [
+                        0
+                      ],
+                      "out": [
+                        1
+                      ],
+                      "props": {
+                        "name": "John\nDewey"
+                      }
+                    },
+                    {
+                      "type": "",
+                      "in": [
+                        1
+                      ],
+                      "out": [],
+                      "props": {
+                        "name": "Reflective\nPractice"
+                      }
+                    }
+                  ],
+                  "rels": [
+                    {
+                      "type": "Trail",
+                      "from": 0,
+                      "to": 1,
+                      "props": {}
+                    },
+                    {
+                      "type": "Trail",
+                      "from": 1,
+                      "to": 2,
+                      "props": {}
+                    }
+                  ]
+                }
+              },
+              {
+                "name": "trail 2",
+                "graph": {
+                  "nodes": [
+                    {
+                      "type": "",
+                      "in": [],
+                      "out": [
+                        0
+                      ],
+                      "props": {
+                        "name": "Jean\nLave"
+                      }
+                    },
+                    {
+                      "type": "",
+                      "in": [
+                        0
+                      ],
+                      "out": [
+                        1
+                      ],
+                      "props": {
+                        "name": "Dorothy\nSmith"
+                      }
+                    },
+                    {
+                      "type": "",
+                      "in": [
+                        1
+                      ],
+                      "out": [],
+                      "props": {
+                        "name": "Reflective\nPractice"
+                      }
+                    }
+                  ],
+                  "rels": [
+                    {
+                      "type": "Trail",
+                      "from": 0,
+                      "to": 1,
+                      "props": {}
+                    },
+                    {
+                      "type": "Trail",
+                      "from": 1,
+                      "to": 2,
+                      "props": {}
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ],
+        "pageKey": "f7a1afe6"
+      },
+      "combined": {
+        "nodeNames": [
+          "Susan\nKare",
+          "John\nDewey",
+          "Reflective\nPractice",
+          "Jean\nLave",
+          "Dorothy\nSmith"
+        ],
+        "edgeCount": 4
+      },
+      "discourseStatus": "CLICK\u25b6\nNEIGHBORS\u21d2 3 pages, 1 sites\nEXTRACT \u21d2 parsed 3/3 pages, 1 typed edges (claim: 0; unknown folds: 0)\nEDGES \u21d2 1/1 edges (question: 1)\nquestion (1)\nWALK 60 questions \u21d2 1 aspects, 2 nodes\nCLICK\u25b6\nSOLO",
+      "discourseBatch": {
+        "type": "batch",
+        "sources": [
+          {
+            "source": "WALK 60 questions",
+            "aspects": [
+              {
+                "name": "Question Root",
+                "graph": {
+                  "nodes": [
+                    {
+                      "type": "",
+                      "in": [],
+                      "out": [
+                        0,
+                        1
+                      ],
+                      "props": {
+                        "name": "Question\nRoot",
+                        "title": "Question Root",
+                        "site": "remote.fixture.test:61354"
+                      }
+                    },
+                    {
+                      "type": "",
+                      "in": [
+                        0,
+                        1
+                      ],
+                      "out": [],
+                      "props": {
+                        "name": "Target\nPage",
+                        "title": "Target Page",
+                        "site": "remote.fixture.test:61354"
+                      }
+                    }
+                  ],
+                  "rels": [
+                    {
+                      "type": "",
+                      "from": 0,
+                      "to": 1,
+                      "props": {}
+                    },
+                    {
+                      "type": "",
+                      "from": 0,
+                      "to": 1,
+                      "props": {}
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ],
+        "pageKey": "a4a5707d"
+      },
+      "acceptance": "PASS"
+    }
+  ],
+  "moduleTests": {
+    "catalog": 23,
+    "browser": "PASS",
+    "browserChecks": 36,
+    "evidenceRetention": 32,
+    "fullBehavioralEquivalence": {
+      "status": "FAIL",
+      "passed": 33,
+      "failed": 2
+    },
+    "ambiguityCases": 4,
+    "uninstrumentedControls": 4
+  },
+  "trustedFixtureProvenance": [
+    {
+      "file": "trails.json",
+      "sha256": "6355758e8bd3a7ed16e3fda6ab6687f5fe3c7e5471e87a32055ab9eea3d8b27a",
+      "sourcePageSha256": "5fdba40fd3a68eddee00497af4dadb3847500356a2f131dbc0745afb86de9810",
+      "sourcePageURL": "http://ward.voices.ustawi.wiki/trails-rendered.json",
+      "sourceItemIds": [
+        "93cd119d6286888a",
+        "fc6c7d06e5bce7d3",
+        "6405b752d1739af0",
+        "17a5b123160ef0d9",
+        "cc6a77771de7edbd",
+        "84da00fa76850971"
+      ],
+      "status": "trusted selected Code functions and paragraphs; no public page executed"
+    },
+    {
+      "file": "graph.js",
+      "sha256": "8a137c3d51d49f7233ea10e7c067aab7871b8dc605a171a16de36a03624ff852",
+      "url": "https://wardcunningham.github.io/graph/graph.js",
+      "status": "retained observed dependency response, pinned by content digest; no Git revision invented"
+    },
+    {
+      "file": "cypher.js",
+      "sha256": "952768e094d5eb61e5a56a5857fd30e0bd7a110af6acd9d65877fc35c101c1bd",
+      "url": "https://wardcunningham.github.io/graph/cypher.js",
+      "status": "retained observed dependency response, pinned by content digest; no Git revision invented"
+    },
+    {
+      "file": "highlight.js",
+      "sha256": "3c7754ce18073de1e7305d7dec5dd4adad0a56a5d43732fed249ccdeca1a9d4a",
+      "url": "https://cdn.jsdelivr.net/npm/highlight.js@11/+esm",
+      "npmAuthority": "https://registry.npmjs.org/highlight.js/11.11.1",
+      "version": "11.11.1",
+      "integrity": "sha512-Xwwo44whKBVCYoliBQwaPvtd/2tYFkRQtXDWj1nackaV2JPXx3L0+Jvd8/qCJ2p+ML0/XVkJ2q+Mr+UVdpJK5w==",
+      "status": "explicit trusted offline display fixture; JS rebuilt with esbuild 0.28.2 and expected named export; not a captured CDN response"
+    },
+    {
+      "file": "highlight.css",
+      "sha256": "3a9a5def8b9c311e5ae43abde85c63133185eed4f0d9f67fea4b00a8308cf066",
+      "url": "https://cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css",
+      "npmAuthority": "https://registry.npmjs.org/highlight.js/11.11.1",
+      "version": "11.11.1",
+      "integrity": "sha512-Xwwo44whKBVCYoliBQwaPvtd/2tYFkRQtXDWj1nackaV2JPXx3L0+Jvd8/qCJ2p+ML0/XVkJ2q+Mr+UVdpJK5w==",
+      "status": "explicit trusted offline display fixture; JS rebuilt with esbuild 0.28.2 and expected named export; not a captured CDN response"
+    }
+  ],
+  "linux": {
+    "derivations": {
+      "mech-discourse": "/nix/store/21lbnsf8zb5fawa585b19c8zj2rqfkym-wiki-plugin-mech-discourse-0.1.48-3.drv",
+      "mech-upstream": "/nix/store/fykrgym98jlkb08ix1wqskxc2y26w660-wiki-plugin-mech-upstream-0.1.48-3.drv",
+      "wiki": "/nix/store/k095zyjr1cbr61j3pzgkmd65f66q6wzi-wiki-0.39.1.drv",
+      "wiki-discourse": "/nix/store/dmlaw1inafs21srpjyvf307d685v51c0-wiki-dreyeck-discourse-0.39.2.drv",
+      "wiki-dreyeck-upstream": "/nix/store/hirhyvx8wkbnjbbh7n1w8y40z4gkzvii-wiki-dreyeck-upstream-0.39.2.drv",
+      "wiki-localhost-discourse": "/nix/store/qb148zcrprq4ng95859q1zykq5r8k5vh-wiki-localhost-discourse-0.39.1.drv",
+      "wiki-localhost-upstream": "/nix/store/3mdp05xnlb9r3pfwavb3ja546l4r138s-wiki-localhost-upstream-0.39.1.drv",
+      "wiki-ralfbarkow-discourse": "/nix/store/q1k759b4zqihyvwk4zkx1mzj55cgzhyj-wiki-ralfbarkow-discourse-0.41.0-rc.3.drv",
+      "wiki-upstream": "/nix/store/k7xv359jag08s3if0rs86q6ick1fx4pc-wiki-ralfbarkow-upstream-0.41.0-rc.3.drv"
+    },
+    "built": false,
+    "runtimeVerified": false
+  },
+  "reproducibility": {
+    "mechIndependentNixRebuild": "PASS; complete outputs compared by Nix",
+    "primaryWikiIndependentNixRebuild": "PASS; complete primary Wiki outputs compared by Nix",
+    "localhostWikiBanner": "legacy recipe uses wall-clock client banner; preserved, full reproducibility not claimed"
+  },
+  "boundaries": {
+    "productionAccess": false,
+    "deployment": false,
+    "activeHostState": "unknown; branch configuration is declared authority",
+    "productionSoloCompatibility": "unverified; receiver explicitly trusted isolated fixture",
+    "publicCodeTrust": "not a JavaScript sandbox; separate deployment decision",
+    "duplicateSlugPolicy": "undecided; unchanged"
+  },
+  "logDigests": {
+    "wiki-mech-contracts.log": "07dbc1bcfca866333ee8eb4071dc71ede5fb28e864a8be2d63253af8a7f557cb",
+    "wiki-mech-semantic.log": "6300743df528b97986b0ff06f20e81ea83a0cea8c83e4aa5d6e1f0e650fec9b3",
+    "wiki-mech-ambiguity.log": "8f4f64f97b4d14880ea1e925c3458e091b63a7b97fb5ffbb75596a61e437b326",
+    "wiki-mech-browser.log": "94c86f10f9ee1e94073c0a34be21358508f8c6f3896e3ec0234a176cdc062915",
+    "wiki-mech-retention.log": "00ddcf78123608c74802d09d536a351635e0ffb29245d14e22394d2eaa33a53d",
+    "wiki-profiles-browser-final.log": "4466146f58cd03d3c8b3592c3667af60ed313f418b145cf53f464020acbb1e61",
+    "wiki-mech-nix-reproducibility.log": "f188b289293cae9b86c0ce6763b608b1e3ee0614e677ad4473c5eaa2cc91b047",
+    "wiki-nix-reproducibility.log": "3ea9b8de56bd7aca98d2df753306be7b48319ebc11b50e8a67f9b652f28ff7f7"
+  }
+}

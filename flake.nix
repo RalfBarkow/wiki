@@ -57,6 +57,46 @@
           [ "wiki-client-src" "rev" ]
           (lib.attrByPath [ "wiki-client-src" "sourceInfo" "rev" ] "unknown" inputs)
           inputs;
+        profilePins = lib.importJSON ./nix/mech-pins.json;
+        dreyeckRecipeSrc = pkgs.fetchFromGitHub {
+          owner = "RalfBarkow";
+          repo = "wiki";
+          rev = profilePins.dreyeckRecipe.oid;
+          hash = profilePins.dreyeckRecipe.narHash;
+        };
+        # Same nixpkgs/flake-utils identities in both recorded branch locks.
+        # Evaluate the frozen recipe without copying/reconciling its core pins.
+        dreyeckBase = ((import (dreyeckRecipeSrc + "/flake.nix")).outputs {
+          inherit self nixpkgs flake-utils;
+        }).packages.${system}.wiki;
+        ralfRecipeSrc = pkgs.fetchFromGitHub {
+          owner = "RalfBarkow"; repo = "wiki";
+          rev = profilePins.ralfbarkowRecipe.oid;
+          hash = profilePins.ralfbarkowRecipe.narHash;
+        };
+        ralfNixpkgsSrc = pkgs.fetchFromGitHub {
+          owner = "NixOS"; repo = "nixpkgs";
+          rev = profilePins.ralfbarkowRecipe.nixpkgs.rev;
+          hash = profilePins.ralfbarkowRecipe.nixpkgs.narHash;
+        };
+        ralfBase = ((import (ralfRecipeSrc + "/flake.nix")).outputs {
+          inherit self;
+          nixpkgs = { outPath = ralfNixpkgsSrc; lib = import (ralfNixpkgsSrc + "/lib"); };
+        }).packages.${system}.default;
+        mechUpstream = import ./nix/mech.nix { inherit pkgs; profile = "upstream"; };
+        mechDiscourse = import ./nix/mech.nix { inherit pkgs; profile = "discourse"; };
+        withMech = base: recipe: profile: mech:
+          import ./nix/wiki-profile.nix { inherit pkgs base recipe profile mech; };
+        profilePackages = {
+          mech-upstream = mechUpstream;
+          mech-discourse = mechDiscourse;
+          wiki-upstream = withMech ralfBase "ralfbarkow" "upstream" mechUpstream;
+          wiki-localhost-upstream = withMech self.packages.${system}.wiki "localhost" "upstream" mechUpstream;
+          wiki-ralfbarkow-discourse = withMech ralfBase "ralfbarkow" "discourse" mechDiscourse;
+          wiki-discourse = withMech dreyeckBase "dreyeck" "discourse" mechDiscourse;
+          wiki-localhost-discourse = withMech self.packages.${system}.wiki "localhost" "discourse" mechDiscourse;
+          wiki-dreyeck-upstream = withMech dreyeckBase "dreyeck" "upstream" mechUpstream;
+        };
         wikiClientRevShort =
           if wikiClientRev == "unknown" then "unknown" else lib.substring 0 7 wikiClientRev;
       in {
@@ -289,7 +329,7 @@ JSON
               platforms   = lib.platforms.linux ++ lib.platforms.darwin;
             };
           };
-        };
+        } // profilePackages;
 
         # nix build
         defaultPackage = self.packages.${system}.wiki;

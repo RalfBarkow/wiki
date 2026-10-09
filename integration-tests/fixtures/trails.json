@@ -1,0 +1,82 @@
+{
+  "title": "Trails Rendered",
+  "story": [
+    {
+      "type": "paragraph",
+      "id": "93cd119d6286888a",
+      "text": "[[Susan Kare]] \u21d2 [[John Dewey]] \u21d2 [[Reflective Practice]]"
+    },
+    {
+      "type": "paragraph",
+      "id": "fc6c7d06e5bce7d3",
+      "text": "[[Jean Lave]] \u21d2 [[Dorothy Smith]] \u21d2 [[Reflective Practice]]"
+    },
+    {
+      "type": "mech",
+      "id": "6405b752d1739af0",
+      "text": "CLICK\n CODE trails\n CLICK\n  SOLO\n CLICK\n  PREVIEW synopsis items"
+    },
+    {
+      "type": "code",
+      "id": "17a5b123160ef0d9",
+      "text": "import {Graph} from 'https://wardcunningham.github.io/graph/graph.js'",
+      "language": "javascript"
+    },
+    {
+      "type": "code",
+      "id": "cc6a77771de7edbd",
+      "text": "export function trails () {\n let context = this.context\n let page = context.page\n let result = page.story\n  .filter(item => item.type == \"paragraph\")\n  .map(item => item.text)\n  .filter(text => text.startsWith('[['))\n  .map((text,i) => ({\n   name:`trail ${i+1}`,   \n   graph: trail(text.split(/ . /))\n  }))\n this.aspect = [{\n  id:context.itemId,\n  source:page.title,\n  result}]\n this.items = [{\n  type: \"solo\",\n  text: \"LINEUP\\nINCLUDED\",\n  aspects: result\n },'See [[Solo Lineup Browser]]']\n return `${result.length} aspects`\n}",
+      "language": "javascript"
+    },
+    {
+      "type": "code",
+      "id": "84da00fa76850971",
+      "text": "function trail(names) {\n let graph = new Graph()\n let prev = null\n for (let each of names) {\n  let name = each\n   .replaceAll(/[\\[\\]]/g,\"\")\n   .replaceAll(/ +/g,\"\\n\")\n  let nid = graph.addNode(\"\",{name})\n  if(prev !== null) graph.addRel(\"Trail\",prev,nid,{})\n  prev = nid\n }\n return graph\n}",
+      "language": "javascript"
+    }
+  ],
+  "journal": [
+    {
+      "type": "create",
+      "date": 1,
+      "item": {
+        "title": "Trails Rendered",
+        "story": [
+          {
+            "type": "paragraph",
+            "id": "93cd119d6286888a",
+            "text": "[[Susan Kare]] \u21d2 [[John Dewey]] \u21d2 [[Reflective Practice]]"
+          },
+          {
+            "type": "paragraph",
+            "id": "fc6c7d06e5bce7d3",
+            "text": "[[Jean Lave]] \u21d2 [[Dorothy Smith]] \u21d2 [[Reflective Practice]]"
+          },
+          {
+            "type": "mech",
+            "id": "6405b752d1739af0",
+            "text": "CLICK\n CODE trails\n CLICK\n  SOLO\n CLICK\n  PREVIEW synopsis items"
+          },
+          {
+            "type": "code",
+            "id": "17a5b123160ef0d9",
+            "text": "import {Graph} from 'https://wardcunningham.github.io/graph/graph.js'",
+            "language": "javascript"
+          },
+          {
+            "type": "code",
+            "id": "cc6a77771de7edbd",
+            "text": "export function trails () {\n let context = this.context\n let page = context.page\n let result = page.story\n  .filter(item => item.type == \"paragraph\")\n  .map(item => item.text)\n  .filter(text => text.startsWith('[['))\n  .map((text,i) => ({\n   name:`trail ${i+1}`,   \n   graph: trail(text.split(/ . /))\n  }))\n this.aspect = [{\n  id:context.itemId,\n  source:page.title,\n  result}]\n this.items = [{\n  type: \"solo\",\n  text: \"LINEUP\\nINCLUDED\",\n  aspects: result\n },'See [[Solo Lineup Browser]]']\n return `${result.length} aspects`\n}",
+            "language": "javascript"
+          },
+          {
+            "type": "code",
+            "id": "84da00fa76850971",
+            "text": "function trail(names) {\n let graph = new Graph()\n let prev = null\n for (let each of names) {\n  let name = each\n   .replaceAll(/[\\[\\]]/g,\"\")\n   .replaceAll(/ +/g,\"\\n\")\n  let nid = graph.addNode(\"\",{name})\n  if(prev !== null) graph.addRel(\"Trail\",prev,nid,{})\n  prev = nid\n }\n return graph\n}",
+            "language": "javascript"
+          }
+        ]
+      }
+    }
+  ]
+}

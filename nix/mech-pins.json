@@ -1,0 +1,36 @@
+{
+  "upstreamMech": {
+    "authority": "https://github.com/WardCunningham/wiki-plugin-mech",
+    "oid": "a028b4bba04e539dcaa090423d38a00a0050489d",
+    "treeOid": "b0d8ebfdefdd259966705718c602e790607155fc",
+    "narHash": "sha256-4NqBv0P9JjXEnEVpCEk54tE0tDwMmc38ZwhZqMiyzLQ=",
+    "commitObject": "tree b0d8ebfdefdd259966705718c602e790607155fc\nparent 54b769596f27ad97b79fa83061e0b238090fdc59\nauthor Ward Cunningham <ward@c2.com> 1789065056 -0700\ncommitter Ward Cunningham <ward@c2.com> 1789065056 -0700\n\nupdate dev dependencies\n"
+  },
+  "dreyeckRecipe": {
+    "authority": "https://github.com/RalfBarkow/wiki",
+    "oid": "548ee4c31ec7824bf19954b745f12b3b5212fc2b",
+    "treeOid": "aa6e58e9afef7be54fe9d54467f8cdca2f04b52c",
+    "narHash": "sha256-DqXoT3YPLgYUr9THr8kTDMi8+f/ofl4jDlZs4ogjIto="
+  },
+  "module": {
+    "authority": "https://github.com/RalfBarkow/wiki",
+    "oid": "971794d2066f87f63e7685447352340d5276a959",
+    "path": "integrations/mech",
+    "version": "0.1.0",
+    "sourceContentSha256": "4b4dea00306480b43d200f435e79541b5d3dc8dcc0549ee7785166cfeffb3b51",
+    "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103"
+  },
+  "ralfbarkowRecipe": {
+    "authority": "https://github.com/RalfBarkow/wiki",
+    "oid": "b42eb888d6e5d59803667c6320e0779523fc265c",
+    "narHash": "sha256-OpFyJA8X/MxkAW7zryqXuBxG5w85PNGwdU8BgExelCM=",
+    "nixpkgs": {
+      "lastModified": 1790450978,
+      "narHash": "sha256-/eLCD/X9kaWJqPR47+fDozEC87Hjmm3i8gJbYmDAD7g=",
+      "owner": "NixOS",
+      "repo": "nixpkgs",
+      "rev": "5e2305d577ca00acbba631b05cb1094d172b29f3",
+      "type": "github"
+    }
+  }
+}

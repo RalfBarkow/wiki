@@ -1,0 +1,47 @@
+[
+  {
+    "file": "trails.json",
+    "sha256": "6355758e8bd3a7ed16e3fda6ab6687f5fe3c7e5471e87a32055ab9eea3d8b27a",
+    "sourcePageSha256": "5fdba40fd3a68eddee00497af4dadb3847500356a2f131dbc0745afb86de9810",
+    "sourcePageURL": "http://ward.voices.ustawi.wiki/trails-rendered.json",
+    "sourceItemIds": [
+      "93cd119d6286888a",
+      "fc6c7d06e5bce7d3",
+      "6405b752d1739af0",
+      "17a5b123160ef0d9",
+      "cc6a77771de7edbd",
+      "84da00fa76850971"
+    ],
+    "status": "trusted selected Code functions and paragraphs; no public page executed"
+  },
+  {
+    "file": "graph.js",
+    "sha256": "8a137c3d51d49f7233ea10e7c067aab7871b8dc605a171a16de36a03624ff852",
+    "url": "https://wardcunningham.github.io/graph/graph.js",
+    "status": "retained observed dependency response, pinned by content digest; no Git revision invented"
+  },
+  {
+    "file": "cypher.js",
+    "sha256": "952768e094d5eb61e5a56a5857fd30e0bd7a110af6acd9d65877fc35c101c1bd",
+    "url": "https://wardcunningham.github.io/graph/cypher.js",
+    "status": "retained observed dependency response, pinned by content digest; no Git revision invented"
+  },
+  {
+    "file": "highlight.js",
+    "sha256": "3c7754ce18073de1e7305d7dec5dd4adad0a56a5d43732fed249ccdeca1a9d4a",
+    "url": "https://cdn.jsdelivr.net/npm/highlight.js@11/+esm",
+    "npmAuthority": "https://registry.npmjs.org/highlight.js/11.11.1",
+    "version": "11.11.1",
+    "integrity": "sha512-Xwwo44whKBVCYoliBQwaPvtd/2tYFkRQtXDWj1nackaV2JPXx3L0+Jvd8/qCJ2p+ML0/XVkJ2q+Mr+UVdpJK5w==",
+    "status": "explicit trusted offline display fixture; JS rebuilt with esbuild 0.28.2 and expected named export; not a captured CDN response"
+  },
+  {
+    "file": "highlight.css",
+    "sha256": "3a9a5def8b9c311e5ae43abde85c63133185eed4f0d9f67fea4b00a8308cf066",
+    "url": "https://cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css",
+    "npmAuthority": "https://registry.npmjs.org/highlight.js/11.11.1",
+    "version": "11.11.1",
+    "integrity": "sha512-Xwwo44whKBVCYoliBQwaPvtd/2tYFkRQtXDWj1nackaV2JPXx3L0+Jvd8/qCJ2p+ML0/XVkJ2q+Mr+UVdpJK5w==",
+    "status": "explicit trusted offline display fixture; JS rebuilt with esbuild 0.28.2 and expected named export; not a captured CDN response"
+  }
+]

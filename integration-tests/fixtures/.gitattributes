@@ -1,0 +1,3 @@
+# Captured dependency response bytes retain their original whitespace and digest.
+graph.js -whitespace
+cypher.js -whitespace
