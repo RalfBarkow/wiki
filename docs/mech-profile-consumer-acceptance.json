@@ -1,0 +1,19 @@
+{
+  "kind": "local declared profile consumer acceptance",
+  "baseCommitOid": "548ee4c31ec7824bf19954b745f12b3b5212fc2b",
+  "compositionCommitOid": "9a9afef387e8c05587c95171119d627117798f56",
+  "defaultAttribute": "wiki",
+  "defaultOutPath": "/nix/store/ib56gml232vfswinxwqw65cin4z98xsc-wiki-0.39.2",
+  "outputs": {
+    "mech-discourse": "/nix/store/rxvbinnjkw5ci51dzdr7nm4aks30v9a8-wiki-plugin-mech-discourse-0.1.48-3",
+    "mech-upstream": "/nix/store/xj28msdll0r2iv21iga9lbzmg68wybld-wiki-plugin-mech-upstream-0.1.48-3",
+    "wiki": "/nix/store/ib56gml232vfswinxwqw65cin4z98xsc-wiki-0.39.2",
+    "wiki-discourse": "/nix/store/ywblwij34ah66fdyv3gb9hgbywkic8h1-wiki-dreyeck-discourse-0.39.2",
+    "wiki-upstream": "/nix/store/z0s3y818a8cgs68s8yj2ffixbhkmjaxm-wiki-dreyeck-upstream-0.39.2"
+  },
+  "originalLockNodesUnchanged": true,
+  "sharedMechOutputsMatchVerifiedLibrary": true,
+  "activeServerState": "unknown",
+  "deployed": false,
+  "transportOverride": "explicit local Git transport at exact composition OID; not written to lock"
+}

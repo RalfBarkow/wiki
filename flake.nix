@@ -4,9 +4,10 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
     flake-utils.url = "github:numtide/flake-utils";
+    "mech-composition".url = "github:RalfBarkow/wiki/9a9afef387e8c05587c95171119d627117798f56";
   };
 
-  outputs = { self, nixpkgs, flake-utils }:
+  outputs = inputs @ { self, nixpkgs, flake-utils, ... }:
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = import nixpkgs { inherit system; };
@@ -48,6 +49,18 @@
           repo = "wiki-client";
           rev = wikiClientRev;
           hash = "sha256-c+uctkCLTKpoc9bPsyOR7gOK920QX1MQcaIH7uyAU3Q=";
+        };
+        sharedMech = inputs."mech-composition".packages.${system};
+        withMech = profile: mech: import (inputs."mech-composition" + "/nix/wiki-profile.nix") {
+          inherit pkgs profile mech;
+          base = self.packages.${system}.wiki;
+          recipe = "dreyeck";
+        };
+        profilePackages = {
+          mech-upstream = sharedMech.mech-upstream;
+          mech-discourse = sharedMech.mech-discourse;
+          wiki-upstream = withMech "upstream" sharedMech.mech-upstream;
+          wiki-discourse = withMech "discourse" sharedMech.mech-discourse;
         };
       in {
         packages = {
@@ -166,7 +179,7 @@ EOF
               platforms   = lib.platforms.linux ++ lib.platforms.darwin;
             };
           };
-        };
+        } // profilePackages;
 
         # nix build
         defaultPackage = self.packages.${system}.wiki;
