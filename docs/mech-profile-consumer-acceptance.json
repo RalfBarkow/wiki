@@ -1,0 +1,21 @@
+{
+  "kind": "local declared profile consumer acceptance",
+  "baseCommitOid": "b42eb888d6e5d59803667c6320e0779523fc265c",
+  "compositionCommitOid": "9a9afef387e8c05587c95171119d627117798f56",
+  "defaultAttribute": "default",
+  "defaultOutPath": "/nix/store/qj488bdrnfchi2w27i0ylys4xbqlx0vk-wiki-p41-0.41.0-rc.3",
+  "outputs": {
+    "default": "/nix/store/qj488bdrnfchi2w27i0ylys4xbqlx0vk-wiki-p41-0.41.0-rc.3",
+    "mech-discourse": "/nix/store/rxvbinnjkw5ci51dzdr7nm4aks30v9a8-wiki-plugin-mech-discourse-0.1.48-3",
+    "mech-upstream": "/nix/store/xj28msdll0r2iv21iga9lbzmg68wybld-wiki-plugin-mech-upstream-0.1.48-3",
+    "reconstruct": "/nix/store/56p1gg7c806sl3ns42f3irnk7n81qd7r-p41-reconstructed-packages",
+    "reconstructionSources": "/nix/store/3ds9kl4cnbcd7v9n7017lm9lddzc1g1m-p41-pinned-sources",
+    "wiki-discourse": "/nix/store/sy57wssxzwq4bvs8bci8y6d3x5an30jj-wiki-ralfbarkow-discourse-0.41.0-rc.3",
+    "wiki-upstream": "/nix/store/zdxp8kp64rklkav8la49gmgsh4dc1jqc-wiki-ralfbarkow-upstream-0.41.0-rc.3"
+  },
+  "originalLockNodesUnchanged": true,
+  "sharedMechOutputsMatchVerifiedLibrary": true,
+  "activeServerState": "unknown",
+  "deployed": false,
+  "transportOverride": "explicit local Git transport at exact composition OID; not written to lock"
+}

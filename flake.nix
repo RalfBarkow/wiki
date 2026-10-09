@@ -1,7 +1,8 @@
 {
   description = "Isolated P41 candidate pinned to wiki rc.3";
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/5e2305d577ca00acbba631b05cb1094d172b29f3";
-  outputs = { self, nixpkgs }: let
+  inputs."mech-composition".url = "github:RalfBarkow/wiki/9a9afef387e8c05587c95171119d627117798f56";
+  outputs = inputs @ { self, nixpkgs, ... }: let
     systems = [ "aarch64-darwin" "x86_64-darwin" "x86_64-linux" "aarch64-linux" ];
   in {
     packages = nixpkgs.lib.genAttrs systems (system: let
@@ -46,6 +47,18 @@
           ./candidate/wiki-plugin-journalmatic.patch
           ./candidate/production-server.patch ./candidate/production-client.patch
         ];
+      };
+      sharedMech = inputs."mech-composition".packages.${system};
+      withMech = profile: mech: import (inputs."mech-composition" + "/nix/wiki-profile.nix") {
+        inherit pkgs profile mech;
+        base = self.packages.${system}.default;
+        recipe = "ralfbarkow";
+      };
+      profilePackages = {
+        mech-upstream = sharedMech.mech-upstream;
+        mech-discourse = sharedMech.mech-discourse;
+        wiki-upstream = withMech "upstream" sharedMech.mech-upstream;
+        wiki-discourse = withMech "discourse" sharedMech.mech-discourse;
       };
     in {
       inherit reconstructionSources;
@@ -95,6 +108,6 @@
             --set-default WIKI_CLIENT_REV "d59dbd68c2a539d32add72e06d2fd74e9d6d60c2+p41"
         '';
       };
-    });
+    } // profilePackages);
   };
 }
