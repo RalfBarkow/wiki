@@ -1,0 +1,24 @@
+{
+  "name": "@ralfbarkow/mech-intake",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Pinned unchanged Mech composition with independently identified Discourse extensions",
+  "engines": {
+    "node": ">=22.18.0"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "node test/contracts.mjs",
+    "test:semantic": "node test/semantic.mjs",
+    "test:browser": "node test/browser.mjs"
+  },
+  "dependencies": {
+    "marked": "18.0.12",
+    "universal-ticker": "0.1.1"
+  },
+  "devDependencies": {
+    "acorn": "8.18.0",
+    "esbuild": "0.28.2"
+  }
+}

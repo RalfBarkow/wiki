@@ -1,0 +1,199 @@
+{
+  "catalog": {
+    "status": "PASS",
+    "passed": 23
+  },
+  "selectedSemantics": {
+    "status": "PASS",
+    "selectedComparisonsPassed": 33,
+    "knownDifferencesVerified": 2,
+    "fullBehavioralEquivalence": "FAIL",
+    "normalizationAdded": false
+  },
+  "fullBehavioralEquivalence": {
+    "status": "FAIL",
+    "passed": 33,
+    "failed": 2
+  },
+  "ambiguity": {
+    "cases": 4,
+    "uninstrumentedControls": 4,
+    "semantics": {
+      "extractedEqualAcrossCases": true,
+      "baselineSiteOrderInvariant": true,
+      "compositeSiteOrderInvariant": false,
+      "alphaFirstAspectsEqual": false,
+      "betaFirstAspectsEqual": true,
+      "alphaFirstBatchesEqual": false,
+      "betaFirstBatchesEqual": true
+    },
+    "networkAttempts": 0
+  },
+  "browser": {
+    "acceptance": {
+      "T1": {
+        "status": "PASS",
+        "supportingTests": [
+          "Bundle loaded with expected plugin entry"
+        ]
+      },
+      "T2": {
+        "status": "PASS",
+        "supportingTests": [
+          "Exactly one catalog and preserved upstream emitters",
+          "Bundle loaded with expected plugin entry"
+        ]
+      },
+      "T3": {
+        "status": "PASS",
+        "supportingTests": [
+          "Extensions installed before first plugin emission",
+          "Duplicate, collision and incompatible catalog rejection"
+        ]
+      },
+      "T4": {
+        "status": "PASS",
+        "supportingTests": [
+          "EXTRACT EDGES DEBUG dispatch with real DOM",
+          "Role WALK question",
+          "Role WALK claim",
+          "Role WALK support",
+          "Role WALK oppose",
+          "Extension error diagnostics"
+        ]
+      },
+      "T5": {
+        "status": "PASS",
+        "supportingTests": [
+          "Ordinary WALK and HELLO match upstream control"
+        ]
+      },
+      "T6": {
+        "status": "PASS",
+        "supportingTests": [
+          "CODE named export through actual CLICK emission",
+          "CODE named export through actual TICK",
+          "CODE guard: unowned direct",
+          "CODE guard: owned local",
+          "CODE guard: owned remote",
+          "CODE guard: truthy internal initiator",
+          "CODE diagnostic: missing export",
+          "CODE diagnostic: trusted throw",
+          "CODE diagnostic: syntax failure"
+        ]
+      },
+      "T7": {
+        "status": "PASS",
+        "supportingTests": [
+          "SOLO batch delivery and real status/reset lifecycle",
+          "SOLO missing-aspect diagnostic"
+        ]
+      },
+      "T8": {
+        "status": "PASS",
+        "supportingTests": [
+          "SOLO batch delivery and real status/reset lifecycle"
+        ]
+      },
+      "T9": {
+        "status": "PASS"
+      }
+    },
+    "passed": 35,
+    "failed": 0,
+    "version": "154.0.8037.98",
+    "playwright": "1.62.1",
+    "node": "v24.10.0",
+    "unexpectedRequests": [],
+    "sourceIntegrity": true,
+    "externalTools": {
+      "playwright": {
+        "version": "1.62.1",
+        "contentSha256": "77aee230be115c6562f14fc7687f397644e701f1f26a04f349dca2ccd8097fe1"
+      },
+      "browser": {
+        "version": "154.0.8037.98",
+        "executableSha256": "ccffd5c5fe77ba3212e07c2c69091f8048b73c396b4647ecaa150e1e01a04954"
+      },
+      "jquery": {
+        "version": "3.7.1",
+        "sha256": "fc9a93dd241f6b045cbff0481cf4e1901becd0e12fb45166a8f17f95823f0b1a"
+      }
+    }
+  },
+  "crossNodeBundleIdentity": true,
+  "deviations": [
+    "Compiler initially emitted temporary staging paths; fixed compiler working directory, then independently verified identical output.",
+    "Node22 browser-control launch initially timed out; retained first-attempt.json. Final Node24 run used fresh profiles, bounded startup and unchanged 35 technical checks.",
+    "No exact Playwright npm integrity was available locally. It remains an explicit version/content-digest-identified external test input; no install or fetch occurred."
+  ],
+  "wardEvidence": "docs/ward-listen-experiment.md: temporary author-reported snippet; conditional initiator consequence, not incorporated or labeled a current behavior/exploit.",
+  "schemaVersion": 1,
+  "kind": "retained-prior-acceptance",
+  "testedBeforeReviewCorrections": true,
+  "commands": [
+    "node test/contracts.mjs --repository $MECH_REPOSITORY --dependencies $MECH_DEPENDENCIES",
+    "node test/semantic.mjs --repository $MECH_REPOSITORY --dependencies $MECH_DEPENDENCIES",
+    "node test/ambiguity.mjs --repository $MECH_REPOSITORY --dependencies $MECH_DEPENDENCIES",
+    "node test/browser.mjs --repository $MECH_REPOSITORY --dependencies $MECH_DEPENDENCIES --playwright $PLAYWRIGHT_CORE --browser $BROWSER --jquery $JQUERY"
+  ],
+  "moduleIdentity": {
+    "authority": "https://github.com/RalfBarkow/wiki",
+    "baseCommitOid": "8e6c2e53a47f038f4b0c6d2ef35576cc1d4f456c",
+    "modulePath": "integrations/mech",
+    "moduleVersion": "0.1.0",
+    "extensionCommitOid": null,
+    "workingTree": true,
+    "sourceContentSha256": "4c86bb638bd48f80b32d21a314a8a6fa0be26b4a21d66a3aad118b4c7e490180",
+    "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103"
+  },
+  "profiles": [
+    {
+      "profile": "upstream",
+      "source": {
+        "authority": "https://github.com/WardCunningham/wiki-plugin-mech",
+        "oid": "a028b4bba04e539dcaa090423d38a00a0050489d",
+        "filesSha256": "6943cef3a3bcaec251ebb0e4e8a2170e6eeea90c238c7436b8110beb477fa9f6"
+      },
+      "artifacts": {
+        "client/mech.js": {
+          "sha256": "db6f746b60af54481fa2f2cc6a6b53c69d34ee32a86e48f2810d9baeda220e67",
+          "bytes": 134254
+        },
+        "client/mech.css": {
+          "sha256": "9d930c433a2cdb14c532cfe7c271720df81a1010adeb05cf734fdae7b0608f27"
+        },
+        "metafile.json": {
+          "sha256": "d5edfff8f570bdbf7cb66953073ca72b863b3248ec3ba951a437f740f3eba44c"
+        }
+      }
+    },
+    {
+      "profile": "discourse",
+      "source": {
+        "authority": "https://github.com/WardCunningham/wiki-plugin-mech",
+        "oid": "a028b4bba04e539dcaa090423d38a00a0050489d",
+        "filesSha256": "6943cef3a3bcaec251ebb0e4e8a2170e6eeea90c238c7436b8110beb477fa9f6"
+      },
+      "artifacts": {
+        "client/mech.js": {
+          "sha256": "779a631c020220efb56fbe5a92fd61cf56dcaa3021ab136cf957fae0075f1ec9",
+          "bytes": 151532
+        },
+        "client/mech.css": {
+          "sha256": "9d930c433a2cdb14c532cfe7c271720df81a1010adeb05cf734fdae7b0608f27"
+        },
+        "metafile.json": {
+          "sha256": "58e185a42e64c18c7e3d2ed92a89af2417089df162c39ebf4d5401bc715132ca"
+        }
+      }
+    }
+  ],
+  "baselineOid": "abd88d2da6c89029515f2a456356832dffe038ab",
+  "upstreamOid": "a028b4bba04e539dcaa090423d38a00a0050489d",
+  "limitations": [
+    "Prior runner exit status and cleanup recording were not sufficient to establish acceptance under initialization/error conditions; corrected tests are recorded separately.",
+    "Full behavioral equivalence remains FAIL; duplicate-slug selection undecided.",
+    "Installed tooling reused; clean dependency installation and deployed Solo compatibility not established."
+  ]
+}

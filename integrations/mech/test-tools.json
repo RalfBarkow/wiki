@@ -1,0 +1,8 @@
+{
+  "playwrightCoreVersion": "1.62.1",
+  "jqueryVersion": "3.7.1",
+  "witnessBrowserVersion": "154.0.8037.98",
+  "policy": "Explicit installed test tools; no automatic browser or dependency installation.",
+  "jquerySha256": "fc9a93dd241f6b045cbff0481cf4e1901becd0e12fb45166a8f17f95823f0b1a",
+  "browserToolingBoundary": "External version/digest-identified installed tools; browser is outside the module npm dependency lock."
+}

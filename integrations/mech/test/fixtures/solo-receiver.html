@@ -1,0 +1,11 @@
+<!doctype html><meta charset="utf-8"><title>Trusted scratch Solo receiver</title>
+<pre id="received"></pre>
+<script>
+window.received=[];
+window.addEventListener('message',event=>{
+ if(event.origin!==location.origin||event.source!==opener||event.data?.type!=='batch')return;
+ window.received.push({data:structuredClone(event.data),origin:event.origin});
+ document.querySelector('#received').textContent=JSON.stringify(window.received,null,2);
+});
+window.receiverReady=true;
+</script>

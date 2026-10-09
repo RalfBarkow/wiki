@@ -1,0 +1,414 @@
+{
+  "schemaVersion": 1,
+  "kind": "review-corrections-acceptance",
+  "recordedAt": "2026-10-09T04:37:56.383Z",
+  "moduleIdentity": {
+    "authority": "https://github.com/RalfBarkow/wiki",
+    "baseCommitOid": "8e6c2e53a47f038f4b0c6d2ef35576cc1d4f456c",
+    "modulePath": "integrations/mech",
+    "moduleVersion": "0.1.0",
+    "extensionCommitOid": null,
+    "workingTree": true,
+    "sourceContentSha256": "dc5edee13803ef230f3f6e2611d3700573e6216685cb95b3938bc92ccf6b358f",
+    "sourceDigestExcludes": [
+      "evidence/acceptance/"
+    ],
+    "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103"
+  },
+  "upstream": {
+    "authority": "https://github.com/WardCunningham/wiki-plugin-mech",
+    "oid": "a028b4bba04e539dcaa090423d38a00a0050489d"
+  },
+  "behavioralBaseline": {
+    "authority": "https://github.com/RalfBarkow/wiki-plugin-mech",
+    "oid": "abd88d2da6c89029515f2a456356832dffe038ab"
+  },
+  "profiles": [
+    {
+      "profile": "upstream",
+      "source": {
+        "authority": "https://github.com/WardCunningham/wiki-plugin-mech",
+        "oid": "a028b4bba04e539dcaa090423d38a00a0050489d",
+        "filesSha256": "6943cef3a3bcaec251ebb0e4e8a2170e6eeea90c238c7436b8110beb477fa9f6"
+      },
+      "artifacts": {
+        "client/mech.js": {
+          "sha256": "db6f746b60af54481fa2f2cc6a6b53c69d34ee32a86e48f2810d9baeda220e67",
+          "bytes": 134254
+        },
+        "client/mech.css": {
+          "sha256": "9d930c433a2cdb14c532cfe7c271720df81a1010adeb05cf734fdae7b0608f27"
+        },
+        "metafile.json": {
+          "sha256": "d5edfff8f570bdbf7cb66953073ca72b863b3248ec3ba951a437f740f3eba44c"
+        }
+      },
+      "build": {
+        "node": "v24.10.0",
+        "platform": "darwin",
+        "arch": "x64",
+        "dependencies": {
+          "marked": "18.0.12",
+          "universal-ticker": "0.1.1",
+          "acorn": "8.18.0",
+          "esbuild": "0.28.2"
+        }
+      }
+    },
+    {
+      "profile": "discourse",
+      "source": {
+        "authority": "https://github.com/WardCunningham/wiki-plugin-mech",
+        "oid": "a028b4bba04e539dcaa090423d38a00a0050489d",
+        "filesSha256": "6943cef3a3bcaec251ebb0e4e8a2170e6eeea90c238c7436b8110beb477fa9f6"
+      },
+      "artifacts": {
+        "client/mech.js": {
+          "sha256": "ba933fe338b7938e5fd5f81399325c9335d4bb710c7600b0b7148cf220aa3543",
+          "bytes": 152650
+        },
+        "client/mech.css": {
+          "sha256": "9d930c433a2cdb14c532cfe7c271720df81a1010adeb05cf734fdae7b0608f27"
+        },
+        "metafile.json": {
+          "sha256": "8e350db8b9fe1324627f290db48c6b76ccfe2415d9c08eae44b05c03cd137216"
+        }
+      },
+      "build": {
+        "node": "v24.10.0",
+        "platform": "darwin",
+        "arch": "x64",
+        "dependencies": {
+          "marked": "18.0.12",
+          "universal-ticker": "0.1.1",
+          "acorn": "8.18.0",
+          "esbuild": "0.28.2"
+        }
+      }
+    }
+  ],
+  "commands": [
+    "node test/contracts.mjs --repository $MECH_REPOSITORY --dependencies $MECH_DEPENDENCIES",
+    "node test/semantic.mjs --repository $MECH_REPOSITORY --dependencies $MECH_DEPENDENCIES",
+    "node test/ambiguity.mjs --repository $MECH_REPOSITORY --dependencies $MECH_DEPENDENCIES",
+    "node test/renderer-safety.mjs --repository $MECH_REPOSITORY --dependencies $MECH_DEPENDENCIES",
+    "node test/acceptance-contracts.mjs",
+    "node test/evidence-retention.mjs",
+    "node test/browser-negative.mjs --repository $MECH_REPOSITORY --dependencies $MECH_DEPENDENCIES --playwright $PLAYWRIGHT_CORE --browser $BROWSER --jquery $JQUERY",
+    "node test/browser.mjs --repository $MECH_REPOSITORY --dependencies $MECH_DEPENDENCIES --playwright $PLAYWRIGHT_CORE --browser $BROWSER --jquery $JQUERY"
+  ],
+  "checks": {
+    "catalog": 23,
+    "acceptanceContracts": 16,
+    "evidenceRetention": 6,
+    "renderer": 35,
+    "browser": {
+      "passed": 36,
+      "failed": 0,
+      "acceptance": {
+        "T1": {
+          "status": "PASS",
+          "supportingTests": [
+            "Bundle loaded with expected plugin entry"
+          ]
+        },
+        "T2": {
+          "status": "PASS",
+          "supportingTests": [
+            "Exactly one catalog and preserved upstream emitters",
+            "Bundle loaded with expected plugin entry"
+          ]
+        },
+        "T3": {
+          "status": "PASS",
+          "supportingTests": [
+            "Extensions installed before first plugin emission",
+            "Duplicate, collision and incompatible catalog rejection"
+          ]
+        },
+        "T4": {
+          "status": "PASS",
+          "supportingTests": [
+            "EXTRACT EDGES DEBUG dispatch with real DOM",
+            "EDGES destinations are safe in detached DOM",
+            "Role WALK question",
+            "Role WALK claim",
+            "Role WALK support",
+            "Role WALK oppose",
+            "Extension error diagnostics"
+          ]
+        },
+        "T5": {
+          "status": "PASS",
+          "supportingTests": [
+            "Ordinary WALK and HELLO match upstream control"
+          ]
+        },
+        "T6": {
+          "status": "PASS",
+          "supportingTests": [
+            "CODE named export through actual CLICK emission",
+            "CODE named export through actual TICK",
+            "CODE guard: unowned direct",
+            "CODE guard: owned local",
+            "CODE guard: owned remote",
+            "CODE guard: truthy internal initiator",
+            "CODE diagnostic: missing export",
+            "CODE diagnostic: trusted throw",
+            "CODE diagnostic: syntax failure"
+          ]
+        },
+        "T7": {
+          "status": "PASS",
+          "supportingTests": [
+            "SOLO batch delivery and real status/reset lifecycle",
+            "SOLO missing-aspect diagnostic"
+          ]
+        },
+        "T8": {
+          "status": "PASS",
+          "supportingTests": [
+            "SOLO batch delivery and real status/reset lifecycle"
+          ]
+        },
+        "T9": {
+          "status": "PASS"
+        }
+      },
+      "aggregate": "PASS",
+      "exitCode": 0,
+      "cleanup": [
+        {
+          "configuration": "upstream",
+          "closed": true,
+          "closeObserved": true,
+          "attempts": [
+            {
+              "status": "PASS"
+            }
+          ]
+        },
+        {
+          "configuration": "composite",
+          "closed": true,
+          "closeObserved": true,
+          "attempts": [
+            {
+              "status": "PASS"
+            }
+          ]
+        },
+        {
+          "configuration": "baseline",
+          "closed": true,
+          "closeObserved": true,
+          "attempts": [
+            {
+              "status": "PASS"
+            }
+          ]
+        }
+      ],
+      "ownedContextsClosed": true,
+      "unexpectedRequests": 0,
+      "pageErrors": [],
+      "consoleErrors": []
+    },
+    "negativeBrowser": [
+      {
+        "fault": "console-error",
+        "expectedChildExit": 1,
+        "criterion": "FAIL",
+        "aggregate": "FAIL",
+        "actuallyClosed": 3,
+        "record": ".artifacts/browser/run-FrQF55/results.json",
+        "status": "PASS",
+        "sourceIdentity": {
+          "authority": "https://github.com/RalfBarkow/wiki",
+          "baseCommitOid": "8e6c2e53a47f038f4b0c6d2ef35576cc1d4f456c",
+          "modulePath": "integrations/mech",
+          "moduleVersion": "0.1.0",
+          "extensionCommitOid": null,
+          "workingTree": true,
+          "sourceContentSha256": "dc5edee13803ef230f3f6e2611d3700573e6216685cb95b3938bc92ccf6b358f",
+          "sourceDigestExcludes": [
+            "evidence/acceptance/"
+          ],
+          "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103"
+        }
+      },
+      {
+        "fault": "page-error",
+        "expectedChildExit": 1,
+        "criterion": "FAIL",
+        "aggregate": "FAIL",
+        "actuallyClosed": 3,
+        "record": ".artifacts/browser/run-8eSIxb/results.json",
+        "status": "PASS",
+        "sourceIdentity": {
+          "authority": "https://github.com/RalfBarkow/wiki",
+          "baseCommitOid": "8e6c2e53a47f038f4b0c6d2ef35576cc1d4f456c",
+          "modulePath": "integrations/mech",
+          "moduleVersion": "0.1.0",
+          "extensionCommitOid": null,
+          "workingTree": true,
+          "sourceContentSha256": "dc5edee13803ef230f3f6e2611d3700573e6216685cb95b3938bc92ccf6b358f",
+          "sourceDigestExcludes": [
+            "evidence/acceptance/"
+          ],
+          "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103"
+        }
+      },
+      {
+        "fault": "navigation",
+        "expectedChildExit": 1,
+        "criterion": "FAIL",
+        "aggregate": "FAIL",
+        "actuallyClosed": 2,
+        "record": ".artifacts/browser/run-6RVpqJ/results.json",
+        "status": "PASS",
+        "sourceIdentity": {
+          "authority": "https://github.com/RalfBarkow/wiki",
+          "baseCommitOid": "8e6c2e53a47f038f4b0c6d2ef35576cc1d4f456c",
+          "modulePath": "integrations/mech",
+          "moduleVersion": "0.1.0",
+          "extensionCommitOid": null,
+          "workingTree": true,
+          "sourceContentSha256": "dc5edee13803ef230f3f6e2611d3700573e6216685cb95b3938bc92ccf6b358f",
+          "sourceDigestExcludes": [
+            "evidence/acceptance/"
+          ],
+          "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103"
+        }
+      },
+      {
+        "fault": "bundle-init",
+        "expectedChildExit": 1,
+        "criterion": "FAIL",
+        "aggregate": "FAIL",
+        "actuallyClosed": 2,
+        "record": ".artifacts/browser/run-t7S94w/results.json",
+        "status": "PASS",
+        "sourceIdentity": {
+          "authority": "https://github.com/RalfBarkow/wiki",
+          "baseCommitOid": "8e6c2e53a47f038f4b0c6d2ef35576cc1d4f456c",
+          "modulePath": "integrations/mech",
+          "moduleVersion": "0.1.0",
+          "extensionCommitOid": null,
+          "workingTree": true,
+          "sourceContentSha256": "dc5edee13803ef230f3f6e2611d3700573e6216685cb95b3938bc92ccf6b358f",
+          "sourceDigestExcludes": [
+            "evidence/acceptance/"
+          ],
+          "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103"
+        }
+      },
+      {
+        "fault": "initialization",
+        "expectedChildExit": 1,
+        "criterion": "FAIL",
+        "aggregate": "FAIL",
+        "actuallyClosed": 2,
+        "record": ".artifacts/browser/run-FaSm3z/results.json",
+        "status": "PASS",
+        "sourceIdentity": {
+          "authority": "https://github.com/RalfBarkow/wiki",
+          "baseCommitOid": "8e6c2e53a47f038f4b0c6d2ef35576cc1d4f456c",
+          "modulePath": "integrations/mech",
+          "moduleVersion": "0.1.0",
+          "extensionCommitOid": null,
+          "workingTree": true,
+          "sourceContentSha256": "dc5edee13803ef230f3f6e2611d3700573e6216685cb95b3938bc92ccf6b358f",
+          "sourceDigestExcludes": [
+            "evidence/acceptance/"
+          ],
+          "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103"
+        }
+      },
+      {
+        "fault": "cleanup",
+        "expectedChildExit": 1,
+        "criterion": "FAIL",
+        "aggregate": "FAIL",
+        "actuallyClosed": 3,
+        "record": ".artifacts/browser/run-t5gtI8/results.json",
+        "status": "PASS",
+        "sourceIdentity": {
+          "authority": "https://github.com/RalfBarkow/wiki",
+          "baseCommitOid": "8e6c2e53a47f038f4b0c6d2ef35576cc1d4f456c",
+          "modulePath": "integrations/mech",
+          "moduleVersion": "0.1.0",
+          "extensionCommitOid": null,
+          "workingTree": true,
+          "sourceContentSha256": "dc5edee13803ef230f3f6e2611d3700573e6216685cb95b3938bc92ccf6b358f",
+          "sourceDigestExcludes": [
+            "evidence/acceptance/"
+          ],
+          "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103"
+        }
+      }
+    ]
+  },
+  "selectedSemantics": {
+    "status": "PASS",
+    "selectedComparisonsPassed": 33,
+    "knownDifferencesVerified": 2,
+    "fullBehavioralEquivalence": "FAIL",
+    "normalizationAdded": false
+  },
+  "fullBehavioralEquivalence": {
+    "status": "FAIL",
+    "passed": 33,
+    "failed": 2
+  },
+  "ambiguity": {
+    "semantics": {
+      "extractedEqualAcrossCases": true,
+      "baselineSiteOrderInvariant": true,
+      "compositeSiteOrderInvariant": false,
+      "alphaFirstAspectsEqual": false,
+      "betaFirstAspectsEqual": true,
+      "alphaFirstBatchesEqual": false,
+      "betaFirstBatchesEqual": true
+    },
+    "cases": 4,
+    "networkAttempts": 0
+  },
+  "tools": {
+    "browserRunnerNode": "v24.10.0",
+    "playwright": {
+      "version": "1.62.1",
+      "contentSha256": "77aee230be115c6562f14fc7687f397644e701f1f26a04f349dca2ccd8097fe1"
+    },
+    "browser": {
+      "version": "154.0.8037.98",
+      "executableSha256": "ccffd5c5fe77ba3212e07c2c69091f8048b73c396b4647ecaa150e1e01a04954"
+    },
+    "jquery": {
+      "version": "3.7.1",
+      "sha256": "fc9a93dd241f6b045cbff0481cf4e1901becd0e12fb45166a8f17f95823f0b1a"
+    }
+  },
+  "limitations": [
+    "Full behavioral equivalence remains FAIL: NEIGHBORS ordering and SOLO API-call traces differ.",
+    "Duplicate-slug resolution policy remains undecided; WALK builds Wiki-neighborhood projections.",
+    "Installed dependencies and browser tools reused; clean npm installation and compatibility beyond the pinned upstream revision are unverified.",
+    "Trusted isolated Solo receiver is not evidence of deployed Solo compatibility.",
+    "CODE trust and Ward temporary LISTEN initiator evidence require separate investigation before production adoption.",
+    "Acceptance records are excluded from execution-source digest to avoid circular self-identification; each record is retained separately, append-only."
+  ],
+  "optionalDiagnostics": [
+    {
+      "path": ".artifacts/browser/run-PNzWEq/results.json",
+      "purpose": "Full per-run requests, individual checks and browser diagnostics; ignored, not required to read this decision."
+    },
+    {
+      "path": ".artifacts/browser/negative-tests.json",
+      "purpose": "Controlled fault oracle details; each child also retains a distinct run record."
+    },
+    {
+      "path": ".artifacts/semantic/",
+      "purpose": "Structured baseline/composite state, graph and batch comparison captures."
+    }
+  ]
+}
