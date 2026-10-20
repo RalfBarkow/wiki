@@ -14,10 +14,10 @@
   },
   "module": {
     "authority": "https://github.com/RalfBarkow/wiki",
-    "oid": "971794d2066f87f63e7685447352340d5276a959",
+    "oid": "1dbedae7b776ca38c36dc04302796be7a07b9371",
     "path": "integrations/mech",
     "version": "0.1.0",
-    "sourceContentSha256": "4b4dea00306480b43d200f435e79541b5d3dc8dcc0549ee7785166cfeffb3b51",
+    "sourceContentSha256": "457b7e39d6ce8314b404d8bbb17253afcb2922e135407fc5493d8ad7e0982d95",
     "lockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103"
   },
   "ralfbarkowRecipe": {
