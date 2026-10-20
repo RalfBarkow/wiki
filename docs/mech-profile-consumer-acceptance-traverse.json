@@ -1,0 +1,48 @@
+{
+  "kind": "local declared profile consumer acceptance: composition with TRAVERSE",
+  "date": "2026-10-20",
+  "supersedes": "docs/mech-profile-consumer-acceptance.json (composition 9a9afef387e8c05587c95171119d627117798f56), kept unchanged",
+  "branchBaseCommitOid": "db98a893a7c710fcb3506150b68b1aa08915c47e",
+  "recipeBaseCommitOid": "548ee4c31ec7824bf19954b745f12b3b5212fc2b",
+  "composition": {
+    "authority": "https://github.com/RalfBarkow/wiki",
+    "commitOid": "a83c3e0d6662a10af000696fc3f1401524cef818",
+    "lockNarHash": "sha256-VWvXzbzJH9E4UfJXMfdmVhK/AH4xLY0MugYyyJqxae4=",
+    "lockLastModified": 1792521631,
+    "moduleCommitOid": "1dbedae7b776ca38c36dc04302796be7a07b9371",
+    "moduleSourceContentSha256": "457b7e39d6ce8314b404d8bbb17253afcb2922e135407fc5493d8ad7e0982d95",
+    "moduleLockfileSha256": "a270bbc60832486c1bbf5ba8bfb957e7fd9b9bbe9be11e0c790e44dc1820a103",
+    "upstreamMech": "a028b4bba04e539dcaa090423d38a00a0050489d"
+  },
+  "lockDerivation": "narHash and lastModified computed with nix flake prefetch from the local Git commit; the same rule reproduces the earlier github lock entry of 9a9afef exactly. Only the mech-composition node changed; all other lock nodes are byte-identical.",
+  "bundles": {
+    "mech-discourse client/mech.js": "19b14c31c62f0ce92c4ecaacf78477b230d83f0fdefea48033128cb575190efd",
+    "mech-upstream client/mech.js": "db6f746b60af54481fa2f2cc6a6b53c69d34ee32a86e48f2810d9baeda220e67",
+    "solo client/dialog/index.html (0.1.30-1, unchanged)": "5a513f70546ced3e2af7f83c4f14fb73d30e27f22a295558cbff4b078871aed8",
+    "solo client/solo.js (0.1.30-1, unchanged)": "2343c17e137f22d2d2a504c2560bc4be7888e39c01e80cf7329ac69ceb930ae9"
+  },
+  "x86_64-linux": {
+    "evaluatedNotBuilt": true,
+    "wiki": "/nix/store/idhgz3kwwj5z24s6kdazsggdgjqngri3-wiki-0.39.2",
+    "wikiEqualsProductionPackage": true,
+    "wiki-discourse": "/nix/store/ka7nw9n09d1iqqk2in7v9pdbskdf1qb7-wiki-dreyeck-discourse-0.39.2",
+    "wiki-upstream": "/nix/store/pk0aw2mahz6dr6ki37mr452rqldh2c84-wiki-dreyeck-upstream-0.39.2",
+    "mech-discourse": "/nix/store/cplqfjirg17nvphy721brivpjas3r82h-wiki-plugin-mech-discourse-0.1.48-3",
+    "mech-upstream": "/nix/store/0paydj119z4pq6ifcz5k8fsas611szx6-wiki-plugin-mech-upstream-0.1.48-3",
+    "wikiDiscourseDerivationVersusWiki": "identical except name, pname, out, an appended postInstall (the original postInstall unchanged at its start) and one added input wiki-plugin-mech-discourse"
+  },
+  "x86_64-darwin": {
+    "built": true,
+    "wiki": "/nix/store/ib56gml232vfswinxwqw65cin4z98xsc-wiki-0.39.2",
+    "wiki-discourse": "/nix/store/rzr96hcsx1d5jy1wmzng0rwfdil9dgn8-wiki-dreyeck-discourse-0.39.2",
+    "wiki-upstream": "/nix/store/5njnc3qydqdjwzi9c110j88gjmziqyvw-wiki-dreyeck-upstream-0.39.2",
+    "mech-discourse": "/nix/store/0829y1dx0snsx89q28j9qnnqnad7x2dc-wiki-plugin-mech-discourse-0.1.48-3",
+    "mech-upstream": "/nix/store/2v6654rs01q79wsc731c63pnamfrg344-wiki-plugin-mech-upstream-0.1.48-3",
+    "filesOutsideMechDifferBetweenWikiAndWikiDiscourse": false
+  },
+  "upstreamProfile": "mech-upstream and wiki-upstream have new store paths because their derivation reads the module source and pins; their client/mech.js bytes are unchanged (db6f746b...)",
+  "regression": "integrations/mech suites traverse, contracts, semantic, ambiguity, renderer-safety, acceptance-contracts at a83c3e0d: logs byte-identical to the recorded TRAVERSE state",
+  "transportOverride": "local verification with --override-input mech-composition git+file at a83c3e0d and --no-write-lock-file; the authored lock names only the GitHub source",
+  "activeServerState": "not observed here",
+  "deployed": false
+}

@@ -4,7 +4,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
     flake-utils.url = "github:numtide/flake-utils";
-    "mech-composition".url = "github:RalfBarkow/wiki/9a9afef387e8c05587c95171119d627117798f56";
+    "mech-composition".url = "github:RalfBarkow/wiki/a83c3e0d6662a10af000696fc3f1401524cef818";
   };
 
   outputs = inputs @ { self, nixpkgs, flake-utils, ... }:

@@ -149,17 +149,17 @@
         "wiki-server-src": "mech-library-wiki-server-src"
       },
       "locked": {
-        "lastModified": 1791564102,
-        "narHash": "sha256-vclscpoQEnhBjIzcnFSttrcKr9R+uVBIcsmz5m1SiTQ=",
+        "lastModified": 1792521631,
+        "narHash": "sha256-VWvXzbzJH9E4UfJXMfdmVhK/AH4xLY0MugYyyJqxae4=",
         "owner": "RalfBarkow",
         "repo": "wiki",
-        "rev": "9a9afef387e8c05587c95171119d627117798f56",
+        "rev": "a83c3e0d6662a10af000696fc3f1401524cef818",
         "type": "github"
       },
       "original": {
         "owner": "RalfBarkow",
         "repo": "wiki",
-        "rev": "9a9afef387e8c05587c95171119d627117798f56",
+        "rev": "a83c3e0d6662a10af000696fc3f1401524cef818",
         "type": "github"
       }
     }
