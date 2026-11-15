@@ -1,0 +1,108 @@
+--- a/src/client/blocks.js
++++ b/src/client/blocks.js
+@@ -16,6 +16,8 @@
+   newSVG,
+   SVGline,
+   ticker,
++  lineupAtKey,
++  thisLineupKey,
+ }
+ 
+ export function trouble(elem, message) {
+@@ -96,6 +98,14 @@
+   wiki.showResult(wiki.newPage(page), options)
+ }
+ 
++export function lineupAtKey(key) {
++  return wiki.lineup.atKey(key)
++}
++
++export function thisLineupKey(elem) {
++  return elem.closest('.page').dataset.key
++}
++
+ function expand(text) {
+   return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+ }
+@@ -251,7 +261,7 @@
+   return { api: { stop } }
+ }
+ 
+-export async function run(nest, state) {
++export async function run(nest, state, initiator) {
+   const scope = nest.slice()
+   while (scope.length) {
+     const code = scope.shift()
+@@ -261,7 +271,7 @@
+       const [op, ...args] = code.command.split(/ +/)
+       const next = scope[0]
+       const body = next && 'command' in next ? null : scope.shift()
+-      const stuff = { command, op, args, body, elem, state }
++      const stuff = { command, op, args, body, elem, state, initiator }
+       if (state.debug) console.log(stuff)
+       if (blocks[op]) await blocks[op].emit.apply(null, [stuff])
+       else if (op.match(/^[A-Z]+$/)) state.api.trouble(elem, `${op} doesn't name a block we know.`)
+@@ -276,7 +286,7 @@
+   if (!body?.length) return state.api.trouble(elem, `CLICK expects indented blocks to follow.`)
+   state.api.button(elem, '▶', event => {
+     state.debug = event.shiftKey
+-    run(body, state)
++    run(body, state, 'click')
+   })
+ }
+ 
+@@ -751,7 +761,7 @@
+       if (state.debug) console.log({ tick: state.tick, count })
+       if ('tick' in state && --state.tick >= 0) {
+         status(state.tick)
+-        await run(body, state)
++        await run(body, state, 'tick')
+       } else {
+         clock = clock.api.stop()
+         state.tick = outertick
+@@ -1145,6 +1155,37 @@
+   }
+ }
+ 
++// CODE backport: named exports/state proxy (70b23b9), visibility policy (6782e4d).
++async function code_emit({ elem, command, args, state, initiator }) {
++  if (typeof window == 'undefined' || !state.api.lineupAtKey || !state.api.thisLineupKey)
++    return state.api.trouble(elem, 'CODE expects a browser Wiki page context.')
++  const pageObject = state.api.lineupAtKey(state.api.thisLineupKey(elem))
++  const codes = pageObject.getRawPage().story.filter(item => item.type == 'code')
++  if (!codes.length) return state.api.trouble(elem, 'CODE expects the Code plugin in use on this page.')
++  const owned = window.isOwner && !pageObject.isRemote()
++  if (!(initiator || owned))
++    return state.api.trouble(elem, 'This CODE must be run by CLICK or TICK or owned by the logged in user.')
++  const code = codes.map(item => item.text).join('\n')
++  const way = args.length ? args[0] : 'default'
++  const handler = {
++    get(target, prop) {
++      // This narrow backport does not introduce the later CODE convenience API.
++      if (prop == 'api') return undefined
++      state.api.inspect(elem, prop, target)
++      return target[prop]
++    },
++  }
++  try {
++    const module = await import(`data:text/javascript;base64,${btoa(code)}`)
++    if (typeof module[way] != 'function')
++      return state.api.trouble(elem, `Expected export of function "${way}".`)
++    const result = await module[way].apply(new Proxy(state, handler), args.slice(1))
++    if (typeof result != 'undefined') state.api.status(elem, command, ` ⇒ ${result}`)
++  } catch (err) {
++    return state.api.trouble(elem, err.message)
++  }
++}
++
+ // C A T A L O G
+ 
+ export const blocks = {
+@@ -1177,6 +1218,7 @@
+   MESSAGE: { emit: message_emit },
+   DEBUG: { emit: debug_emit },
+   SOLO: { emit: solo_emit },
++  CODE: { emit: code_emit },
+ }
+ 
+ export {

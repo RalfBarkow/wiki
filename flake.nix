@@ -23,18 +23,21 @@
         journalmaticRev = "aa5f5863bb8de8f697815b405cfb2f1a0e055ed9";
         # Local development override (impure, opt-in):
         #   WIKI_MECH_SRC=/path/to/built/wiki-plugin-mech nix build .#wiki --impure
-        # The checkout must already contain its built client/mech.js.
-        # Without WIKI_MECH_SRC the pinned revision below is used unchanged.
+        # Without WIKI_MECH_SRC, apply the backport to the pinned source.
         mechLocal = builtins.getEnv "WIKI_MECH_SRC";
         mechSrc = if mechLocal != "" then builtins.path {
           name = "wiki-plugin-mech-local";
           path = /. + mechLocal;
           filter = path: type: !(builtins.elem (baseNameOf path) [ ".git" "node_modules" "coverage" ".direnv" ]);
-        } else pkgs.fetchFromGitHub {
-          owner = "RalfBarkow";
-          repo = "wiki-plugin-mech";
-          rev = mechRev;
-          hash = "sha256-UQyFvFY+buaZQ8mAilJL1/XOCzTMS02D4O9d3BKbiYc=";
+        } else pkgs.applyPatches {
+          src = pkgs.fetchFromGitHub {
+            owner = "RalfBarkow";
+            repo = "wiki-plugin-mech";
+            rev = mechRev;
+            hash = "sha256-UQyFvFY+buaZQ8mAilJL1/XOCzTMS02D4O9d3BKbiYc=";
+          };
+          patches = [ ./nix/patches/localhost-mech-code.patch ];
+          patchFlags = [ "-p1" "-F0" ];
         };
         journalmaticSrc = pkgs.fetchFromGitHub {
           owner = "RalfBarkow";
