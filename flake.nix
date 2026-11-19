@@ -34,13 +34,13 @@
           default = wiki;
         }
         // lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
-          nginx = nginx.mainline;
+          nginx = nginx.stable;
           nginx-mainline = nginx.mainline;
           nginx-stable = nginx.stable;
         });
 
       nixosModules = {
-        nginx-security = nginxModule "nginx-mainline";
+        nginx-security = nginxModule "nginx-stable";
         nginx-mainline = nginxModule "nginx-mainline";
         nginx-stable = nginxModule "nginx-stable";
       };
