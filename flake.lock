@@ -19,7 +19,8 @@
     "root": {
       "inputs": {
         "nixpkgs": "nixpkgs",
-        "mech-composition": "mech-composition"
+        "mech-composition": "mech-composition",
+        "wiki-security": "wiki-security"
       }
     },
     "mech-library-flake-utils": {
@@ -126,6 +127,25 @@
         "owner": "RalfBarkow",
         "repo": "wiki",
         "rev": "9a9afef387e8c05587c95171119d627117798f56",
+        "type": "github"
+      }
+    },
+    "wiki-security": {
+      "inputs": {
+        "nixpkgs": "nixpkgs"
+      },
+      "locked": {
+        "lastModified": 1795106469,
+        "narHash": "sha256-htqXd2kFLCCG2AoHR649eOzh7378SoR5PIvL9cJ8elo=",
+        "owner": "RalfBarkow",
+        "repo": "wiki",
+        "rev": "24fbf03a473deb98c23d06048b861f64d847709a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "RalfBarkow",
+        "repo": "wiki",
+        "rev": "24fbf03a473deb98c23d06048b861f64d847709a",
         "type": "github"
       }
     }
