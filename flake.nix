@@ -2,16 +2,19 @@
   description = "fedwiki/wiki packaged from this checkout via buildNpmPackage";
 
   inputs = {
+    wiki-security.url = "github:RalfBarkow/wiki/24fbf03a473deb98c23d06048b861f64d847709a";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
     flake-utils.url = "github:numtide/flake-utils";
     "mech-composition".url = "github:RalfBarkow/wiki/a83c3e0d6662a10af000696fc3f1401524cef818";
   };
 
   outputs = inputs @ { self, nixpkgs, flake-utils, ... }:
-    flake-utils.lib.eachDefaultSystem (system:
+    let
+      perSystem = flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = import nixpkgs { inherit system; };
         lib  = pkgs.lib;
+        security = inputs.wiki-security.packages.${system};
         mechRev = "abd88d2da6c89029515f2a456356832dffe038ab";
         mechSrc = pkgs.fetchFromGitHub {
           owner = "RalfBarkow";
@@ -53,7 +56,7 @@
         sharedMech = inputs."mech-composition".packages.${system};
         withMech = profile: mech: import (inputs."mech-composition" + "/nix/wiki-profile.nix") {
           inherit pkgs profile mech;
-          base = self.packages.${system}.wiki;
+          base = legacyPackages.wiki;
           recipe = "dreyeck";
         };
         profilePackages = {
@@ -62,8 +65,8 @@
           wiki-upstream = withMech "upstream" sharedMech.mech-upstream;
           wiki-discourse = withMech "discourse" sharedMech.mech-discourse;
         };
-      in {
-        packages = {
+        # Explicit plugin profiles keep their current base until their own migration.
+        legacyPackages = {
           wiki = pkgs.buildNpmPackage {
             pname   = "wiki";
             version = "0.39.2";
@@ -179,7 +182,12 @@ EOF
               platforms   = lib.platforms.linux ++ lib.platforms.darwin;
             };
           };
-        } // profilePackages;
+        };
+        wikiPackages = { inherit (security) wiki default; };
+      in {
+        packages = wikiPackages // profilePackages // pkgs.lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
+          inherit (security) nginx;
+        };
 
         # nix build
         defaultPackage = self.packages.${system}.wiki;
@@ -262,6 +270,7 @@ EOF
 
               services.nginx = lib.mkIf (cfg.hostName != null) {
                 enable = true;
+                package = security.nginx;
                 virtualHosts."${cfg.hostName}" = {
                   forceSSL = true;
                   enableACME = true;
@@ -274,4 +283,9 @@ EOF
             };
           };
       });
+    in perSystem // {
+      nixosModules = perSystem.nixosModules // {
+        nginx-security = inputs.wiki-security.nixosModules.nginx-security;
+      };
+    };
 }
