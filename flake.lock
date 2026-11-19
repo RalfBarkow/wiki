@@ -135,17 +135,17 @@
         "nixpkgs": "wiki-security-nixpkgs"
       },
       "locked": {
-        "lastModified": 1795106822,
-        "narHash": "sha256-lYZ1DHMv2V0UfQYhau7ozYnxhXoJmLf97ytJLpCwR/Y=",
+        "lastModified": 1795114228,
+        "narHash": "sha256-pJxlEing8YuPKUhGeYjarwow6h8vaAfv9JRPAFX8SA4=",
         "owner": "RalfBarkow",
         "repo": "wiki",
-        "rev": "ecd4ee34b09b35c91e33cbed843b25a686e6feb3",
+        "rev": "7e27ba665c129defa851a629bbddccd2580f3cf9",
         "type": "github"
       },
       "original": {
         "owner": "RalfBarkow",
         "repo": "wiki",
-        "rev": "ecd4ee34b09b35c91e33cbed843b25a686e6feb3",
+        "rev": "7e27ba665c129defa851a629bbddccd2580f3cf9",
         "type": "github"
       }
     },

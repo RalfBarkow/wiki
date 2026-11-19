@@ -1,6 +1,6 @@
 {
   description = "Isolated P41 candidate pinned to wiki rc.3";
-  inputs.wiki-security.url = "github:RalfBarkow/wiki/ecd4ee34b09b35c91e33cbed843b25a686e6feb3";
+  inputs.wiki-security.url = "github:RalfBarkow/wiki/7e27ba665c129defa851a629bbddccd2580f3cf9";
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/5e2305d577ca00acbba631b05cb1094d172b29f3";
   inputs."mech-composition".url = "github:RalfBarkow/wiki/9a9afef387e8c05587c95171119d627117798f56";
   outputs = inputs @ { self, nixpkgs, ... }: let
