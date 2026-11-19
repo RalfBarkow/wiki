@@ -1,12 +1,17 @@
 {
   description = "Isolated P41 candidate pinned to wiki rc.3";
+  inputs.wiki-security.url = "github:RalfBarkow/wiki/ecd4ee34b09b35c91e33cbed843b25a686e6feb3";
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/5e2305d577ca00acbba631b05cb1094d172b29f3";
   inputs."mech-composition".url = "github:RalfBarkow/wiki/9a9afef387e8c05587c95171119d627117798f56";
   outputs = inputs @ { self, nixpkgs, ... }: let
     systems = [ "aarch64-darwin" "x86_64-darwin" "x86_64-linux" "aarch64-linux" ];
   in {
+    nixosModules = {
+      inherit (inputs.wiki-security.nixosModules) nginx-security nginx-mainline nginx-stable;
+    };
     packages = nixpkgs.lib.genAttrs systems (system: let
       pkgs = import nixpkgs { inherit system; };
+      security = inputs.wiki-security.packages.${system};
       candidateSource = pkgs.lib.fileset.toSource {
         root = ./.;
         fileset = pkgs.lib.fileset.unions [
@@ -51,7 +56,7 @@
       sharedMech = inputs."mech-composition".packages.${system};
       withMech = profile: mech: import (inputs."mech-composition" + "/nix/wiki-profile.nix") {
         inherit pkgs profile mech;
-        base = self.packages.${system}.default;
+        base = legacyWiki;
         recipe = "ralfbarkow";
       };
       profilePackages = {
@@ -60,17 +65,8 @@
         wiki-upstream = withMech "upstream" sharedMech.mech-upstream;
         wiki-discourse = withMech "discourse" sharedMech.mech-discourse;
       };
-    in {
-      inherit reconstructionSources;
-      reconstruct = pkgs.runCommand "p41-reconstructed-packages" {
-        nativeBuildInputs = [ pkgs.python313 pkgs.git ];
-      } ''
-        mkdir -p "$out"
-        python ${reconstructionDescription}/assemble.py \
-          --sources ${reconstructionSources} \
-          --output "$out/packages" --report "$out/reconstruction.json"
-      '';
-      default = pkgs.buildNpmPackage {
+      # Explicit plugin profiles keep their current base until their own migration.
+      legacyWiki = pkgs.buildNpmPackage {
         pname = "wiki-p41";
         version = "0.41.0-rc.3";
         src = candidateSource;
@@ -108,6 +104,19 @@
             --set-default WIKI_CLIENT_REV "d59dbd68c2a539d32add72e06d2fd74e9d6d60c2+p41"
         '';
       };
-    } // profilePackages);
+    in {
+      inherit reconstructionSources;
+      reconstruct = pkgs.runCommand "p41-reconstructed-packages" {
+        nativeBuildInputs = [ pkgs.python313 pkgs.git ];
+      } ''
+        mkdir -p "$out"
+        python ${reconstructionDescription}/assemble.py \
+          --sources ${reconstructionSources} \
+          --output "$out/packages" --report "$out/reconstruction.json"
+      '';
+      inherit (security) wiki default;
+    } // profilePackages // pkgs.lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
+      inherit (security) nginx nginx-mainline nginx-stable;
+    });
   };
 }
