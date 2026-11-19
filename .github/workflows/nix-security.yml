@@ -62,15 +62,15 @@ jobs:
                   { system.stateVersion = "26.05"; services.nginx.enable = enable; }
                 ];
               }).config;
-              accepted = version: cfg: (builtins.head (builtins.filter
-                (a: a.message == "Enable NGINX and select the pinned NGINX ${version} package for this server.")
-                cfg.assertions)).assertion;
+              rejected = version: cfg: builtins.any
+                (a: !a.assertion && a.message == "Enable NGINX and select the pinned NGINX ${version} package for this server.")
+                cfg.assertions;
               mainline = configured "nginx-mainline" true;
               stable = configured "nginx-stable" true;
             in {
-              mainlineAccepted = accepted "1.31.9" mainline;
-              stableAccepted = accepted "1.30.7" stable;
-              disabledRejected = !(accepted "1.31.9" (configured "nginx-mainline" false));
+              mainlineAccepted = !(rejected "1.31.9" mainline);
+              stableAccepted = !(rejected "1.30.7" stable);
+              disabledRejected = rejected "1.31.9" (configured "nginx-mainline" false);
               mainline = mainline.services.nginx.package.version;
               stable = stable.services.nginx.package.version;
             }
