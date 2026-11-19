@@ -16,3 +16,62 @@ jobs:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
       - uses: cachix/install-nix-action@3dc140bfc76c49fbd4dd958429132e3746bcb086
       - run: nix flake check --no-update-lock-file --print-build-logs
+  consumers:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      SHARED: github:RalfBarkow/wiki/ecd4ee34b09b35c91e33cbed843b25a686e6feb3
+      DREYECK: github:RalfBarkow/wiki/16fafd6294f35014d3dbf29caee1eef681e9f405
+      RALF: github:RalfBarkow/wiki/231341b505275a8034d9a069e37e5f9cde6c588e
+    steps:
+      - uses: cachix/install-nix-action@3dc140bfc76c49fbd4dd958429132e3746bcb086
+      - name: Evaluate both server branches with their repository locks
+        run: |
+          evaluate() {
+            nix eval --no-update-lock-file --raw "$1#packages.x86_64-linux.$2.$3"
+          }
+          for consumer in "$DREYECK" "$RALF"; do
+            printf 'Lock metadata for %s\n' "$consumer"
+            nix flake metadata --json --no-write-lock-file "$consumer" | jq -c '.locks'
+          done
+          for output in wiki default nginx nginx-mainline nginx-stable; do
+            expected="$(evaluate "$SHARED" "$output" outPath)"
+            for consumer in "$DREYECK" "$RALF"; do
+              actual="$(evaluate "$consumer" "$output" outPath)"
+              test "$actual" = "$expected"
+              printf '%s %s %s\n' "$consumer" "$output" "$actual"
+            done
+          done
+          test "$(evaluate "$SHARED" wiki version)" = 0.41.1
+          test "$(evaluate "$SHARED" nginx version)" = 1.31.9
+          test "$(evaluate "$SHARED" nginx-stable version)" = 1.30.7
+          for consumer in "$DREYECK" "$RALF"; do
+            for output in nginx-security nginx-mainline nginx-stable; do
+              test "$(nix eval --no-update-lock-file --json "$consumer#nixosModules.$output" --apply builtins.isFunction)" = true
+            done
+          done
+      - name: Evaluate both NixOS alternatives and the missing-service case
+        run: |
+          nix eval --json --expr '
+            let
+              release = builtins.getFlake "github:RalfBarkow/wiki/ecd4ee34b09b35c91e33cbed843b25a686e6feb3";
+              configured = module: enable: (release.inputs.nixpkgs.lib.nixosSystem {
+                system = "x86_64-linux";
+                modules = [
+                  release.nixosModules.${module}
+                  { system.stateVersion = "26.05"; services.nginx.enable = enable; }
+                ];
+              }).config;
+              accepted = version: cfg: (builtins.head (builtins.filter
+                (a: a.message == "Enable NGINX and select the pinned NGINX ${version} package for this server.")
+                cfg.assertions)).assertion;
+              mainline = configured "nginx-mainline" true;
+              stable = configured "nginx-stable" true;
+            in {
+              mainlineAccepted = accepted "1.31.9" mainline;
+              stableAccepted = accepted "1.30.7" stable;
+              disabledRejected = !(accepted "1.31.9" (configured "nginx-mainline" false));
+              mainline = mainline.services.nginx.package.version;
+              stable = stable.services.nginx.package.version;
+            }
+          ' | jq -e '.mainlineAccepted and .stableAccepted and .disabledRejected and (.mainline == "1.31.9") and (.stable == "1.30.7")'
