@@ -2,7 +2,7 @@
   description = "fedwiki/wiki packaged from this checkout via buildNpmPackage";
 
   inputs = {
-    wiki-security.url = "github:RalfBarkow/wiki/ecd4ee34b09b35c91e33cbed843b25a686e6feb3";
+    wiki-security.url = "github:RalfBarkow/wiki/7e27ba665c129defa851a629bbddccd2580f3cf9";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
     flake-utils.url = "github:numtide/flake-utils";
     "mech-composition".url = "github:RalfBarkow/wiki/a83c3e0d6662a10af000696fc3f1401524cef818";
@@ -270,7 +270,7 @@ EOF
 
               services.nginx = lib.mkIf (cfg.hostName != null) {
                 enable = true;
-                package = security.nginx;
+                package = lib.mkOverride 1001 security.nginx;
                 virtualHosts."${cfg.hostName}" = {
                   forceSSL = true;
                   enableACME = true;
