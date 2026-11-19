@@ -30,13 +30,11 @@
       nixosModules.nginx-security = { config, lib, pkgs, ... }:
         let nginx = self.packages.${pkgs.stdenv.hostPlatform.system}.nginx;
         in {
-          config = lib.mkIf config.services.nginx.enable {
-            services.nginx.package = lib.mkDefault nginx;
-            assertions = [{
-              assertion = config.services.nginx.package == nginx;
-              message = "This security release requires its pinned nginx package. Review any host package override.";
-            }];
-          };
+          services.nginx.package = lib.mkDefault nginx;
+          assertions = [{
+            assertion = config.services.nginx.enable && config.services.nginx.package == nginx;
+            message = "Enable NGINX and select the shared NGINX 1.30.7 package for this server.";
+          }];
         };
 
       checks = lib.genAttrs [ "x86_64-linux" "aarch64-linux" ] (system:
