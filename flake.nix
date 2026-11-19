@@ -270,7 +270,7 @@ EOF
 
               services.nginx = lib.mkIf (cfg.hostName != null) {
                 enable = true;
-                package = security.nginx;
+                package = lib.mkOverride 1001 security.nginx;
                 virtualHosts."${cfg.hostName}" = {
                   forceSSL = true;
                   enableACME = true;
