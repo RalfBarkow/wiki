@@ -2,7 +2,7 @@ name: Nix security release
 
 on:
   push:
-    branches: [security/wiki-0.41.1]
+    branches: [review/nginx-stable-acceptance]
   workflow_dispatch:
 
 permissions:
@@ -16,3 +16,99 @@ jobs:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
       - uses: cachix/install-nix-action@3dc140bfc76c49fbd4dd958429132e3746bcb086
       - run: nix flake check --no-update-lock-file --print-build-logs
+      - name: Verify the installed FedWiki dialog against the release source
+        run: |
+          wiki="$(nix build --no-link --print-out-paths --no-update-lock-file .#packages.x86_64-linux.wiki)"
+          # Source: fedwiki/wiki-client cf2acf6184a5e209759725e96ba894185bcf8587.
+          printf '%s  %s\n' '1e74f75c7a29f382b90809cd31ed754b3d032510717386f1a04fb76b24dcd293' \
+            "$wiki/lib/node_modules/wiki/node_modules/wiki-client/client/dialog/index.html" | sha256sum --check --strict
+  consumers:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      SHARED: github:RalfBarkow/wiki/7e27ba665c129defa851a629bbddccd2580f3cf9
+      PREVIOUS_RELEASE: github:RalfBarkow/wiki/ecd4ee34b09b35c91e33cbed843b25a686e6feb3
+      DREYECK: github:RalfBarkow/wiki/7dd4055047e9f6b9919b5d3c418abd3fa4044b3b
+      RALF: github:RalfBarkow/wiki/86fbddd8d553b6548a84933606b418d8354740b0
+    steps:
+      - uses: cachix/install-nix-action@3dc140bfc76c49fbd4dd958429132e3746bcb086
+      - name: Evaluate both server branches with their repository locks
+        run: |
+          evaluate() {
+            nix eval --no-update-lock-file --raw "$1#packages.x86_64-linux.$2.$3"
+          }
+          for consumer in "$DREYECK" "$RALF"; do
+            printf 'Lock metadata for %s\n' "$consumer"
+            nix flake metadata --json --no-write-lock-file "$consumer" | jq -c '.locks'
+          done
+          for output in wiki default nginx nginx-mainline nginx-stable; do
+            expected="$(evaluate "$SHARED" "$output" outPath)"
+            for consumer in "$DREYECK" "$RALF"; do
+              actual="$(evaluate "$consumer" "$output" outPath)"
+              test "$actual" = "$expected"
+              printf '%s %s %s\n' "$consumer" "$output" "$actual"
+            done
+          done
+          test "$(evaluate "$SHARED" wiki version)" = 0.41.1
+          test "$(evaluate "$SHARED" wiki outPath)" = "$(evaluate "$PREVIOUS_RELEASE" wiki outPath)"
+          test "$(evaluate "$SHARED" nginx version)" = 1.30.7
+          test "$(evaluate "$SHARED" nginx-mainline version)" = 1.31.9
+          test "$(evaluate "$SHARED" nginx-stable version)" = 1.30.7
+          for consumer in "$DREYECK" "$RALF"; do
+            for output in nginx-security nginx-mainline nginx-stable; do
+              test "$(nix eval --no-update-lock-file --json "$consumer#nixosModules.$output" --apply builtins.isFunction)" = true
+            done
+          done
+      - name: Evaluate Nginx selection against the effective NixOS package
+        run: |
+          nix eval --json --expr '
+            let
+              release = builtins.getFlake "'"$SHARED"'";
+              dreyeck = builtins.getFlake "'"$DREYECK"'";
+              system = "x86_64-linux";
+              packages = release.packages.${system};
+              configured = modules: (release.inputs.nixpkgs.lib.nixosSystem {
+                inherit system;
+                modules = [{ system.stateVersion = "26.05"; }] ++ modules;
+              }).config;
+              enabled = { services.nginx.enable = true; };
+              selected = expected: cfg:
+                cfg.services.nginx.enable && cfg.services.nginx.package.outPath == expected.outPath;
+              rejected = version: cfg: builtins.any
+                (a: !a.assertion && a.message == "Enable NGINX and select the pinned NGINX ${version} package for this server.")
+                cfg.assertions;
+              mainline = configured [release.nixosModules.nginx-mainline enabled];
+              stable = configured [release.nixosModules.nginx-stable enabled];
+              stableDefault = configured [release.nixosModules.nginx-security enabled];
+              withoutImport = configured [enabled];
+              disabled = configured [release.nixosModules.nginx-security];
+              wrongPackage = configured [
+                release.nixosModules.nginx-security enabled
+                ({ lib, pkgs, ... }: { services.nginx.package = lib.mkForce pkgs.nginx; })
+              ];
+              fedwiki = {
+                services.fedwiki = {
+                  enable = true;
+                  hostName = "wiki.test";
+                  configFile = builtins.toFile "wiki-config.json" "{}";
+                };
+              };
+              dreyeckModules = [dreyeck.nixosModules.${system}.fedwiki fedwiki];
+            in {
+              mainlineAccepted = selected packages.nginx-mainline mainline;
+              stableAccepted = selected packages.nginx-stable stable;
+              stableDefaultAccepted = selected packages.nginx-stable stableDefault;
+              missingImportRejected = !(selected packages.nginx-stable withoutImport);
+              disabledRejected = !(selected packages.nginx-stable disabled) && rejected "1.30.7" disabled;
+              wrongPackageRejected = !(selected packages.nginx-stable wrongPackage) && rejected "1.30.7" wrongPackage;
+              dreyeckFallback = selected packages.nginx-stable (configured dreyeckModules);
+              dreyeckStable = selected packages.nginx-stable
+                (configured (dreyeckModules ++ [release.nixosModules.nginx-stable]));
+              dreyeckMainline = selected packages.nginx-mainline
+                (configured (dreyeckModules ++ [release.nixosModules.nginx-mainline]));
+            }
+          ' | jq -e '
+            .stableDefaultAccepted and .stableAccepted and .mainlineAccepted and
+            .missingImportRejected and .disabledRejected and .wrongPackageRejected and
+            .dreyeckFallback and .dreyeckStable and .dreyeckMainline
+          '
