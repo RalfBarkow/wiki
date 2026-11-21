@@ -1,0 +1,79 @@
+diff -ru a/lib/page.js b/lib/page.js
+--- a/lib/page.js	2026-11-21 17:09:31.732809685 +0000
++++ b/lib/page.js	2026-11-21 17:09:31.775604403 +0000
+@@ -158,6 +158,10 @@
+   }
+   // Reads and writes are async, but serially queued to avoid race conditions.
+   const queue = []
++  // Reads for the sitemap and the site index, which read every page at start-up, wait in a queue of their own,
++  // so that a request for a page is not served behind tens of thousands of them. Writes stay in QUEUE, in order.
++  const background = []
++  const next = () => (queue.length > 0 ? queue.shift() : background.shift())
+ 
+   const tryDefaults = (file, cb) => {
+     const lastDefault = cb => {
+@@ -336,7 +340,7 @@
+       itself.start()
+       fileio(item.action, item.file, item.page, (err, data, status) => {
+         process.nextTick(() => {
+-          serial(queue.shift())
++          serial(next())
+         })
+         item.cb(err, data, status)
+       })
+@@ -366,24 +370,30 @@
+   // starting serial if it isn't already working.
+   itself.get = (file, cb) => {
+     queue.push({ action: 'get', file, page: null, cb })
+-    if (!working) serial(queue.shift())
++    if (!working) serial(next())
++  }
++
++  // getBackground is get for work nobody waits on: it runs only when no other request is queued.
++  itself.getBackground = (file, cb) => {
++    background.push({ action: 'get', file, page: null, cb })
++    if (!working) serial(next())
+   }
+ 
+   // put takes a slugged name, the page as a json object, and a callback.
+   // adds them to the queue, and starts it unless it is working.
+   itself.put = (file, page, cb) => {
+     queue.push({ action: 'put', file, page, cb })
+-    if (!working) serial(queue.shift())
++    if (!working) serial(next())
+   }
+ 
+   itself.delete = (file, cb) => {
+     queue.push({ action: 'delete', file, page: null, cb })
+-    if (!working) serial(queue.shift())
++    if (!working) serial(next())
+   }
+ 
+   itself.saveToRecycler = (file, cb) => {
+     queue.push({ action: 'recycle', file, page: null, cb })
+-    if (!working) serial(queue.shift())
++    if (!working) serial(next())
+   }
+ 
+   const editDate = journal => {
+@@ -425,7 +435,7 @@
+       if (e) return cb(e)
+       const doSitemap = async file => {
+         return new Promise(resolve => {
+-          itself.get(file, (e, page, status) => {
++          itself.getBackground(file, (e, page, status) => {
+             if (file.match(/^\./)) return resolve(null)
+             if (e || status === 404) {
+               console.log('Problem building sitemap:', file, 'e: ', e, 'status:', status)
+diff -ru a/lib/search.js b/lib/search.js
+--- a/lib/search.js	2026-11-21 17:09:31.733476124 +0000
++++ b/lib/search.js	2026-11-21 17:09:31.775753522 +0000
+@@ -269,7 +269,7 @@
+ 
+       const indexPromises = slugs.map(slug => {
+         return new Promise(resolve => {
+-          pagehandler.get(slug, (err, page) => {
++          ;(pagehandler.getBackground ?? pagehandler.get)(slug, (err, page) => {
+             if (err) {
+               console.log(`SITE INDEX *** ${wikiName}: error reading page`, slug)
+               return

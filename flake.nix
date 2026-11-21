@@ -183,7 +183,17 @@ EOF
             };
           };
         };
-        wikiPackages = { inherit (security) wiki default; };
+        # wiki-server 0.28.2 reads every page for the sitemap and the site index at start-up through the same serial
+        # queue as requests for pages, so with tens of thousands of pages the first page waited for all of them
+        # (68 s on the operator's Mac with about 28 000 pages). The patch gives those start-up reads a queue of their
+        # own, served only when no request waits; writes keep their order (nix/patches/…).
+        interactiveFirst = security.wiki.overrideAttrs (old: {
+          postInstall = (old.postInstall or "") + ''
+            patch -p1 -d "$out/lib/node_modules/wiki/node_modules/wiki-server" \
+              < ${./nix/patches/wiki-server-interactive-reads-first.patch}
+          '';
+        });
+        wikiPackages = { wiki = interactiveFirst; default = interactiveFirst; };
       in {
         packages = wikiPackages // profilePackages // pkgs.lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
           inherit (security) nginx nginx-mainline nginx-stable;
