@@ -251,7 +251,8 @@ EOF
 
               systemd.services.fedwiki = {
                 description = "Federated Wiki";
-                after = [ "network-online.target" ];
+                # Not ordered after network-online.target: nginx reaches the wiki on 127.0.0.1
+                # (see the vhost below), and the wiki needs no external network to start.
                 wantedBy = [ "multi-user.target" ];
                 serviceConfig = {
                   ExecStart = ''${cfg.package}/bin/wiki --config ${cfg.configFile} --port ${toString cfg.port}'';
