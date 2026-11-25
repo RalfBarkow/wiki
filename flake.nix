@@ -2,7 +2,9 @@
   description = "fedwiki/wiki packaged from this checkout via buildNpmPackage";
 
   inputs = {
-    wiki-security.url = "github:RalfBarkow/wiki/7e27ba665c129defa851a629bbddccd2580f3cf9";
+    # The shared Wiki 0.41.1 and nginx packages (this repository at 7e27ba66). Named for what it holds; it was
+    # called wiki-security after the security release that brought it.
+    wiki.url = "github:RalfBarkow/wiki/7e27ba665c129defa851a629bbddccd2580f3cf9";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
     flake-utils.url = "github:numtide/flake-utils";
     "mech-composition".url = "github:RalfBarkow/wiki/a83c3e0d6662a10af000696fc3f1401524cef818";
@@ -14,7 +16,7 @@
       let
         pkgs = import nixpkgs { inherit system; };
         lib  = pkgs.lib;
-        security = inputs.wiki-security.packages.${system};
+        shared = inputs.wiki.packages.${system};
         mechRev = "abd88d2da6c89029515f2a456356832dffe038ab";
         mechSrc = pkgs.fetchFromGitHub {
           owner = "RalfBarkow";
@@ -183,10 +185,10 @@ EOF
             };
           };
         };
-        wikiPackages = { inherit (security) wiki default; };
+        wikiPackages = { inherit (shared) wiki default; };
       in {
         packages = wikiPackages // profilePackages // pkgs.lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
-          inherit (security) nginx nginx-mainline nginx-stable;
+          inherit (shared) nginx nginx-mainline nginx-stable;
         };
 
         # nix build
@@ -271,7 +273,7 @@ EOF
 
               services.nginx = lib.mkIf (cfg.hostName != null) {
                 enable = true;
-                package = lib.mkOverride 1001 security.nginx;
+                package = lib.mkOverride 1001 shared.nginx;
                 virtualHosts."${cfg.hostName}" = {
                   forceSSL = true;
                   enableACME = true;
@@ -286,7 +288,7 @@ EOF
       });
     in perSystem // {
       nixosModules = perSystem.nixosModules // {
-        inherit (inputs.wiki-security.nixosModules) nginx-security nginx-mainline nginx-stable;
+        inherit (inputs.wiki.nixosModules) nginx-security nginx-mainline nginx-stable;
       };
     };
 }
