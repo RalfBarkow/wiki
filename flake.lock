@@ -39,7 +39,7 @@
         "flake-utils": "flake-utils",
         "nixpkgs": "nixpkgs",
         "mech-composition": "mech-composition",
-        "wiki-security": "wiki-security"
+        "wiki": "wiki"
       }
     },
     "systems": {
@@ -164,7 +164,7 @@
         "type": "github"
       }
     },
-    "wiki-security": {
+    "wiki": {
       "inputs": {
         "nixpkgs": "wiki-security-nixpkgs"
       },
