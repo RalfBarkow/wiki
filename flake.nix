@@ -4,7 +4,7 @@
   inputs = {
     # The shared Wiki 0.41.1 and nginx packages (this repository at 7e27ba66). Named for what it holds; it was
     # called wiki-security after the security release that brought it.
-    wiki.url = "github:RalfBarkow/wiki/7e27ba665c129defa851a629bbddccd2580f3cf9";
+    wiki.url = "github:RalfBarkow/wiki/928c94c41bfe81a1b54df7d46301b01b942388ba";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
     flake-utils.url = "github:numtide/flake-utils";
     "mech-composition".url = "github:RalfBarkow/wiki/a83c3e0d6662a10af000696fc3f1401524cef818";
