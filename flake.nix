@@ -59,8 +59,8 @@
             ${wiki}/bin/wiki --version > "$out"
             grep -F '0.41.1' "$out"
           '';
-          nginx-mainline = checkNginx nginx-mainline "1.31.9";
-          nginx-stable = checkNginx nginx-stable "1.30.7";
+          nginx-mainline = checkNginx nginx-mainline "1.31.10";
+          nginx-stable = checkNginx nginx-stable "1.30.8";
         });
     };
 }

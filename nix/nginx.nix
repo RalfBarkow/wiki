@@ -11,6 +11,6 @@ let
   });
 in
 {
-  stable = pin pkgs.nginxStable "1.30.7" "sha256-JWW1yDcFDpWPcPsPc8SOK8pFQq00n9NW9G+wxyYQvG4=";
-  mainline = pin pkgs.nginxMainline "1.31.9" "sha256-oRxe7uLiV/RHjw5kn4SwBAeH0nfS0+UjOVKqa23LgK0=";
+  stable = pin pkgs.nginxStable "1.30.8" "sha256-+GcxStoy5xe5SZMIWWVsSKctxmV67FmNtYry+YpA4cE=";
+  mainline = pin pkgs.nginxMainline "1.31.10" "sha256-qbaQlX/KhKva6Km1LWaxu0WSgtfwH+S5S0mO2Ol3vbM=";
 }
